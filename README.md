@@ -19,7 +19,7 @@ bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/main/scrip
 
 ```powershell
 # Windows (PowerShell)
-$f="$env:TEMP\ccc-install.bat"; Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/main/scripts/install.bat -OutFile $f; & $f
+$f="$env:TEMP\cccbot-install.bat"; Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/main/scripts/install.bat -OutFile $f; & $f
 ```
 
 Or download `scripts/install.sh` / `scripts/install.bat` and run it directly.
