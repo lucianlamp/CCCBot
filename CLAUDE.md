@@ -21,10 +21,7 @@ See [SOUL.md](SOUL.md)
 
 ## User
 
-- Handle: lucianlamp / Timezone: JST (UTC+9)
-- Communication: concise, technical, no emojis, Telegram-first
-- Projects: game development (Godot 4, TresJS/Vue 3D), Claude Code customization, Solana/DeFi
-- Preferences: delegate implementation to codex-pipeline, prefers short answers
+See [USER.md](USER.md) — copy from `USER.example.md` and customize.
 
 ---
 

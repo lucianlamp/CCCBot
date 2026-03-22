@@ -1,3 +1,10 @@
+# MCP config (contains bot tokens)
+.mcp.json
+
+# Personal configuration (use *.example.md as templates)
+CRONS.md
+USER.md
+
 # Runtime / session data
 memory/
 .claude/scheduled_tasks.lock

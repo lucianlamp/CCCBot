@@ -9,9 +9,11 @@ Claude runs persistently, receives tasks via Telegram, executes them in the back
 ## Quick Start
 
 1. Clone this repo
-2. Configure your Telegram bot token (see `.mcp.json` / MCP settings)
-3. Run `start.bat` (Windows) or `start.sh` (Unix)
-4. Send a message from Telegram — Claude will respond
+2. Copy `.mcp.json.example` → `.mcp.json` and set your Telegram bot token
+3. Copy `USER.example.md` → `USER.md` and fill in your details
+4. Copy `CRONS.example.md` → `CRONS.md` and configure your scheduled jobs
+5. Run `start.bat` (Windows) or `start.sh` (Unix)
+6. Send a message from Telegram — Claude will respond
 
 ---
 
