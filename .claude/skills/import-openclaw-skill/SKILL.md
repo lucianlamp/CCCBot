@@ -81,10 +81,27 @@ Run bash <(curl -fsSL https://raw.githubusercontent.com/.../install.sh) to insta
    - Write to `.claude/skills/<name>/SKILL.md`
    - If the directory already exists, ask the user before overwriting
 
-5. **Report**
+5. **Register in IMPORTED.md**
+   - Append a row to `.claude/skills/IMPORTED.md`:
+     `| [<name>](.claude/skills/<name>/) | [<source-label>](<source-url>) | <YYYY-MM-DD> | <brief notes> |`
+   - Create the file if it doesn't exist (use the template below)
+
+6. **Report**
    - Confirm the installed path
    - Summarize what was kept and what was stripped
    - If install failed: explain why clearly
+
+## IMPORTED.md template (create if missing)
+
+```markdown
+# Imported External Skills
+
+Skills imported from ClawHub or other external sources.
+To remove a skill: delete the directory listed below.
+
+| Skill | Source | Installed | Notes |
+|-------|--------|-----------|-------|
+```
 
 ## Example
 
