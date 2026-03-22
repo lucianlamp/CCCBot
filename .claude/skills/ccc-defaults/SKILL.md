@@ -19,6 +19,25 @@ curl -s "https://api.example.com/endpoint"
 
 **WebFetch is only acceptable for:** parsing static documentation pages where caching is harmless.
 
+## Git History Management
+
+**Commit after every meaningful change.**
+
+Trigger: after completing a task that modifies files (config, skills, scripts, docs).
+
+```bash
+git add <specific files>   # never git add -A or git add .
+git commit -m "short description"
+```
+
+**Security rules (conservative):**
+- Stage files explicitly by name — never `git add -A` or `git add .`
+- Never commit: `.env`, `*.key`, `*.pem`, `settings.local.json`, `memory/`, files with tokens/passwords
+- If unsure whether a file is safe to commit, skip it and ask
+- Never force-push, never `--no-verify`
+
+**Commit message format:** one concise line describing what changed and why.
+
 ## Telegram Reporting
 
 - Acknowledge every channel message before starting work
