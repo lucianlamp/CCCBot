@@ -14,12 +14,12 @@ Built on [Claude Code Channels](https://code.claude.com/docs/en/channels) — cu
 
 ```bash
 # macOS / Linux
-bash <(curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/ccc/main/scripts/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/main/scripts/install.sh)
 ```
 
 ```powershell
 # Windows (PowerShell)
-$f="$env:TEMP\ccc-install.bat"; Invoke-WebRequest https://raw.githubusercontent.com/YOUR_USERNAME/ccc/main/scripts/install.bat -OutFile $f; & $f
+$f="$env:TEMP\ccc-install.bat"; Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/main/scripts/install.bat -OutFile $f; & $f
 ```
 
 Or download `scripts/install.sh` / `scripts/install.bat` and run it directly.
@@ -27,7 +27,7 @@ Or download `scripts/install.sh` / `scripts/install.bat` and run it directly.
 ### Option B — Clone and run
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ccc
+git clone https://github.com/lucianlamp/CCCBot
 cd ccc
 bash start.sh   # Windows: start.bat
 ```

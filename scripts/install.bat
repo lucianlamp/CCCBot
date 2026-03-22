@@ -1,7 +1,7 @@
 @echo off
 :: CCCBot — Claude Code Channels Bot Installer
 
-set "REPO_URL=https://github.com/YOUR_USERNAME/ccc"
+set "REPO_URL=https://github.com/lucianlamp/CCCBot"
 if "%~1"=="" (
     set "INSTALL_DIR=%USERPROFILE%\.cccbot"
 ) else (

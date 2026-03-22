@@ -1,7 +1,7 @@
 #!/bin/bash
 # CCCBot — Claude Code Channels Bot Installer
 
-REPO_URL="https://github.com/YOUR_USERNAME/ccc"
+REPO_URL="https://github.com/lucianlamp/CCCBot"
 INSTALL_DIR="${1:-$HOME/.cccbot}"
 
 # Colors
