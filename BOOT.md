@@ -1,7 +1,6 @@
 # Boot checklist
 
-Run at session start:
-- Read MEMORY.md
-- Read today's and yesterday's memory/YYYY-MM-DD.md (if they exist)
-- If there are in-progress tasks, report status to the user
-- Read CRONS.md and register all Active Jobs via CronCreate (skip heartbeat, it's handled separately)
+Define what to do at session start. The skill handles implementation details.
+
+- Load memory and review recent logs
+- Report any in-progress tasks or blockers
