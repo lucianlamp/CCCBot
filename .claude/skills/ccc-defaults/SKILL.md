@@ -19,6 +19,36 @@ curl -s "https://api.example.com/endpoint"
 
 **WebFetch is only acceptable for:** parsing static documentation pages where caching is harmless.
 
+## Git Setup
+
+**Every workspace must have git initialized and a .gitignore.**
+
+This is checked at boot. If missing, initialize automatically:
+
+```bash
+# Check
+git rev-parse --git-dir 2>/dev/null || git init
+
+# Create .gitignore if missing
+```
+
+**.gitignore template for CCC workspaces:**
+
+```gitignore
+# Session / runtime
+memory/
+.claude/codex-tasks/
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
+# Secrets
+.env
+**/*.key
+**/*.pem
+**/*.secret
+**/secrets.*
+```
+
 ## Git History Management
 
 **Commit after every meaningful change.**
