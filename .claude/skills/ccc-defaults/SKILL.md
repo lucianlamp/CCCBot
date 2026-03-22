@@ -35,19 +35,35 @@ git rev-parse --git-dir 2>/dev/null || git init
 **.gitignore template for CCC workspaces:**
 
 ```gitignore
-# Session / runtime
+# Runtime / session data (changes every session, not reproducible from config)
 memory/
-.claude/codex-tasks/
-.claude/settings.local.json
 .claude/scheduled_tasks.lock
+.claude/codex-tasks/
 
-# Secrets
+# Local machine overrides (never share between machines)
+.claude/settings.local.json
+
+# Security: Telegram access list contains allowed user IDs
+.claude/access.json
+**/access.json
+
+# Secrets and credentials
 .env
 **/*.key
 **/*.pem
 **/*.secret
 **/secrets.*
+**/credentials.*
 ```
+
+**What TO commit:**
+- `CLAUDE.md`, `SOUL.md`, `IDENTITY.md`, `USER.md`, `AGENTS.md`, `TOOLS.md` — workspace identity
+- `BOOT.md`, `HEARTBEAT.md`, `CRONS.md` — operational config
+- `MEMORY.md` — memory index (not daily logs)
+- `.claude/settings.json` — base permissions and hooks (no secrets)
+- `.claude/skills/**` — all skill definitions
+- `.mcp.json` — MCP server list (only if it contains no tokens/credentials)
+- `start.bat`, `start.sh` — launchers
 
 ## Git History Management
 
