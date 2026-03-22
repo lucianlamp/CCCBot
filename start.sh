@@ -2,7 +2,13 @@
 # CCC Workspace Launcher
 # Start Claude Code Channels session
 
-cd "$(dirname "$0")"
+# Use ~/.cccbot/ as workspace directory (create if missing)
+CCCBOT_DIR="$HOME/.cccbot"
+if [ ! -d "$CCCBOT_DIR" ]; then
+    echo "Creating workspace directory: $CCCBOT_DIR"
+    mkdir -p "$CCCBOT_DIR"
+fi
+cd "$CCCBOT_DIR"
 
 echo "Starting Claude Code Channels session..."
 echo "Workspace: $(pwd)"
