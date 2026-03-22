@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "deny": [
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~*)",
+      "Bash(git push --force*)",
+      "Bash(git push -f *)",
+      "Bash(git reset --hard*)",
+      "Bash(git clean -f*)",
+      "Bash(format *)",
+      "Bash(mkfs*)",
+      "Bash(dd if=*)",
+      "Bash(git push --force-with-lease*)",
+      "Bash(npm publish*)",
+      "Bash(git branch -D*)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\": {\"hookEventName\": \"SessionStart\", \"additionalContext\": \"Session started. Your FIRST action must be to invoke the Skill tool with skill=\\\"boot\\\" to run the boot sequence. This loads memory and starts the heartbeat loop. Do this before responding to any message.\"}}'",
+            "shell": "bash"
+          }
+        ]
+      }
+    ]
+  }
+}

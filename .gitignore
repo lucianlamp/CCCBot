@@ -1,0 +1,7 @@
+memory/
+.claude/codex-tasks/
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+.env
+**/*.key
+**/*.pem
