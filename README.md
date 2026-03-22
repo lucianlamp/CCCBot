@@ -67,6 +67,8 @@ These files are yours to edit — they define behavior for your workspace:
 └── .claude/
     ├── settings.json      # Permissions and hooks
     └── skills/            # Skill definitions (behavior logic)
+        ├── REQUIRED.md    # Essential skills — do not delete
+        ├── IMPORTED.md    # Externally imported skills
         ├── boot/
         ├── heartbeat/
         ├── channel-task/
@@ -85,3 +87,10 @@ Skills in `.claude/skills/` define the authoritative behavior logic. The `.md` f
 | `heartbeat` | Periodic liveness check |
 | `channel-task` | Standard flow for channel messages |
 | `ccc-defaults` | Workspace-wide defaults (HTTP, git, Telegram) |
+
+### Skill Registry Files
+
+| File | Purpose |
+|------|---------|
+| `REQUIRED.md` | Essential CCC skills — do NOT delete these |
+| `IMPORTED.md` | Externally imported skills with source URLs and install dates |

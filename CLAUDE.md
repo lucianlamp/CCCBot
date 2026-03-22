@@ -76,5 +76,9 @@ Alert: return content only, without `HEARTBEAT_OK`.
 - tresjs-vue3d: TresJS + Vue 3 3D scenes
 - game-ui-design: Game UI / HUD design
 
+**Skill Management:**
+- `.claude/skills/REQUIRED.md` — essential CCC skills (do NOT delete)
+- `.claude/skills/IMPORTED.md` — externally imported skills and their sources
+
 **Project Paths:**
 - Game development: `~/dev/games/`, TresJS: `~/dev/TresJS/`, Skills: `~/.claude/skills/`
