@@ -56,7 +56,7 @@ memory/
 ```
 
 **What TO commit:**
-- `CLAUDE.md`, `SOUL.md`, `IDENTITY.md`, `USER.md`, `AGENTS.md`, `TOOLS.md` — workspace identity
+- `CLAUDE.md`, `SOUL.md`, `USER.md`, `AGENTS.md`, `TOOLS.md` — workspace identity
 - `BOOT.md`, `HEARTBEAT.md`, `CRONS.md` — operational config
 - `MEMORY.md` — memory index (not daily logs)
 - `.claude/settings.json` — base permissions and hooks (no secrets)
@@ -82,6 +82,31 @@ git commit -m "short description"
 - Never force-push, never `--no-verify`
 
 **Commit message format:** one concise line describing what changed and why.
+
+## Cron Deduplication
+
+**Always wrap bash commands in cron prompts with a lock file check.**
+
+Cron triggers can fire 2–3× in the same interval due to scheduler jitter. Without deduplication, this causes duplicate API calls and duplicate Telegram messages.
+
+**Pattern:**
+
+```bash
+LOCK=/tmp/ccc-<job-id>; NOW=$(date +%s); if [ -f "$LOCK" ] && [ $((NOW - $(cat "$LOCK"))) -lt <threshold>; then echo "SKIP"; else echo $NOW > "$LOCK"; <your command>; fi
+```
+
+**Threshold = ~75% of the cron interval in seconds:**
+
+| Interval | Threshold |
+|----------|-----------|
+| `*/2 * * * *` (2 min) | 90s |
+| `*/5 * * * *` (5 min) | 225s |
+| `*/10 * * * *` (10 min) | 450s |
+| `0 * * * *` (hourly) | 2700s |
+
+**In the cron prompt, add:** "If output is `SKIP`, stop here and do nothing."
+
+**Why not just ignore duplicates manually?** Manual dedup (skipping extra triggers in context) still executes the bash command and hits the API. The lock file prevents the API call itself.
 
 ## Telegram Reporting
 

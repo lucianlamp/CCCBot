@@ -2,11 +2,17 @@
 # CCC Workspace Launcher
 # Start Claude Code Channels session
 
-# Use ~/.cccbot/ as workspace directory (create if missing)
 CCCBOT_DIR="$HOME/.cccbot"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# First run: install if ~/.cccbot doesn't exist
 if [ ! -d "$CCCBOT_DIR" ]; then
-    echo "Creating workspace directory: $CCCBOT_DIR"
-    mkdir -p "$CCCBOT_DIR"
+    echo "~/.cccbot not found. Running installer..."
+    bash "$SCRIPT_DIR/install.sh"
+    if [ $? -ne 0 ]; then
+        echo "Install failed. Exiting."
+        exit 1
+    fi
 fi
 cd "$CCCBOT_DIR"
 

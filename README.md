@@ -8,12 +8,36 @@ Claude runs persistently, receives tasks via Telegram, executes them in the back
 
 ## Quick Start
 
-1. Clone this repo
-2. Copy `.mcp.json.example` → `.mcp.json` and set your Telegram bot token
-3. Copy `USER.example.md` → `USER.md` and fill in your details
-4. Copy `CRONS.example.md` → `CRONS.md` and configure your scheduled jobs
-5. Run `start.bat` (Windows) or `start.sh` (Unix)
-6. Send a message from Telegram — Claude will respond
+### Option A — One-command install
+
+```bash
+# macOS / Linux
+bash <(curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/ccc/main/install.sh)
+```
+
+```powershell
+# Windows (PowerShell)
+$f="$env:TEMP\ccc-install.bat"; Invoke-WebRequest https://raw.githubusercontent.com/YOUR_USERNAME/ccc/main/install.bat -OutFile $f; & $f
+```
+
+Or download `install.sh` / `install.bat` and run it directly.
+
+### Option B — Clone and run
+
+```bash
+git clone https://github.com/YOUR_USERNAME/ccc
+cd ccc
+bash start.sh   # Windows: start.bat
+```
+
+`start.sh` automatically runs the installer on first launch if `~/.cccbot` doesn't exist.
+
+### After install
+
+1. Edit `~/.cccbot/.mcp.json` — add your Telegram bot token
+2. Edit `~/.cccbot/USER.md` — describe yourself and your projects
+3. Run `~/.cccbot/start.sh` (or `%USERPROFILE%\.cccbot\start.bat` on Windows) — Claude starts and connects to Telegram
+4. Send a message from Telegram — Claude will respond
 
 ---
 
@@ -43,8 +67,7 @@ These files are yours to edit — they define behavior for your workspace:
 | File | Purpose |
 |------|---------|
 | `CLAUDE.md` | **Core config — controls Claude's behavior. Edit with care.** |
-| `SOUL.md` | Persona, tone, values |
-| `IDENTITY.md` | Name, role, context |
+| `SOUL.md` | Identity, persona, tone, values |
 | `USER.md` | Info about the operator |
 | `BOOT.md` | What to do at session start |
 | `HEARTBEAT.md` | What to check on each heartbeat cycle |
@@ -60,11 +83,8 @@ These files are yours to edit — they define behavior for your workspace:
 ```
 .
 ├── CLAUDE.md              # Primary Claude config (edit with care)
-├── SOUL.md / IDENTITY.md  # Persona and identity
-├── BOOT.md / HEARTBEAT.md # Session lifecycle hooks
-├── CRONS.md               # Scheduled tasks
-├── MEMORY.md              # Memory index
-├── start.bat / start.sh   # Launchers
+├── install.sh / install.bat  # Installers (first-time setup)
+├── start.sh / start.bat   # Launchers (auto-installs on first run)
 └── .claude/
     ├── settings.json      # Permissions and hooks
     └── skills/            # Skill definitions (behavior logic)
@@ -73,8 +93,12 @@ These files are yours to edit — they define behavior for your workspace:
         ├── boot/
         ├── heartbeat/
         ├── channel-task/
-        └── ccc-defaults/
+        ├── ccc-defaults/
+        └── setup/
+            └── templates/ # Personal config templates (generated on first boot)
 ```
+
+Personal config files (`SOUL.md`, `USER.md`, `CRONS.md`, etc.) live in `~/.cccbot/` and are not tracked by git.
 
 ---
 

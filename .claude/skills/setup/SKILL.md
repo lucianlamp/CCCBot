@@ -19,8 +19,7 @@ Called by the `boot` skill when required files are missing.
 
 | Template | Target | Notes |
 |----------|--------|-------|
-| `SOUL.example.md` | `SOUL.md` | Persona and tone |
-| `IDENTITY.example.md` | `IDENTITY.md` | Name and role |
+| `SOUL.example.md` | `SOUL.md` | Identity, persona and tone |
 | `USER.example.md` | `USER.md` | Operator info |
 | `CRONS.example.md` | `CRONS.md` | Scheduled jobs |
 | `BOOT.example.md` | `BOOT.md` | Boot checklist |
@@ -36,8 +35,26 @@ For each file in the table above:
 3. Log which files were created
 
 After generating files:
-- Notify the user (via Telegram if available, otherwise print): "First-run setup complete. Edit the following files to configure your workspace: [list of created files]"
-- If `.mcp.json` was created, add a note: "Add your Telegram bot token to .mcp.json"
+
+1. **Greet the user** (print to terminal, and via Telegram if available):
+
+   ```
+   👋 Welcome to CCC — Claude Code Channels!
+
+   I'm your autonomous assistant. Before we get started, let's set up your identity.
+
+   Please edit these files to configure me:
+     • SOUL.md      — My persona, tone, and values (who I am)
+     • IDENTITY.md  — My name, role, and context
+     • USER.md      — Info about you and your projects
+     • .mcp.json    — Add your Telegram bot token to connect the channel
+
+   Once you've edited them, run start.sh (or start.bat) again.
+   ```
+
+2. If `.mcp.json` was created, emphasize: "⚠️ Don't forget to add your Telegram bot token to .mcp.json — without it, I can't receive messages."
+
+3. **Pause and wait** — do not proceed with the rest of boot until the user confirms they've configured the files (or explicitly says to skip).
 
 ## Usage
 
