@@ -28,7 +28,7 @@ Or download `scripts/install.sh` / `scripts/install.bat` and run it directly.
 
 ```bash
 git clone https://github.com/lucianlamp/CCCBot
-cd ccc
+cd CCCBot
 bash start.sh   # Windows: start.bat
 ```
 
