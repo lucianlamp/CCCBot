@@ -9,6 +9,7 @@ These skills are essential for CCC to function. Do NOT delete them.
 | [channel-task](channel-task/) | Telegram message handling | All channel communication |
 | [ccc-defaults](ccc-defaults/) | Workspace behavior rules (curl, git, Telegram) | Always applied |
 | [import-openclaw-skill](import-openclaw-skill/) | Install ClawHub skills | Skill management |
+| [setup](setup/) | First-run config file generation | First boot on new clone |
 
 ## Optional / External
 

@@ -9,8 +9,9 @@ Run the boot sequence at session start.
 
 ## Steps
 
-1. If there are in-progress or incomplete tasks, report status via Telegram
-2. Start HEARTBEAT via `/loop 30m /heartbeat` (CronCreate with `*/30 * * * *` + prompt `/heartbeat` + recurring true)
+1. **First-run check:** If any of `SOUL.md`, `IDENTITY.md`, `USER.md`, `CRONS.md` are missing from the project root, invoke the `/setup` skill to generate them from templates before proceeding.
+2. If there are in-progress or incomplete tasks, report status via Telegram
+3. Start HEARTBEAT via `/loop 30m /heartbeat` (CronCreate with `*/30 * * * *` + prompt `/heartbeat` + recurring true)
 3. Read CRONS.md and register all Active Jobs via CronCreate
 4. **Git setup check:**
    - Run `git rev-parse --git-dir 2>/dev/null` — if it fails, git is not initialized
