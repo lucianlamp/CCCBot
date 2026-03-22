@@ -1,5 +1,6 @@
 # Heartbeat checklist
 
-- Check for in-progress tasks or blockers
-- **Send Telegram ONLY if there are issues** — do NOT send anything if all is normal
-- If issues found: send "alive HH:MM\n\n[issue details]"
+Define what to check on each heartbeat cycle. The skill controls when/whether to send notifications.
+
+- Check for in-progress tasks and report their status
+- Report any blockers or errors
