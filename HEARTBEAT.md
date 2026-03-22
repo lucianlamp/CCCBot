@@ -1,4 +1,5 @@
 # Heartbeat checklist
 
-- Send a liveness ping to Telegram (brief: "alive HH:MM")
-- If there are in-progress tasks, check their status and report
+- Check for in-progress tasks or blockers
+- **Send Telegram ONLY if there are issues** — do NOT send anything if all is normal
+- If issues found: send "alive HH:MM\n\n[issue details]"
