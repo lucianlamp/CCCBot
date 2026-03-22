@@ -38,7 +38,6 @@ git rev-parse --git-dir 2>/dev/null || git init
 # Runtime / session data (changes every session, not reproducible from config)
 memory/
 .claude/scheduled_tasks.lock
-.claude/codex-tasks/
 
 # Local machine overrides (never share between machines)
 .claude/settings.local.json
