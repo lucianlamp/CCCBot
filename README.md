@@ -1,4 +1,4 @@
-# CCC — Claude Code Channels
+# CCCBot — Claude Code Channels Bot
 
 An autonomous Claude Code workspace connected to messaging channels (Telegram, etc.).
 
@@ -12,15 +12,15 @@ Claude runs persistently, receives tasks via Telegram, executes them in the back
 
 ```bash
 # macOS / Linux
-bash <(curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/ccc/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/ccc/main/scripts/install.sh)
 ```
 
 ```powershell
 # Windows (PowerShell)
-$f="$env:TEMP\ccc-install.bat"; Invoke-WebRequest https://raw.githubusercontent.com/YOUR_USERNAME/ccc/main/install.bat -OutFile $f; & $f
+$f="$env:TEMP\ccc-install.bat"; Invoke-WebRequest https://raw.githubusercontent.com/YOUR_USERNAME/ccc/main/scripts/install.bat -OutFile $f; & $f
 ```
 
-Or download `install.sh` / `install.bat` and run it directly.
+Or download `scripts/install.sh` / `scripts/install.bat` and run it directly.
 
 ### Option B — Clone and run
 
@@ -83,8 +83,10 @@ These files are yours to edit — they define behavior for your workspace:
 ```
 .
 ├── CLAUDE.md              # Primary Claude config (edit with care)
-├── install.sh / install.bat  # Installers (first-time setup)
 ├── start.sh / start.bat   # Launchers (auto-installs on first run)
+├── scripts/
+│   ├── install.sh         # Installer (macOS/Linux)
+│   └── install.bat        # Installer (Windows)
 └── .claude/
     ├── settings.json      # Permissions and hooks
     └── skills/            # Skill definitions (behavior logic)

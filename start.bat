@@ -7,7 +7,7 @@ set "CCCBOT_DIR=%USERPROFILE%\.cccbot"
 :: First run: install if .cccbot doesn't exist
 if not exist "%CCCBOT_DIR%" (
     echo .cccbot not found. Running installer...
-    call "%~dp0install.bat"
+    call "%~dp0scripts\install.bat"
     if %ERRORLEVEL% neq 0 (
         echo Install failed. Exiting.
         exit /b 1

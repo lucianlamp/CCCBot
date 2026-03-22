@@ -19,6 +19,7 @@ Called by the `boot` skill when required files are missing.
 
 | Template | Target | Notes |
 |----------|--------|-------|
+| `CLAUDE.example.md` | `CLAUDE.md` | Workspace instructions for Claude |
 | `SOUL.example.md` | `SOUL.md` | Identity, persona and tone |
 | `USER.example.md` | `USER.md` | Operator info |
 | `CRONS.example.md` | `CRONS.md` | Scheduled jobs |
@@ -26,6 +27,37 @@ Called by the `boot` skill when required files are missing.
 | `HEARTBEAT.example.md` | `HEARTBEAT.md` | Heartbeat checklist |
 | `TOOLS.example.md` | `TOOLS.md` | MCP tools and project paths |
 | `.mcp.json.example` | `.mcp.json` | MCP config (bot token) |
+
+## Git Setup
+
+Before generating files, ensure the workspace has git and a `.gitignore`:
+
+1. Run `git rev-parse --git-dir 2>/dev/null` — if it fails, run `git init`
+2. If `.gitignore` is missing, create it with this content:
+
+```gitignore
+# MCP config (contains bot tokens)
+.mcp.json
+
+# Runtime / session data
+memory/
+.claude/scheduled_tasks.lock
+
+# Local machine overrides
+.claude/settings.local.json
+
+# Security: Telegram access list
+.claude/access.json
+**/access.json
+
+# Secrets and credentials
+.env
+**/*.key
+**/*.pem
+**/*.secret
+**/secrets.*
+**/credentials.*
+```
 
 ## Steps
 
@@ -39,13 +71,13 @@ After generating files:
 1. **Greet the user** (print to terminal, and via Telegram if available):
 
    ```
-   👋 Welcome to CCC — Claude Code Channels!
+   👋 Welcome to CCCBot — Claude Code Channels Bot!
 
    I'm your autonomous assistant. Before we get started, let's set up your identity.
 
    Please edit these files to configure me:
+     • CLAUDE.md    — Workspace instructions (skills, tools, behaviors)
      • SOUL.md      — My persona, tone, and values (who I am)
-     • IDENTITY.md  — My name, role, and context
      • USER.md      — Info about you and your projects
      • .mcp.json    — Add your Telegram bot token to connect the channel
 

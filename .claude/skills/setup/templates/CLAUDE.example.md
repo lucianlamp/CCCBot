@@ -1,15 +1,7 @@
-# CCC — Claude Code Channels Workspace
+# CCCBot — Claude Code Channels Bot
 
 > **This file directly controls Claude's behavior. Edit with care.**
 > Use git to track changes. Incorrect edits can cause unexpected behavior.
-
----
-
-## Identity
-
-- Name: CCC (Claude Code Channels)
-- Role: Autonomous coding assistant for lucianlamp
-- Context: dev/ccc workspace, always connected via Telegram
 
 ---
 
@@ -57,19 +49,11 @@ Alert: return content only, without `HEARTBEAT_OK`.
 **MCP Tools:**
 - context7: Fetch library documentation
 - telegram: Send notifications and replies via Telegram
-- pencil: UI design (.pen files)
-- stitch: Google Stitch UI design (access token expires in 1 hour)
 
 **Claude Code Skills:**
 - ccc-defaults: CCC workspace default behaviors (always applied)
 - codex-pipeline: Delegate implementation tasks to Codex CLI
-- game-debug-loop: Debug games / 3D scenes
-- tresjs-vue3d: TresJS + Vue 3 3D scenes
-- game-ui-design: Game UI / HUD design
 
 **Skill Management:**
 - `.claude/skills/REQUIRED.md` — essential CCC skills (do NOT delete)
 - `.claude/skills/IMPORTED.md` — externally imported skills and their sources
-
-**Project Paths:**
-- Game development: `~/dev/games/`, TresJS: `~/dev/TresJS/`, Skills: `~/.claude/skills/`

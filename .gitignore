@@ -2,6 +2,7 @@
 .mcp.json
 
 # Personal configuration (use *.example.md as templates)
+CLAUDE.md
 CRONS.md
 USER.md
 SOUL.md

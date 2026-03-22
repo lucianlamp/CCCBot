@@ -8,7 +8,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # First run: install if ~/.cccbot doesn't exist
 if [ ! -d "$CCCBOT_DIR" ]; then
     echo "~/.cccbot not found. Running installer..."
-    bash "$SCRIPT_DIR/install.sh"
+    bash "$SCRIPT_DIR/scripts/install.sh"
     if [ $? -ne 0 ]; then
         echo "Install failed. Exiting."
         exit 1

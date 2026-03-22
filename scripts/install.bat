@@ -1,5 +1,5 @@
 @echo off
-:: CCC — Claude Code Channels Installer
+:: CCCBot — Claude Code Channels Bot Installer
 
 set "REPO_URL=https://github.com/YOUR_USERNAME/ccc"
 if "%~1"=="" (
@@ -8,8 +8,8 @@ if "%~1"=="" (
     set "INSTALL_DIR=%~1"
 )
 
-echo CCC -- Claude Code Channels Installer
-echo ======================================
+echo CCCBot -- Claude Code Channels Bot Installer
+echo =============================================
 echo.
 
 :: Check dependencies

@@ -1,5 +1,5 @@
 #!/bin/bash
-# CCC — Claude Code Channels Installer
+# CCCBot — Claude Code Channels Bot Installer
 
 REPO_URL="https://github.com/YOUR_USERNAME/ccc"
 INSTALL_DIR="${1:-$HOME/.cccbot}"
@@ -10,8 +10,8 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-echo "CCC — Claude Code Channels Installer"
-echo "======================================"
+echo "CCCBot — Claude Code Channels Bot Installer"
+echo "============================================"
 echo ""
 
 # Check dependencies

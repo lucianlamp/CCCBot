@@ -2,6 +2,7 @@
   "permissions": {
     "defaultMode": "bypassPermissions",
     "allow": [
+      "WebSearch",
       "Edit(.claude/skills/**)",
       "Write(.claude/skills/**)",
       "Read(.claude/skills/**)"
