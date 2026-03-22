@@ -8,4 +8,9 @@ echo "Starting Claude Code Channels session..."
 echo "Workspace: $(pwd)"
 echo ""
 
-claude --channels plugin:telegram@claude-plugins-official --remote-control
+echo "Trying --continue..."
+claude --continue --channels plugin:telegram@claude-plugins-official --remote-control
+if [ $? -ne 0 ]; then
+    echo "No previous session found, starting fresh..."
+    claude --channels plugin:telegram@claude-plugins-official --remote-control
+fi
