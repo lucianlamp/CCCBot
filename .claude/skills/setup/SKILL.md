@@ -23,6 +23,9 @@ Called by the `boot` skill when required files are missing.
 | `IDENTITY.example.md` | `IDENTITY.md` | Name and role |
 | `USER.example.md` | `USER.md` | Operator info |
 | `CRONS.example.md` | `CRONS.md` | Scheduled jobs |
+| `BOOT.example.md` | `BOOT.md` | Boot checklist |
+| `HEARTBEAT.example.md` | `HEARTBEAT.md` | Heartbeat checklist |
+| `TOOLS.example.md` | `TOOLS.md` | MCP tools and project paths |
 | `.mcp.json.example` | `.mcp.json` | MCP config (bot token) |
 
 ## Steps
