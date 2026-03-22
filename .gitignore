@@ -4,6 +4,9 @@
 # Personal configuration (use *.example.md as templates)
 CRONS.md
 USER.md
+IDENTITY.md
+SOUL.md
+MEMORY.md
 
 # Runtime / session data
 memory/
