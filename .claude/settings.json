@@ -1,6 +1,11 @@
 {
   "permissions": {
     "defaultMode": "bypassPermissions",
+    "allow": [
+      "Edit(.claude/skills/**)",
+      "Write(.claude/skills/**)",
+      "Read(.claude/skills/**)"
+    ],
     "deny": [
       "Bash(rm -rf /*)",
       "Bash(rm -rf ~*)",
