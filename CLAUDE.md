@@ -1,5 +1,8 @@
 # CCC — Claude Code Channels Workspace
 
+> **This file directly controls Claude's behavior. Edit with care.**
+> Use git to track changes. Incorrect edits can cause unexpected behavior.
+
 ---
 
 ## Identity
