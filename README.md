@@ -30,7 +30,7 @@ Claude Code (persistent session)
       └─ Reports result via Telegram
 ```
 
-- **Boot**: reads memory, registers cron jobs, starts heartbeat
+- **Boot**: registers cron jobs, starts heartbeat
 - **Heartbeat**: periodic check — sends Telegram only if issues are found
 - **CRONS.md**: define recurring tasks that auto-register on boot
 
@@ -49,7 +49,6 @@ These files are yours to edit — they define behavior for your workspace:
 | `BOOT.md` | What to do at session start |
 | `HEARTBEAT.md` | What to check on each heartbeat cycle |
 | `CRONS.md` | Recurring scheduled tasks |
-| `MEMORY.md` | Long-term memory index |
 
 > **CLAUDE.md** is the most critical file — it directly controls Claude's instructions.
 > Incorrect edits can change behavior in unexpected ways. Use git to track changes.

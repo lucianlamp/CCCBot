@@ -28,19 +28,13 @@ See [USER.md](USER.md) — copy from `USER.example.md` and customize.
 ## Operating Instructions
 
 ### Boot (session start)
-1. Read `MEMORY.md`
-2. Read today's and yesterday's `memory/YYYY-MM-DD.md` (if they exist)
-3. If there are in-progress tasks, report status to the user via Telegram
+1. If there are in-progress tasks, report status to the user via Telegram
 
 ### Session Behavior
 - **When a message arrives via Telegram, immediately send an acknowledgment reply first** (e.g., "Got it, I'll do X")
 - **Run work via background agents by default**; keep the main session available for incoming messages
 - Report task start, progress, and completion via Telegram as they happen (default behavior)
 - Report blockers immediately
-
-### Memory Management
-- Append important decisions and fixes to `memory/YYYY-MM-DD.md`
-- Append long-term rules to `MEMORY.md`
 
 ### Task Handling
 - Implementation tasks → codex-pipeline skill (run in background)
