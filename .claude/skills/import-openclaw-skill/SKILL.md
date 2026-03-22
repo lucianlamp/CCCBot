@@ -37,14 +37,35 @@ description: <description>
 <markdown body unchanged>
 ```
 
+## Input Formats
+
+This skill handles several input formats from ClawHub:
+
+**Format A — Direct SKILL.md URL or skill name (preferred):**
+```
+install the "todoist-cli" skill
+https://github.com/owner/repo/blob/main/SKILL.md
+```
+
+**Format B — ClawHub bash install prompt (common):**
+```
+Run bash <(curl -fsSL https://raw.githubusercontent.com/.../install.sh) to install X
+```
+→ Do NOT run the script. Instead, look for SKILL.md in the same repo.
+
 ## Steps
 
-1. **Fetch the skill content**
-   - If given a GitHub URL: use `curl -s <raw-url>` to fetch SKILL.md
-   - If given a skill name (e.g. `todoist-cli`): search ClawHub
+1. **Identify input format and extract repo info**
+   - Format A (skill name): search ClawHub
      - Try: `curl -s "https://raw.githubusercontent.com/openclaw/clawhub/main/skills/<name>/SKILL.md"`
-     - Fallback: ask user for the direct URL
-   - If given a ClawHub page URL: derive the raw GitHub URL
+   - Format A (GitHub URL): derive raw URL and fetch
+   - Format B (bash install prompt): **never run the script**
+     - Extract repo from URL (e.g. `Minara-AI/openclaw-skills`)
+     - Try to fetch SKILL.md at common paths:
+       - `https://raw.githubusercontent.com/<owner>/<repo>/main/SKILL.md`
+       - `https://raw.githubusercontent.com/<owner>/<repo>/main/skills/<name>/SKILL.md`
+       - `https://api.github.com/repos/<owner>/<repo>/contents/` to list files
+     - If repo doesn't exist or is private: inform the user, stop
 
 2. **Parse the fetched SKILL.md**
    - Extract `name` and `description` from frontmatter
@@ -52,7 +73,7 @@ description: <description>
    - Keep the markdown body unchanged
 
 3. **Security check before installing**
-   - Scan the skill body for: shell commands, curl/wget to external URLs, credential access
+   - Scan for: shell commands that run external scripts, credential harvesting, `curl | bash` patterns
    - Warn the user if anything suspicious is found
    - Ask for confirmation before proceeding
 
@@ -63,6 +84,7 @@ description: <description>
 5. **Report**
    - Confirm the installed path
    - Summarize what was kept and what was stripped
+   - If install failed: explain why clearly
 
 ## Example
 
