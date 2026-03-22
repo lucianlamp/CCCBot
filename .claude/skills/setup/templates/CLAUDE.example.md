@@ -20,12 +20,12 @@ See [USER.md](USER.md) — copy from `USER.example.md` and customize.
 ## Operating Instructions
 
 ### Boot (session start)
-1. If there are in-progress tasks, report status to the user via Telegram
+1. If there are in-progress tasks, report status to the user via the active channel (Telegram/Discord)
 
 ### Session Behavior
-- **When a message arrives via Telegram, immediately send an acknowledgment reply first** (e.g., "Got it, I'll do X")
+- **When a message arrives via Telegram or Discord, immediately send an acknowledgment reply first** (e.g., "Got it, I'll do X")
 - **Run work via background agents by default**; keep the main session available for incoming messages
-- Report task start, progress, and completion via Telegram as they happen (default behavior)
+- Report task start, progress, and completion via the channel as they happen (default behavior)
 - Report blockers immediately
 
 ### Task Handling
@@ -48,7 +48,8 @@ Alert: return content only, without `HEARTBEAT_OK`.
 
 **MCP Tools:**
 - context7: Fetch library documentation
-- telegram: Send notifications and replies via Telegram
+- telegram: Send notifications and replies via Telegram (if enabled)
+- discord: Send notifications and replies via Discord (if enabled)
 
 **Claude Code Skills:**
 - ccc-defaults: CCC workspace default behaviors (always applied)

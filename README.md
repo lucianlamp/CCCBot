@@ -1,8 +1,10 @@
 # CCCBot — Claude Code Channels Bot
 
-An autonomous Claude Code workspace connected to messaging channels (Telegram, etc.).
+An autonomous Claude Code workspace connected to messaging channels (Telegram, Discord, etc.).
 
-Claude runs persistently, receives tasks via Telegram, executes them in the background, and reports results — without requiring a terminal open.
+Claude runs persistently, receives tasks via Telegram or Discord, executes them in the background, and reports results — without requiring a terminal open.
+
+Built on [Claude Code Channels](https://code.claude.com/docs/en/channels) — currently in research preview.
 
 ---
 
@@ -34,29 +36,33 @@ bash start.sh   # Windows: start.bat
 
 ### After install
 
-1. Edit `~/.cccbot/.mcp.json` — add your Telegram bot token
+1. Set up your channel — Telegram or Discord (or both):
+   - **Telegram**: edit `~/.cccbot/.mcp.json` — add your bot token, or run `/telegram:configure <token>` in Claude Code
+   - **Discord**: run `/discord:configure <token>` in Claude Code
 2. Edit `~/.cccbot/USER.md` — describe yourself and your projects
-3. Run `~/.cccbot/start.sh` (or `%USERPROFILE%\.cccbot\start.bat` on Windows) — Claude starts and connects to Telegram
-4. Send a message from Telegram — Claude will respond
+3. Run `~/.cccbot/start.sh` (or `%USERPROFILE%\.cccbot\start.bat` on Windows)
+4. Send a message from Telegram or Discord — Claude will respond
 
 ---
 
 ## How It Works
 
 ```
-[Telegram message]
+[Telegram / Discord message]
       │
       ▼
 Claude Code (persistent session)
       │
       ├─ Acknowledges immediately
       ├─ Runs task in background agent
-      └─ Reports result via Telegram
+      └─ Reports result via Telegram / Discord
 ```
 
 - **Boot**: registers cron jobs, starts heartbeat
-- **Heartbeat**: periodic check — sends Telegram only if issues are found
+- **Heartbeat**: periodic check — sends notification only if issues are found
 - **CRONS.md**: define recurring tasks that auto-register on boot
+
+> Both Telegram and Discord can be active simultaneously. Pass both to `--channels` when starting.
 
 ---
 
