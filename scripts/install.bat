@@ -41,39 +41,17 @@ if exist "%INSTALL_DIR%" (
 
 cd /d "%INSTALL_DIR%"
 
-:: Copy template files (skip if already exists)
+:: Run shared setup (template copy, gitignore, etc.)
 echo.
-echo Setting up personal config files...
-set "T=.claude\skills\setup\templates"
-
-call :copy_if_missing "%T%\.mcp.json.example"    ".mcp.json"
-call :copy_if_missing "%T%\SOUL.example.md"      "SOUL.md"
-call :copy_if_missing "%T%\IDENTITY.example.md"  "IDENTITY.md"
-call :copy_if_missing "%T%\USER.example.md"      "USER.md"
-call :copy_if_missing "%T%\CRONS.example.md"     "CRONS.md"
-call :copy_if_missing "%T%\BOOT.example.md"      "BOOT.md"
-call :copy_if_missing "%T%\HEARTBEAT.example.md" "HEARTBEAT.md"
-call :copy_if_missing "%T%\TOOLS.example.md"     "TOOLS.md"
+call "%INSTALL_DIR%\scripts\setup.bat"
 
 :: Done
 echo.
 echo CCC installed to: %INSTALL_DIR%
 echo.
-echo Next steps:
-echo   1. Edit .mcp.json       -- add your Telegram bot token
-echo   2. Edit USER.md         -- describe yourself and your projects
-echo   3. Edit SOUL.md         -- customize the assistant persona (optional)
-echo   4. Edit CRONS.md        -- set up scheduled jobs (optional)
-echo   5. Run: start.bat       -- start the assistant
+echo Next step:
+echo   Run: start.bat
+echo.
+echo   The assistant will guide you through setup on first launch.
 echo.
 echo Docs: %REPO_URL%
-goto :eof
-
-:copy_if_missing
-if not exist "%~2" (
-    copy "%~1" "%~2" >nul
-    echo   Created: %~2
-) else (
-    echo   Skipped (exists): %~2
-)
-goto :eof

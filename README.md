@@ -1,8 +1,10 @@
 # CCCBot — Claude Code Channels Bot
 
+> **[日本語版はこちら](README.ja.md)**
+
 An autonomous Claude Code workspace connected to messaging channels (Telegram, Discord, etc.).
 
-Claude runs persistently, receives tasks via Telegram or Discord, executes them in the background, and reports results — without requiring a terminal open.
+Claude runs persistently, receives tasks via Telegram or Discord, executes them in the background, and reports results. The terminal running Claude Code must stay open to maintain the session.
 
 Built on [Claude Code Channels](https://code.claude.com/docs/en/channels) — currently in research preview.
 
@@ -36,12 +38,9 @@ bash start.sh   # Windows: start.bat
 
 ### After install
 
-1. Set up your channel — Telegram or Discord (or both):
-   - **Telegram**: edit `~/.cccbot/.mcp.json` — add your bot token, or run `/telegram:configure <token>` in Claude Code
-   - **Discord**: run `/discord:configure <token>` in Claude Code
-2. Edit `~/.cccbot/USER.md` — describe yourself and your projects
-3. Run `~/.cccbot/start.sh` (or `%USERPROFILE%\.cccbot\start.bat` on Windows)
-4. Send a message from Telegram or Discord — Claude will respond
+1. Run `~/.cccbot/start.sh` (or `%USERPROFILE%\.cccbot\start.bat` on Windows)
+2. The assistant will guide you through setup on first launch (`/ccc-setup`)
+3. Send a message from Telegram or Discord — Claude will respond
 
 ---
 
@@ -92,18 +91,21 @@ These files are yours to edit — they define behavior for your workspace:
 ├── start.sh / start.bat   # Launchers (auto-installs on first run)
 ├── scripts/
 │   ├── install.sh         # Installer (macOS/Linux)
-│   └── install.bat        # Installer (Windows)
+│   ├── install.bat        # Installer (Windows)
+│   ├── setup.sh           # Shared setup logic (template copy, gitignore)
+│   ├── setup.bat          # Windows version
+│   └── templates/         # Personal config templates (copied on first run)
 └── .claude/
     ├── settings.json      # Permissions and hooks
     └── skills/            # Skill definitions (behavior logic)
         ├── REQUIRED.md    # Essential skills — do not delete
         ├── IMPORTED.md    # Externally imported skills
-        ├── boot/
-        ├── heartbeat/
-        ├── channel-task/
+        ├── ccc-boot/
+        ├── ccc-setup/
+        ├── ccc-heartbeat/
+        ├── ccc-channel-task/
         ├── ccc-defaults/
-        └── setup/
-            └── templates/ # Personal config templates (generated on first boot)
+        └── ccc-import-openclaw-skill/
 ```
 
 Personal config files (`SOUL.md`, `USER.md`, `CRONS.md`, etc.) live in `~/.cccbot/` and are not tracked by git.
@@ -116,10 +118,12 @@ Skills in `.claude/skills/` define the authoritative behavior logic. The `.md` f
 
 | Skill | Purpose |
 |-------|---------|
-| `boot` | Session start sequence |
-| `heartbeat` | Periodic liveness check |
-| `channel-task` | Standard flow for channel messages |
+| `ccc-boot` | Session start sequence |
+| `ccc-heartbeat` | Periodic liveness check |
+| `ccc-channel-task` | Standard flow for channel messages |
 | `ccc-defaults` | Workspace-wide defaults (HTTP, git, Telegram) |
+| `ccc-import-openclaw-skill` | Install ClawHub skills |
+| `ccc-setup` | First-run config file generation |
 
 ### Skill Registry Files
 

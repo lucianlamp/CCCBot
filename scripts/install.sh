@@ -41,42 +41,17 @@ fi
 
 cd "$INSTALL_DIR"
 
-# Copy template files (skip if already exists)
+# Run shared setup (template copy, gitignore, etc.)
 echo ""
-echo "Setting up personal config files..."
-TEMPLATES_DIR=".claude/skills/setup/templates"
-CREATED=()
-
-copy_if_missing() {
-    local src="$1"
-    local dst="$2"
-    if [ ! -f "$dst" ]; then
-        cp "$src" "$dst"
-        CREATED+=("$dst")
-        echo -e "  ${GREEN}Created:${NC} $dst"
-    else
-        echo "  Skipped (exists): $dst"
-    fi
-}
-
-copy_if_missing "$TEMPLATES_DIR/.mcp.json.example"     ".mcp.json"
-copy_if_missing "$TEMPLATES_DIR/SOUL.example.md"       "SOUL.md"
-copy_if_missing "$TEMPLATES_DIR/IDENTITY.example.md"   "IDENTITY.md"
-copy_if_missing "$TEMPLATES_DIR/USER.example.md"       "USER.md"
-copy_if_missing "$TEMPLATES_DIR/CRONS.example.md"      "CRONS.md"
-copy_if_missing "$TEMPLATES_DIR/BOOT.example.md"       "BOOT.md"
-copy_if_missing "$TEMPLATES_DIR/HEARTBEAT.example.md"  "HEARTBEAT.md"
-copy_if_missing "$TEMPLATES_DIR/TOOLS.example.md"      "TOOLS.md"
+bash "$INSTALL_DIR/scripts/setup.sh"
 
 # Done
 echo ""
 echo -e "${GREEN}CCC installed to: $INSTALL_DIR${NC}"
 echo ""
-echo "Next steps:"
-echo "  1. Edit .mcp.json       — add your Telegram bot token"
-echo "  2. Edit USER.md         — describe yourself and your projects"
-echo "  3. Edit SOUL.md         — customize the assistant persona (optional)"
-echo "  4. Edit CRONS.md        — set up scheduled jobs (optional)"
-echo "  5. Run: bash ~/.cccbot/start.sh   — start the assistant"
+echo "Next step:"
+echo "  Run: bash ~/.cccbot/start.sh"
+echo ""
+echo "  The assistant will guide you through setup on first launch."
 echo ""
 echo "Docs: $REPO_URL"

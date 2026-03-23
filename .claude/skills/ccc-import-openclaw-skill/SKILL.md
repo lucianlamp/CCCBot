@@ -1,5 +1,5 @@
 ---
-name: import-openclaw-skill
+name: ccc-import-openclaw-skill
 description: Fetch an OpenClaw/ClawHub skill and convert it to a Claude Code project skill in .claude/skills/
 ---
 

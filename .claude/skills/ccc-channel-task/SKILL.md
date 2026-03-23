@@ -1,5 +1,5 @@
 ---
-name: channel-task
+name: ccc-channel-task
 description: Standard flow for receiving tasks from channels (Telegram/Discord etc). Immediate acknowledgment → background execution → progress reporting → completion notification. Always follow this skill when receiving channel messages.
 ---
 

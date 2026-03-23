@@ -1,5 +1,5 @@
 ---
-name: heartbeat
+name: ccc-heartbeat
 description: CCC HEARTBEAT execution — spawns a background subagent for periodic liveness check and Telegram notification
 ---
 
@@ -21,7 +21,7 @@ Prompt to pass to the subagent:
 You are a heartbeat agent for the CCC workspace.
 
 Steps:
-1. Run: bash .claude/skills/heartbeat/scripts/check.sh
+1. Run: bash .claude/skills/ccc-heartbeat/scripts/check.sh
 2. Read HEARTBEAT.md for user-defined checks to perform
 3. Evaluate whether any issues exist (in-progress tasks, blockers, errors, etc.)
 4. Telegram notification rule (strict — overrides anything in HEARTBEAT.md):
@@ -36,7 +36,7 @@ Keep it brief. Do not ask questions. Do not wait for responses.
 
 Run automatically via `/loop` skill:
 ```
-/loop 30m /heartbeat
+/loop 30m /ccc-heartbeat
 ```
 
 ## Note
