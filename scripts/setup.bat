@@ -3,7 +3,7 @@
 :: Copies template files to project root if they don't exist.
 :: Called by install.bat and boot skill.
 
-setlocal enabledelayedexpansion
+setlocal
 
 :: Resolve paths relative to this script
 set "SCRIPT_DIR=%~dp0"
@@ -27,8 +27,6 @@ if not exist ".gitignore" (
 )
 
 :: --- Template files ---
-set "COUNT=0"
-
 call :copy_if_missing "%TEMPLATES_DIR%\CLAUDE.example.md"    "CLAUDE.md"
 call :copy_if_missing "%TEMPLATES_DIR%\SOUL.example.md"      "SOUL.md"
 call :copy_if_missing "%TEMPLATES_DIR%\USER.example.md"      "USER.md"
@@ -37,11 +35,7 @@ call :copy_if_missing "%TEMPLATES_DIR%\BOOT.example.md"      "BOOT.md"
 call :copy_if_missing "%TEMPLATES_DIR%\HEARTBEAT.example.md" "HEARTBEAT.md"
 
 :: --- Summary ---
-if %COUNT% equ 0 (
-    echo All config files already exist. Nothing to do.
-) else (
-    echo Setup complete. Created %COUNT% file(s).
-)
+echo Setup complete.
 
 endlocal
 goto :eof
@@ -49,9 +43,8 @@ goto :eof
 :copy_if_missing
 if not exist "%~2" (
     copy "%~1" "%~2" >nul
-    set /a COUNT+=1
     echo   Created: %~2
 ) else (
-    echo   Skipped (exists^): %~2
+    echo   Skipped [exists]: %~2
 )
 goto :eof
