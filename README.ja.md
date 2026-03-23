@@ -116,7 +116,8 @@ Claude Code（常駐セッション）
 ```
 
 - **Boot**: スケジュールジョブを登録し、ハートビートを開始
-- **Heartbeat**: 定期チェック — 問題がある場合のみ通知を送信
+- **Heartbeat**: 定期チェック — 問題がある場合のみ通知を送信。MCPチャンネルが切断された場合、自動的にセッションを再起動して復旧
+- **セッション復元**: ランチャースクリプトは `--continue` で前回セッションの復元を試み、なければ新規セッションを開始
 - **JOBS.yaml**: 起動時に自動登録される定期タスクを定義（`/ccc-jobs` で管理）
 
 > Telegram と Discord は同時に有効にできます。起動時に `--channels` で両方を指定してください。
@@ -207,6 +208,9 @@ CCCBot はデフォルトで `.claude/settings.json` に自律性と安全性の
 +-- scripts/
 |   +-- install.sh           # インストーラー（macOS/Linux）
 |   +-- install.bat          # インストーラー（Windows）
+|   +-- restart-session.sh   # MCP 自動リカバリ（macOS/Linux）
+|   +-- restart-session.bat  # MCP 自動リカバリ（Windows）
+|   +-- get-parent-pid.ps1   # PID 取得ヘルパー（Windows）
 |   +-- session-start-hook.sh
 |   +-- templates/           # 設定テンプレート（初回実行時にコピー）
 |       +-- settings.json.default

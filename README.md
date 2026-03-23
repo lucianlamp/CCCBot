@@ -116,7 +116,8 @@ Claude Code (persistent session)
 ```
 
 - **Boot**: registers scheduled jobs, starts heartbeat
-- **Heartbeat**: periodic check — sends notification only if issues are found
+- **Heartbeat**: periodic check — sends notification only if issues are found; if an MCP channel disconnects, automatically triggers a session restart to recover
+- **Session Resume**: launcher scripts try `--continue` first to resume the previous session, falling back to a fresh start if none exists
 - **JOBS.yaml**: define recurring tasks that auto-register on boot (managed via `/ccc-jobs`)
 
 > Both Telegram and Discord can be active simultaneously. Pass both to `--channels` when starting.
@@ -209,6 +210,9 @@ Or ask Claude in chat — e.g. *"allow npm test commands"* — and it will updat
 ├── scripts/
 │   ├── install.sh           # Installer (macOS/Linux)
 │   ├── install.bat          # Installer (Windows)
+│   ├── restart-session.sh   # MCP auto-recovery (macOS/Linux)
+│   ├── restart-session.bat  # MCP auto-recovery (Windows)
+│   ├── get-parent-pid.ps1   # PID helper for Windows
 │   ├── session-start-hook.sh
 │   └── templates/           # Config templates (copied on first run)
 │       ├── settings.json.default
