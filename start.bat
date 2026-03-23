@@ -25,7 +25,7 @@ cd /d "%CCCBOT_DIR%"
 echo Starting Claude Code Channels session...
 echo Workspace: %CD%
 echo Channels:  %CHANNELS%
-echo.
+echo(
 
 echo Trying --continue...
 claude --continue --channels %CHANNELS% --remote-control

@@ -10,7 +10,7 @@ if "%~1"=="" (
 
 echo CCCBot -- Claude Code Channels Bot Installer
 echo =============================================
-echo.
+echo(
 
 :: Check dependencies
 where git >nul 2>&1
@@ -42,15 +42,15 @@ if exist "%INSTALL_DIR%" (
 cd /d "%INSTALL_DIR%"
 
 :: Run shared setup (template copy, gitignore, etc.)
-echo.
+echo(
 call "%INSTALL_DIR%\scripts\setup.bat"
 
 :: Done
-echo.
+echo(
 echo CCC installed to: %INSTALL_DIR%
-echo.
+echo(
 echo Docs: %REPO_URL%
-echo.
+echo(
 
 :: Launch
 call "%INSTALL_DIR%\start.bat"
