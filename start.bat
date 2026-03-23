@@ -20,4 +20,4 @@ echo Starting Claude Code Channels session...
 echo Workspace: %CD%
 echo Channels:  %CHANNELS%
 
-claude --channels %CHANNELS% --remote-control --append-system-prompt "Session started. Your FIRST action must be to invoke the Skill tool with skill=\"ccc-boot\" to run the boot sequence. Do this before responding to any message."
+claude --channels %CHANNELS% --remote-control "/ccc-boot"
