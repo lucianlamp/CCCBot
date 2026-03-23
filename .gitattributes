@@ -1,2 +1,7 @@
 # Force CRLF for Windows batch files (cmd.exe requires CRLF)
 *.bat text eol=crlf
+
+# Exclude from release archives (git archive / GitHub source downloads)
+docs/superpowers/ export-ignore
+scripts/install.sh export-ignore
+scripts/install.bat export-ignore
