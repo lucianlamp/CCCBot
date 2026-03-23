@@ -48,7 +48,13 @@ Alert: return content only, without `HEARTBEAT_OK`.
 - discord: Send notifications and replies via Discord (if enabled)
 
 **Claude Code Skills:**
+- ccc-boot: Boot sequence (session start)
+- ccc-soul: SOUL.md persona/identity configuration
+- ccc-heartbeat: Periodic liveness check
 - ccc-defaults: CCC workspace default behaviors (always applied)
+- ccc-channel-task: Telegram/Discord message handling flow
+- ccc-jobs: Scheduled job management (JOBS.yaml)
+- ccc-import-openclaw-skill: Install ClawHub skills
 - codex-pipeline: Delegate implementation tasks to Codex CLI
 
 **Skill Management:**

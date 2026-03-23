@@ -23,7 +23,7 @@ curl -s "https://api.example.com/endpoint"
 
 **Every workspace must have git initialized and a .gitignore.**
 
-Git init and `.gitignore` creation are handled by the `setup` skill on first run.
+Git init and `.gitignore` creation are handled by the installer (`install.sh`/`install.bat`) on first run.
 
 **What TO commit:**
 - `.claude/settings.json` — base permissions and hooks (no secrets)
