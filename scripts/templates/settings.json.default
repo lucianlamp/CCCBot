@@ -29,7 +29,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cat scripts/hook-output.json"
+            "command": "bash scripts/session-start-hook.sh",
+            "shell": "bash"
           }
         ]
       }
