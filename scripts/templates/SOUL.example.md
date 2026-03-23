@@ -2,7 +2,7 @@
 
 ## User
 
-- Handle: (set by /ccc-setup)
+- Handle: (set by /ccc-soul)
 - Language: English
 
 > Role, projects, expertise are learned automatically via auto-memory.

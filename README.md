@@ -40,6 +40,35 @@ $f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercont
 
 Claude Code starts automatically after installation. On first launch, a greeting message will arrive via Telegram or Discord, and the interactive setup will guide you through configuration.
 
+### Subsequent launches
+
+Use the launcher script to start the session:
+
+```bash
+# macOS / Linux
+~/.cccbot/start.sh
+```
+
+```bat
+:: Windows
+%USERPROFILE%\.cccbot\start.bat
+```
+
+Or launch directly with the underlying command:
+
+```bash
+cd ~/.cccbot
+
+# Telegram only (default)
+claude --channels plugin:telegram@claude-plugins-official --remote-control
+
+# Discord only
+claude --channels plugin:discord@claude-plugins-official --remote-control
+
+# Both at once
+claude --channels plugin:telegram@claude-plugins-official plugin:discord@claude-plugins-official --remote-control
+```
+
 ---
 
 ## Updating
@@ -96,7 +125,12 @@ These files are yours to edit — they define behavior for your workspace:
 
 CCCBot ships with a default permission set in `.claude/settings.json` that balances autonomy and safety.
 
-**Default mode:** `bypassPermissions` — Claude runs most tools without asking for confirmation.
+**Permission mode is selected during installation:**
+
+| Mode                 | `defaultMode`       | Behavior                                                            |
+|----------------------|---------------------|---------------------------------------------------------------------|
+| **bypass** (default) | `bypassPermissions` | All tools run without confirmation                                  |
+| **auto**             | `allowEdits`        | File edits auto-approved, Bash/dangerous tools require confirmation |
 
 **Allowed by default:**
 
@@ -141,8 +175,6 @@ Or ask Claude in chat — e.g. *"allow npm test commands"* — and it will updat
 ├── scripts/
 │   ├── install.sh         # Installer (macOS/Linux)
 │   ├── install.bat        # Installer (Windows)
-│   ├── setup.sh           # Shared setup logic (template copy, gitignore)
-│   ├── setup.bat          # Windows version
 │   └── templates/         # Config templates (copied on first run)
 │       └── settings.json.default  # Permission & hook defaults
 └── .claude/
@@ -151,7 +183,7 @@ Or ask Claude in chat — e.g. *"allow npm test commands"* — and it will updat
         ├── REQUIRED.md    # Essential skills — do not delete
         ├── IMPORTED.md    # Externally imported skills
         ├── ccc-boot/
-        ├── ccc-setup/
+        ├── ccc-soul/
         ├── ccc-jobs/
         ├── ccc-heartbeat/
         ├── ccc-channel-task/
@@ -173,7 +205,7 @@ Skills in `.claude/skills/` define the authoritative behavior logic. The `.md` f
 | `ccc-defaults` | Workspace-wide defaults (HTTP, git, Telegram) |
 | `ccc-import-openclaw-skill` | Install ClawHub skills |
 | `ccc-jobs` | Scheduled job management (`JOBS.yaml`) |
-| `ccc-setup` | First-run config file generation |
+| `ccc-soul` | SOUL.md persona/identity configuration |
 
 ### Skill Registry Files
 

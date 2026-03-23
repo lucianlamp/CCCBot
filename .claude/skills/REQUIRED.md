@@ -10,7 +10,7 @@ These skills are essential for CCC to function. Do NOT delete them.
 | [ccc-defaults](ccc-defaults/) | Workspace behavior rules (curl, git, Telegram) | Always applied |
 | [ccc-import-openclaw-skill](ccc-import-openclaw-skill/) | Install ClawHub skills | Skill management |
 | [ccc-jobs](ccc-jobs/) | Scheduled job management (JOBS.yaml) | Job add/remove/pause/resume |
-| [ccc-setup](ccc-setup/) | First-run config file generation | First boot on new clone |
+| [ccc-soul](ccc-soul/) | SOUL.md persona/identity configuration | First boot on new clone |
 
 ## Optional / External
 

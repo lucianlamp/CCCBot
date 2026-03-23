@@ -18,7 +18,9 @@ cd /d "%CCCBOT_DIR%"
 
 :: Ensure settings.json exists (may be missing after git pull)
 if not exist ".claude\settings.json" (
-    call scripts\setup.bat
+    if not exist ".claude" mkdir ".claude"
+    copy scripts\templates\settings.json.default .claude\settings.json >nul
+    echo Created default .claude\settings.json
 )
 
 echo Starting Claude Code Channels session...

@@ -17,7 +17,7 @@ Run this command to check if the personalization file exists:
 ls SOUL.md 2>&1
 ```
 
-- If **missing** (error in output) → invoke `/ccc-setup` skill, then continue from step 4 (skip steps 2-3, setup already handles greeting)
+- If **missing** (error in output) → invoke `/ccc-soul` skill, then continue from step 4 (skip steps 2-3, soul setup already handles greeting)
 - If **exists** → continue to step 2
 
 ### 2. Load persona

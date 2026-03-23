@@ -1,29 +1,19 @@
 ---
-name: ccc-setup
-description: First-run interactive setup — generate config files and guide user through persona/identity configuration
+name: ccc-soul
+description: Interactive SOUL.md configuration — persona, identity, language, and personality setup via Telegram
 ---
 
-# CCC Setup Skill
+# CCC Soul Skill
 
-Interactive first-run setup. Creates config files and guides the user through workspace configuration via Telegram.
+Interactive persona/identity configuration. Guides the user through SOUL.md setup via Telegram.
 
 ## When to Run
 
-Called by `ccc-boot` when `SOUL.md` is missing. Can also be run manually with `/ccc-setup`.
+Called by `ccc-boot` when `SOUL.md` is missing. Can also be run manually with `/ccc-soul`.
 
 ## Steps
 
-### 1. Ensure structural files exist
-
-Run the setup script to copy structural config files (CLAUDE.md, JOBS.yaml, BOOT.md, HEARTBEAT.md) if not already present:
-
-```bash
-bash scripts/setup.sh
-```
-
-(On Windows cmd: `scripts\setup.bat`)
-
-### 2. Create SOUL.md from template
+### 1. Create SOUL.md from template
 
 Use the Write tool to copy template contents as a starting point:
 
@@ -31,16 +21,16 @@ Use the Write tool to copy template contents as a starting point:
 
 Only create if the file doesn't already exist.
 
-### 3. Greet via Telegram
+### 2. Greet via Telegram
 
 Send the first message via Telegram (reply MCP tool). This is the user's first contact with the bot.
 
 ```
 Welcome to CCCBot!
-Let me set up your workspace. I'll ask a few quick questions.
+Let me set up your persona. I'll ask a few quick questions.
 ```
 
-### 4. Interactive configuration (via Telegram)
+### 3. Interactive configuration (via Telegram)
 
 Ask one question at a time via Telegram. Wait for each answer before asking the next. Write all answers to `SOUL.md` immediately.
 
@@ -66,11 +56,11 @@ Offer examples: "1. Concise & technical  2. Friendly & casual  3. Formal & thoro
 Ask: "Want to set up any recurring tasks? (e.g., daily reports, periodic checks) If not, just say 'skip'."
 → If yes, write to `JOBS.yaml`. If skip, move on.
 
-### 5. Done
+### 4. Done
 
 Send via Telegram:
 ```
-Setup complete! Starting session now.
+Soul configured! Starting session now.
 ```
 
 Return control to the boot skill to continue the boot sequence (heartbeat, crons).
@@ -83,5 +73,5 @@ Return control to the boot skill to continue the boot sequence (heartbeat, crons
 ## Usage
 
 ```
-/ccc-setup
+/ccc-soul
 ```

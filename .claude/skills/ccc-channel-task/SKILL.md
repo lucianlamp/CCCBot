@@ -42,7 +42,7 @@ Before processing any message, check if boot has been completed this session:
 ls SOUL.md 2>&1
 ```
 
-- If `SOUL.md` is missing → invoke `/ccc-boot` first (which will trigger `/ccc-setup` for first-run)
+- If `SOUL.md` is missing → invoke `/ccc-boot` first (which will trigger `/ccc-soul` for first-run)
 - If this is the first message of the session and boot hasn't run yet → invoke `/ccc-boot` first
 - Otherwise → proceed to Step 1
 

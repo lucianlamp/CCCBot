@@ -40,6 +40,35 @@ $f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercont
 
 インストール完了後、Claude Code が自動で起動します。初回起動時は Telegram または Discord に挨拶メッセージが届き、対話的にセットアップが始まります。
 
+### 2回目以降の起動
+
+ランチャースクリプトでセッションを開始します:
+
+```bash
+# macOS / Linux
+~/.cccbot/start.sh
+```
+
+```bat
+:: Windows
+%USERPROFILE%\.cccbot\start.bat
+```
+
+または、直接コマンドで起動することもできます:
+
+```bash
+cd ~/.cccbot
+
+# Telegram のみ（デフォルト）
+claude --channels plugin:telegram@claude-plugins-official --remote-control
+
+# Discord のみ
+claude --channels plugin:discord@claude-plugins-official --remote-control
+
+# 両方同時
+claude --channels plugin:telegram@claude-plugins-official plugin:discord@claude-plugins-official --remote-control
+```
+
 ---
 
 ## アップデート
@@ -96,7 +125,10 @@ Claude Code（常駐セッション）
 
 CCCBot はデフォルトで `.claude/settings.json` に自律性と安全性のバランスを取ったパーミッション設定を持っています。
 
-**デフォルトモード:** `bypassPermissions` — Claude はほとんどのツールを確認なしで実行します。
+**パーミッションモードはインストール時に選択します:**
+
+- **bypass**（デフォルト）— `bypassPermissions`: 全ツールを確認なしで実行
+- **auto** — `allowEdits`: ファイル編集は自動許可、Bash等の危険なツールは確認必要
 
 **許可（デフォルト）:**
 
@@ -141,8 +173,6 @@ CCCBot はデフォルトで `.claude/settings.json` に自律性と安全性の
 +-- scripts/
 |   +-- install.sh         # インストーラー（macOS/Linux）
 |   +-- install.bat        # インストーラー（Windows）
-|   +-- setup.sh           # 共通セットアップ処理（テンプレートコピー、gitignore）
-|   +-- setup.bat          # Windows 版
 |   +-- templates/         # 設定テンプレート（初回実行時にコピー）
 |       +-- settings.json.default  # パーミッション・フックのデフォルト
 +-- .claude/
@@ -151,7 +181,7 @@ CCCBot はデフォルトで `.claude/settings.json` に自律性と安全性の
         +-- REQUIRED.md    # 必須スキル — 削除禁止
         +-- IMPORTED.md    # 外部インポートされたスキル
         +-- ccc-boot/
-        +-- ccc-setup/
+        +-- ccc-soul/
         +-- ccc-jobs/
         +-- ccc-heartbeat/
         +-- ccc-channel-task/
@@ -169,7 +199,7 @@ CCCBot はデフォルトで `.claude/settings.json` に自律性と安全性の
 |--------|------|
 | `ccc-boot` | セッション開始シーケンス |
 | `ccc-jobs` | スケジュールジョブ管理（`JOBS.yaml`） |
-| `ccc-setup` | 初回セットアップ（対話的に設定をガイド） |
+| `ccc-soul` | SOUL.md ペルソナ・アイデンティティ設定 |
 | `ccc-heartbeat` | 定期的な死活監視 |
 | `ccc-channel-task` | チャンネルメッセージの標準フロー |
 | `ccc-defaults` | ワークスペース全体のデフォルト設定 |

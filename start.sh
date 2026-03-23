@@ -23,7 +23,9 @@ cd "$CCCBOT_DIR"
 
 # Ensure settings.json exists (may be missing after git pull)
 if [ ! -f ".claude/settings.json" ]; then
-    bash scripts/setup.sh
+    mkdir -p .claude
+    cp scripts/templates/settings.json.default .claude/settings.json
+    echo "Created default .claude/settings.json"
 fi
 
 echo "Starting Claude Code Channels session..."

@@ -41,9 +41,80 @@ fi
 
 cd "$INSTALL_DIR"
 
-# Run shared setup (template copy, gitignore, etc.)
+# --- Permission mode selection ---
 echo ""
-bash "$INSTALL_DIR/scripts/setup.sh"
+echo "=== Permission Mode ==="
+echo ""
+echo "Claude Code needs permission settings to control tool execution."
+echo ""
+echo -e "  ${GREEN}1) bypass${NC} — All tools run without confirmation (full autonomy)"
+echo -e "     Best for: experienced users, background bot operation"
+echo ""
+echo -e "  ${YELLOW}2) auto${NC}   — File edits auto-approved, Bash/dangerous tools require confirmation"
+echo -e "     Best for: first-time users, security-conscious setups"
+echo ""
+
+while true; do
+    read -rp "Select permission mode [1/2] (default: 1): " PERM_CHOICE
+    PERM_CHOICE="${PERM_CHOICE:-1}"
+    case "$PERM_CHOICE" in
+        1|bypass)
+            PERM_MODE="bypassPermissions"
+            echo -e "  → ${GREEN}bypass${NC} mode selected"
+            break
+            ;;
+        2|auto)
+            PERM_MODE="allowEdits"
+            echo -e "  → ${YELLOW}auto${NC} mode selected"
+            break
+            ;;
+        *)
+            echo -e "  ${RED}Invalid choice. Enter 1 or 2.${NC}"
+            ;;
+    esac
+done
+
+TEMPLATES_DIR="$INSTALL_DIR/scripts/templates"
+
+# --- Git setup ---
+if ! git rev-parse --git-dir &>/dev/null; then
+    echo "Initializing git repository..."
+    git init
+fi
+
+# --- .gitignore ---
+if [ ! -f ".gitignore" ]; then
+    cp "$TEMPLATES_DIR/.gitignore.default" ".gitignore"
+    echo -e "  ${GREEN}Created:${NC} .gitignore"
+else
+    echo "  Skipped (exists): .gitignore"
+fi
+
+# --- settings.json (with selected permission mode) ---
+mkdir -p .claude
+if [ ! -f ".claude/settings.json" ]; then
+    cp "$TEMPLATES_DIR/settings.json.default" ".claude/settings.json"
+    sed -i "s/\"defaultMode\": \"bypassPermissions\"/\"defaultMode\": \"$PERM_MODE\"/" ".claude/settings.json"
+    echo -e "  ${GREEN}Created:${NC} .claude/settings.json (mode: $PERM_MODE)"
+else
+    echo "  Skipped (exists): .claude/settings.json"
+fi
+
+# --- Template files ---
+copy_if_missing() {
+    local src="$1" dst="$2"
+    if [ ! -f "$dst" ]; then
+        cp "$src" "$dst"
+        echo -e "  ${GREEN}Created:${NC} $dst"
+    else
+        echo "  Skipped (exists): $dst"
+    fi
+}
+
+copy_if_missing "$TEMPLATES_DIR/CLAUDE.example.md"    "CLAUDE.md"
+copy_if_missing "$TEMPLATES_DIR/JOBS.example.yaml"    "JOBS.yaml"
+copy_if_missing "$TEMPLATES_DIR/BOOT.example.md"      "BOOT.md"
+copy_if_missing "$TEMPLATES_DIR/HEARTBEAT.example.md" "HEARTBEAT.md"
 
 # Done
 echo ""
