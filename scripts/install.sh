@@ -50,7 +50,7 @@ echo ""
 echo -e "  ${GREEN}1) bypass${NC} — All tools run without confirmation (full autonomy)"
 echo -e "     Best for: experienced users, background bot operation"
 echo ""
-echo -e "  ${YELLOW}2) auto${NC}   — File edits auto-approved, Bash/dangerous tools require confirmation"
+echo -e "  ${YELLOW}2) allowEdits${NC} — File edits auto-approved, Bash/dangerous tools require confirmation"
 echo -e "     Best for: first-time users, security-conscious setups"
 echo ""
 
@@ -63,9 +63,9 @@ while true; do
             echo -e "  → ${GREEN}bypass${NC} mode selected"
             break
             ;;
-        2|auto)
+        2|allowEdits)
             PERM_MODE="allowEdits"
-            echo -e "  → ${YELLOW}auto${NC} mode selected"
+            echo -e "  → ${YELLOW}allowEdits${NC} mode selected"
             break
             ;;
         *)

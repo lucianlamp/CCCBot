@@ -49,7 +49,7 @@ echo.
 echo   1) bypass — All tools run without confirmation (full autonomy)
 echo      Best for: experienced users, background bot operation
 echo.
-echo   2) auto   — File edits auto-approved, Bash/dangerous tools require confirmation
+echo   2) allowEdits — File edits auto-approved, Bash/dangerous tools require confirmation
 echo      Best for: first-time users, security-conscious setups
 echo.
 
@@ -69,12 +69,12 @@ if "%PERM_CHOICE%"=="bypass" (
 )
 if "%PERM_CHOICE%"=="2" (
     set "CCC_PERMISSION_MODE=allowEdits"
-    echo   -^> auto mode selected
+    echo   -^> allowEdits mode selected
     goto :perm_done
 )
-if "%PERM_CHOICE%"=="auto" (
+if "%PERM_CHOICE%"=="allowEdits" (
     set "CCC_PERMISSION_MODE=allowEdits"
-    echo   -^> auto mode selected
+    echo   -^> allowEdits mode selected
     goto :perm_done
 )
 echo   Invalid choice. Enter 1 or 2.

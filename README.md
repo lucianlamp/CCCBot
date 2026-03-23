@@ -107,7 +107,7 @@ Claude Code (persistent session)
 CCCBot launches with `--remote-control`, which connects the session to the [Claude desktop/mobile app](https://claude.ai). This lets you:
 
 - **Monitor** — watch Claude's activity in real time from your phone or browser
-- **Approve** — confirm tool executions when permission mode is set to `auto`
+- **Approve** — confirm tool executions when permission mode is set to `allowEdits`
 - **Intervene** — send messages directly to the session, pause or cancel tasks
 
 The terminal running Claude Code stays headless — all interaction happens through channels (Telegram/Discord) and/or the Claude app.
@@ -140,7 +140,7 @@ CCCBot ships with a default permission set in `.claude/settings.json` that balan
 | Mode                 | `defaultMode`       | Behavior                                                            |
 |----------------------|---------------------|---------------------------------------------------------------------|
 | **bypass** (default) | `bypassPermissions` | All tools run without confirmation                                  |
-| **auto**             | `allowEdits`        | File edits auto-approved, Bash/dangerous tools require confirmation |
+| **allowEdits**       | `allowEdits`        | File edits auto-approved, Bash/dangerous tools require confirmation |
 
 **Allowed by default:**
 
