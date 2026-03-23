@@ -178,25 +178,39 @@ CCCBot はデフォルトで `.claude/settings.json` に自律性と安全性の
 
 ```
 .
-+-- CLAUDE.md              # Claude のメイン設定（慎重に編集）
-+-- start.sh / start.bat   # ランチャー（初回起動時に自動インストール）
++-- CLAUDE.md                # Claude のメイン設定（慎重に編集）
++-- SOUL.md                  # ペルソナ、アイデンティティ、トーン、価値観
++-- BOOT.md                  # セッション開始時の処理
++-- HEARTBEAT.md             # ハートビートチェック項目
++-- JOBS.yaml                # 定期スケジュールタスク
++-- .mcp.json                # MCP プラグイン設定（ボットトークン — gitignore対象）
++-- start.sh / start.bat     # ランチャー（初回起動時に自動インストール）
 +-- scripts/
-|   +-- install.sh         # インストーラー（macOS/Linux）
-|   +-- install.bat        # インストーラー（Windows）
-|   +-- templates/         # 設定テンプレート（初回実行時にコピー）
-|       +-- settings.json.default  # パーミッション・フックのデフォルト
+|   +-- install.sh           # インストーラー（macOS/Linux）
+|   +-- install.bat          # インストーラー（Windows）
+|   +-- session-start-hook.sh
+|   +-- templates/           # 設定テンプレート（初回実行時にコピー）
+|       +-- settings.json.default
+|       +-- CLAUDE.example.md
+|       +-- SOUL.example.md
+|       +-- BOOT.example.md
+|       +-- HEARTBEAT.example.md
+|       +-- JOBS.example.yaml
+|       +-- .gitignore.default
 +-- .claude/
-    +-- settings.json      # パーミッションとフック（テンプレートから作成、gitignore対象）
-    +-- skills/            # スキル定義（動作ロジック）
-        +-- REQUIRED.md    # 必須スキル — 削除禁止
-        +-- IMPORTED.md    # 外部インポートされたスキル
-        +-- ccc-boot/
-        +-- ccc-soul/
-        +-- ccc-jobs/
-        +-- ccc-heartbeat/
-        +-- ccc-channel-task/
-        +-- ccc-defaults/
-        +-- ccc-import-openclaw-skill/
+|   +-- settings.json        # パーミッションとフック（gitignore対象）
+|   +-- settings.local.json  # ローカル上書き設定（gitignore対象）
+|   +-- skills/              # スキル定義（動作ロジック）
+|       +-- REQUIRED.md
+|       +-- IMPORTED.md
+|       +-- ccc-boot/
+|       +-- ccc-soul/
+|       +-- ccc-jobs/
+|       +-- ccc-heartbeat/
+|       +-- ccc-channel-task/
+|       +-- ccc-defaults/
+|       +-- ccc-import-openclaw-skill/
++-- memory/                  # 自動メモリストレージ（gitignore対象）
 ```
 
 ---

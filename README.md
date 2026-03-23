@@ -180,25 +180,39 @@ Or ask Claude in chat — e.g. *"allow npm test commands"* — and it will updat
 
 ```
 .
-├── CLAUDE.md              # Primary Claude config (edit with care)
-├── start.sh / start.bat   # Launchers (auto-installs on first run)
+├── CLAUDE.md                # Primary Claude config (edit with care)
+├── SOUL.md                  # Persona, identity, tone, values
+├── BOOT.md                  # Session start instructions
+├── HEARTBEAT.md             # Heartbeat check instructions
+├── JOBS.yaml                # Scheduled recurring tasks
+├── .mcp.json                # MCP plugin config (bot tokens — gitignored)
+├── start.sh / start.bat     # Launchers (auto-installs on first run)
 ├── scripts/
-│   ├── install.sh         # Installer (macOS/Linux)
-│   ├── install.bat        # Installer (Windows)
-│   └── templates/         # Config templates (copied on first run)
-│       └── settings.json.default  # Permission & hook defaults
-└── .claude/
-    ├── settings.json      # Permissions and hooks (created from template, gitignored)
-    └── skills/            # Skill definitions (behavior logic)
-        ├── REQUIRED.md    # Essential skills — do not delete
-        ├── IMPORTED.md    # Externally imported skills
-        ├── ccc-boot/
-        ├── ccc-soul/
-        ├── ccc-jobs/
-        ├── ccc-heartbeat/
-        ├── ccc-channel-task/
-        ├── ccc-defaults/
-        └── ccc-import-openclaw-skill/
+│   ├── install.sh           # Installer (macOS/Linux)
+│   ├── install.bat          # Installer (Windows)
+│   ├── session-start-hook.sh
+│   └── templates/           # Config templates (copied on first run)
+│       ├── settings.json.default
+│       ├── CLAUDE.example.md
+│       ├── SOUL.example.md
+│       ├── BOOT.example.md
+│       ├── HEARTBEAT.example.md
+│       ├── JOBS.example.yaml
+│       └── .gitignore.default
+├── .claude/
+│   ├── settings.json        # Permissions and hooks (gitignored)
+│   ├── settings.local.json  # Local overrides (gitignored)
+│   └── skills/              # Skill definitions (behavior logic)
+│       ├── REQUIRED.md
+│       ├── IMPORTED.md
+│       ├── ccc-boot/
+│       ├── ccc-soul/
+│       ├── ccc-jobs/
+│       ├── ccc-heartbeat/
+│       ├── ccc-channel-task/
+│       ├── ccc-defaults/
+│       └── ccc-import-openclaw-skill/
+└── memory/                  # Auto-memory storage (gitignored)
 ```
 
 ---
