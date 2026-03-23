@@ -36,7 +36,23 @@ Read `SOUL.md` and internalize as self-description (identity, persona, tone, val
 
 Start HEARTBEAT via `/loop 30m /ccc-heartbeat`
 
-### 5. Register scheduled jobs
+### 5. Migrate legacy config (if needed)
+
+Check for legacy `CRONS.md`:
+
+```bash
+ls CRONS.md 2>&1
+```
+
+If `CRONS.md` exists **and** `JOBS.yaml` does NOT exist:
+1. Read `CRONS.md` and parse the Active Jobs table
+2. Convert each row to YAML format and write to `JOBS.yaml` (use `scripts/templates/JOBS.example.yaml` as the base structure)
+3. Delete `CRONS.md` after successful migration
+4. Report to user: "Migrated CRONS.md → JOBS.yaml"
+
+If both exist, or only `JOBS.yaml` exists, skip this step.
+
+### 6. Register scheduled jobs
 
 Read `JOBS.yaml` and register all jobs with `active: true` via CronCreate.
 
