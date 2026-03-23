@@ -1,12 +1,9 @@
 @echo off
 rem CCCBot - Claude Code Channels Bot Installer
 
-set "REPO_URL=https://github.com/lucianlamp/CCCBot"
-if "%~1"=="" (
-    set "INSTALL_DIR=%USERPROFILE%\.cccbot"
-) else (
-    set "INSTALL_DIR=%~1"
-)
+set "REPO=lucianlamp/CCCBot"
+set "VERSION=%~1"
+set "INSTALL_DIR=%USERPROFILE%\.cccbot"
 
 echo CCCBot -- Claude Code Channels Bot Installer
 echo =============================================
@@ -25,24 +22,99 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
-rem Clone repo
-if exist "%INSTALL_DIR%" goto :skip_clone
-echo Cloning to %INSTALL_DIR%...
-git clone "%REPO_URL%" "%INSTALL_DIR%"
-if %ERRORLEVEL% neq 0 (
-    echo Error - Clone failed.
+rem Resolve latest version if not specified
+if not "%VERSION%"=="" goto :version_set
+echo Fetching latest release...
+for /f "tokens=*" %%v in ('powershell -NoProfile -Command "(Invoke-RestMethod 'https://api.github.com/repos/%REPO%/releases/latest').tag_name"') do set "VERSION=%%v"
+if "%VERSION%"=="" (
+    echo Error - Could not determine latest release.
+    echo Specify a version manually, e.g. install.bat v1.0.0
     exit /b 1
 )
-goto :clone_done
+echo   Latest release -- %VERSION%
+:version_set
 
-:skip_clone
-echo Directory already exists - %INSTALL_DIR%
-echo Skipping clone. Updating templates only.
+rem Download and extract release archive
+set "TMPDIR=%TEMP%\cccbot-%RANDOM%"
+mkdir "%TMPDIR%"
+set "ARCHIVE_URL=https://github.com/%REPO%/archive/refs/tags/%VERSION%.zip"
 
-:clone_done
+echo Downloading CCCBot %VERSION%...
+powershell -NoProfile -Command "Invoke-WebRequest '%ARCHIVE_URL%' -OutFile '%TMPDIR%\cccbot.zip'"
+if %ERRORLEVEL% neq 0 (
+    echo Error - Download failed. Check version tag %VERSION%
+    rd /s /q "%TMPDIR%"
+    exit /b 1
+)
+
+echo Extracting...
+powershell -NoProfile -Command "Expand-Archive -Force '%TMPDIR%\cccbot.zip' '%TMPDIR%\extract'"
+if %ERRORLEVEL% neq 0 (
+    echo Error - Extraction failed.
+    rd /s /q "%TMPDIR%"
+    exit /b 1
+)
+
+rem Check for existing installation (update mode)
+set "IS_UPDATE=0"
+if exist "%INSTALL_DIR%\start.bat" set "IS_UPDATE=1"
+
+rem On update, back up user config files
+if "%IS_UPDATE%"=="0" goto :skip_backup
+echo Existing installation detected. Updating...
+set "BACKUP_DIR=%TEMP%\cccbot-backup-%RANDOM%"
+mkdir "%BACKUP_DIR%"
+for %%f in (CLAUDE.md SOUL.md BOOT.md HEARTBEAT.md JOBS.yaml .mcp.json .gitignore) do (
+    if exist "%INSTALL_DIR%\%%f" copy "%INSTALL_DIR%\%%f" "%BACKUP_DIR%\" >nul
+)
+if exist "%INSTALL_DIR%\.claude\settings.json" (
+    mkdir "%BACKUP_DIR%\.claude" 2>nul
+    copy "%INSTALL_DIR%\.claude\settings.json" "%BACKUP_DIR%\.claude\" >nul
+)
+if exist "%INSTALL_DIR%\.claude\settings.local.json" (
+    mkdir "%BACKUP_DIR%\.claude" 2>nul
+    copy "%INSTALL_DIR%\.claude\settings.local.json" "%BACKUP_DIR%\.claude\" >nul
+)
+if exist "%INSTALL_DIR%\memory" xcopy "%INSTALL_DIR%\memory" "%BACKUP_DIR%\memory\" /E /Q >nul
+
+:skip_backup
+rem Copy extracted files to install dir
+if not exist "%INSTALL_DIR%" mkdir "%INSTALL_DIR%"
+for /d %%d in ("%TMPDIR%\extract\CCCBot-*") do xcopy "%%d\*" "%INSTALL_DIR%\" /E /Y /Q >nul
+
+rem Restore user config files on update
+if "%IS_UPDATE%"=="0" goto :skip_restore
+for %%f in (CLAUDE.md SOUL.md BOOT.md HEARTBEAT.md JOBS.yaml .mcp.json .gitignore) do (
+    if exist "%BACKUP_DIR%\%%f" copy "%BACKUP_DIR%\%%f" "%INSTALL_DIR%\" >nul
+)
+if exist "%BACKUP_DIR%\.claude\settings.json" copy "%BACKUP_DIR%\.claude\settings.json" "%INSTALL_DIR%\.claude\" >nul
+if exist "%BACKUP_DIR%\.claude\settings.local.json" copy "%BACKUP_DIR%\.claude\settings.local.json" "%INSTALL_DIR%\.claude\" >nul
+if exist "%BACKUP_DIR%\memory" xcopy "%BACKUP_DIR%\memory" "%INSTALL_DIR%\memory\" /E /Y /Q >nul
+rd /s /q "%BACKUP_DIR%"
+
+:skip_restore
+rem Cleanup temp
+rd /s /q "%TMPDIR%"
+
 cd /d "%INSTALL_DIR%"
+set "TEMPLATES_DIR=%INSTALL_DIR%\scripts\templates"
 
-rem --- Permission mode selection ---
+rem Migrate from git-clone workspace
+git rev-parse --git-dir >nul 2>&1
+if %ERRORLEVEL% neq 0 goto :no_migration
+set "REMOTE_URL="
+for /f "tokens=*" %%u in ('git remote get-url origin 2^>nul') do set "REMOTE_URL=%%u"
+if "%REMOTE_URL%"=="" goto :no_migration
+echo %REMOTE_URL% | findstr /i "lucianlamp/CCCBot" >nul 2>&1
+if %ERRORLEVEL% neq 0 goto :no_migration
+echo Detected old git-clone workspace. Removing dev remote...
+git remote remove origin
+:no_migration
+
+rem --- Permission mode selection (skip on update) ---
+if "%IS_UPDATE%"=="0" goto :show_perm_prompt
+if exist ".claude\settings.json" goto :perm_done
+:show_perm_prompt
 echo.
 echo === Permission Mode ===
 echo.
@@ -77,14 +149,6 @@ echo   -^> allowEdits mode selected
 goto :perm_done
 
 :perm_done
-set "TEMPLATES_DIR=%INSTALL_DIR%\scripts\templates"
-
-rem --- Git setup ---
-git rev-parse --git-dir >nul 2>&1
-if %ERRORLEVEL% neq 0 (
-    echo Initializing git repository...
-    git init
-)
 
 rem --- .gitignore ---
 if exist ".gitignore" goto :skip_gitignore
@@ -116,10 +180,31 @@ call :copy_if_missing "%TEMPLATES_DIR%\JOBS.example.yaml"    "JOBS.yaml"
 call :copy_if_missing "%TEMPLATES_DIR%\BOOT.example.md"      "BOOT.md"
 call :copy_if_missing "%TEMPLATES_DIR%\HEARTBEAT.example.md" "HEARTBEAT.md"
 
+rem --- Git setup (after all files are in place) ---
+git rev-parse --git-dir >nul 2>&1
+if %ERRORLEVEL% equ 0 goto :git_exists
+
+git init
+git add -A
+git commit -m "CCCBot %VERSION% installed" --quiet
+echo   Initial commit created
+goto :git_done
+
+:git_exists
+if "%IS_UPDATE%"=="0" goto :git_done
+git add -A
+git commit -m "CCCBot updated to %VERSION%" --quiet 2>nul
+if %ERRORLEVEL% neq 0 goto :no_changes
+echo   Update committed
+goto :git_done
+:no_changes
+echo   No changes to commit
+
+:git_done
+
 rem Done
 echo.
-echo CCC installed to %INSTALL_DIR%
-echo Docs %REPO_URL%
+echo CCCBot %VERSION% installed to %INSTALL_DIR%
 echo.
 
 rem Launch
