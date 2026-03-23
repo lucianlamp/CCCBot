@@ -258,3 +258,12 @@ CCCBot はデフォルトで `.claude/settings.json` に自律性と安全性の
 |----------|------|
 | `REQUIRED.md` | 必須 CCC スキル — 削除禁止 |
 | `IMPORTED.md` | 外部インポートされたスキルとソースURL・インストール日 |
+
+---
+
+## 免責事項
+
+- CCCBot は独立したコミュニティプロジェクトであり、**Anthropic とは無関係であり、Anthropic による公式な推奨を受けたものではありません**。
+- [Claude Code Channels](https://code.claude.com/docs/en/channels) は現在リサーチプレビュー中です。機能や提供状況は予告なく変更される場合があります。
+- CCCBot は Claude Code を自律的に実行します。使用前に[パーミッション](#パーミッション)設定を十分に確認してください。AI が行った意図しない動作について、作者は一切の責任を負いません。
+- 自己責任でご使用ください。詳細は [LICENSE](LICENSE) を参照してください。

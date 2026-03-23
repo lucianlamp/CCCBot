@@ -260,3 +260,12 @@ Skills in `.claude/skills/` define the authoritative behavior logic. The `.md` f
 |------|---------|
 | `REQUIRED.md` | Essential CCC skills — do NOT delete these |
 | `IMPORTED.md` | Externally imported skills with source URLs and install dates |
+
+---
+
+## Disclaimer
+
+- CCCBot is an independent community project and is **not affiliated with or endorsed by Anthropic**.
+- [Claude Code Channels](https://code.claude.com/docs/en/channels) is currently in research preview. Features and availability may change without notice.
+- CCCBot runs Claude Code autonomously. Review the [permissions](#permissions) configuration carefully before use. The authors are not responsible for any unintended actions performed by the AI.
+- Use at your own risk. See [LICENSE](LICENSE) for details.
