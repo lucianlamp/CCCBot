@@ -49,9 +49,8 @@ bash "$INSTALL_DIR/scripts/setup.sh"
 echo ""
 echo -e "${GREEN}CCC installed to: $INSTALL_DIR${NC}"
 echo ""
-echo "Next step:"
-echo "  Run: bash ~/.cccbot/start.sh"
-echo ""
-echo "  The assistant will guide you through setup on first launch."
-echo ""
 echo "Docs: $REPO_URL"
+echo ""
+
+# Launch
+exec bash "$INSTALL_DIR/start.sh"

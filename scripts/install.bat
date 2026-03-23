@@ -49,9 +49,8 @@ call "%INSTALL_DIR%\scripts\setup.bat"
 echo.
 echo CCC installed to: %INSTALL_DIR%
 echo.
-echo Next step:
-echo   Run: start.bat
-echo.
-echo   The assistant will guide you through setup on first launch.
-echo.
 echo Docs: %REPO_URL%
+echo.
+
+:: Launch
+call "%INSTALL_DIR%\start.bat"
