@@ -95,13 +95,13 @@ if not exist ".gitignore" (
     copy "%TEMPLATES_DIR%\.gitignore.default" ".gitignore" >nul
     echo   Created: .gitignore
 ) else (
-    echo   Skipped (exists): .gitignore
+    echo   Skipped: already exists: .gitignore
 )
 
 :: --- settings.json (with selected permission mode) ---
 if not exist ".claude" mkdir ".claude"
 if exist ".claude\settings.json" (
-    echo   Skipped (exists): .claude\settings.json
+    echo   Skipped: already exists: .claude\settings.json
     goto :settings_done
 )
 copy "%TEMPLATES_DIR%\settings.json.default" ".claude\settings.json" >nul
@@ -130,6 +130,6 @@ if not exist "%~2" (
     copy "%~1" "%~2" >nul
     echo   Created: %~2
 ) else (
-    echo   Skipped (exists): %~2
+    echo   Skipped: already exists: %~2
 )
 goto :eof
