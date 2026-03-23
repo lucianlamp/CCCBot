@@ -1,4 +1,6 @@
-# CCCBot — Claude Code Channels Bot
+<p align="center">
+  <img src="assets/banner.svg" alt="CCCBot — Claude Code Channels Bot" width="800">
+</p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-blue.svg)](#quick-start)
