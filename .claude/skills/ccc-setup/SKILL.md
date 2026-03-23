@@ -5,59 +5,67 @@ description: First-run interactive setup — generate config files and guide use
 
 # CCC Setup Skill
 
-Interactive first-run setup. Generates config files via `setup.sh`/`setup.bat`, then guides the user through persona and identity configuration.
+Interactive first-run setup. Creates config files and guides the user through workspace configuration via Telegram.
 
 ## When to Run
 
-Called by `ccc-boot` when required files are missing. Can also be run manually.
+Called by `ccc-boot` when `SOUL.md` or `USER.md` is missing. Can also be run manually with `/ccc-setup`.
 
 ## Steps
 
-### 1. Copy structural templates (if not already done)
+### 1. Ensure structural files exist
 
-Run the setup script to copy structural config files (CLAUDE.md, CRONS.md, BOOT.md, HEARTBEAT.md):
+Run the setup script to copy structural config files (CLAUDE.md, CRONS.md, BOOT.md, HEARTBEAT.md) if not already present:
 
-- **Unix/WSL/Git Bash:** `bash scripts/setup.sh`
-- **Windows (cmd):** `scripts\setup.bat`
+```bash
+bash scripts/setup.sh
+```
 
-Detect the platform and run the appropriate script.
+(On Windows cmd: `scripts\setup.bat`)
 
 ### 2. Create SOUL.md and USER.md from templates
 
-Copy the templates as starting points (these will be customized in the interactive step):
+Use the Write tool to copy template contents as starting points:
 
-- `scripts/templates/SOUL.example.md` → `SOUL.md`
-- `scripts/templates/USER.example.md` → `USER.md`
+- Read `scripts/templates/SOUL.example.md` → Write to `SOUL.md`
+- Read `scripts/templates/USER.example.md` → Write to `USER.md`
 
-Only copy if the files don't already exist.
+Only create if the files don't already exist.
 
-### 3. Greet the user via Telegram
+### 3. Greet via Telegram
 
-**Always send the greeting via Telegram** (using the reply MCP tool). This is the user's first contact with the bot — they need to see it in their messaging app.
+Send the first message via Telegram (reply MCP tool). This is the user's first contact with the bot.
 
 ```
 Welcome to CCCBot!
-Let's set up your workspace. I'll ask a few questions here.
+Let me set up your workspace. I'll ask a few quick questions.
 ```
 
 ### 4. Interactive configuration (via Telegram)
 
-Guide the user through the following, one at a time. Ask questions via Telegram and write their answers to the corresponding files.
+Ask one question at a time via Telegram. Wait for each answer before asking the next. Write answers to the corresponding files immediately.
 
-**USER.md — Who are you?**
-- Name / handle
-- Role (developer, designer, etc.)
-- Projects and interests
-- Preferred language for conversation
+**Q1: Language**
+Ask: "What language should I use? (e.g., English, 日本語)"
+→ Write to `SOUL.md` Language section AND `USER.md` Language field.
+→ Switch to the chosen language for all subsequent messages.
 
-**SOUL.md — Assistant persona**
-- Persona name and style (e.g., concise, friendly, formal)
-- Tone preferences
-- Values and boundaries
+**Q2: Your name**
+Ask: "What should I call you? (name or handle)"
+→ Write to `USER.md` Handle field.
 
-**CRONS.md — Scheduled jobs (optional)**
-- Ask if they want to set up any recurring tasks
-- If not, skip
+**Q3: Bot name**
+Ask: "What should my name be? (default: CCC)"
+→ Write to `SOUL.md` Identity > Name field.
+
+**Q4: Bot personality**
+Ask: "How should I behave? Pick a style or describe your own:"
+Offer examples: "1. Concise & technical  2. Friendly & casual  3. Formal & thorough  4. Custom"
+→ Write to `SOUL.md` Persona and Tone sections.
+
+**Q5: Scheduled tasks (optional)**
+Ask: "Want to set up any recurring tasks? (e.g., daily reports, periodic checks) If not, just say 'skip'."
+→ If yes, write to `CRONS.md`. If skip, move on.
 
 ### 5. Done
 
@@ -66,7 +74,12 @@ Send via Telegram:
 Setup complete! Starting session now.
 ```
 
-Then return control to the boot skill to continue the boot sequence.
+Return control to the boot skill to continue the boot sequence (heartbeat, crons).
+
+## Design Notes
+
+- **USER.md is minimal by design.** Only name/handle and language are asked. User's role, projects, expertise, and preferences are learned automatically through interactions and stored via the auto-memory system — not through an interrogation at setup time.
+- **SOUL.md defines the bot**, not the user. Keep the setup focused on how the bot should behave.
 
 ## Usage
 
