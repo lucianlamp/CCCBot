@@ -1,19 +1,9 @@
 # MCP config (contains bot tokens)
 .mcp.json
 
-# Personal configuration (use *.example.md as templates)
-CLAUDE.md
-CRONS.md
-JOBS.yaml
-SOUL.md
-MEMORY.md
-BOOT.md
-HEARTBEAT.md
-
 # Runtime / session data
 memory/
 .claude/scheduled_tasks.lock
-.claude/codex-tasks/
 
 # Local machine overrides
 .claude/settings.json
