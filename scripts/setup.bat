@@ -1,5 +1,5 @@
 @echo off
-:: CCCBot — First-run setup
+:: CCCBot -First-run setup
 :: Copies template files to project root if they don't exist.
 :: Called by install.bat and boot skill.
 
@@ -25,7 +25,7 @@ if not exist ".gitignore" (
     (
         echo # MCP config ^(contains bot tokens^)
         echo .mcp.json
-        echo(
+        echo/
         echo # Personal configuration ^(use *.example.md as templates^)
         echo CLAUDE.md
         echo CRONS.md
@@ -34,18 +34,18 @@ if not exist ".gitignore" (
         echo MEMORY.md
         echo BOOT.md
         echo HEARTBEAT.md
-        echo(
+        echo/
         echo # Runtime / session data
         echo memory/
         echo .claude/scheduled_tasks.lock
-        echo(
+        echo/
         echo # Local machine overrides
         echo .claude/settings.local.json
-        echo(
+        echo/
         echo # Security: Telegram access list
         echo .claude/access.json
         echo **/access.json
-        echo(
+        echo/
         echo # Secrets and credentials
         echo .env
         echo **/*.key
@@ -68,7 +68,7 @@ call :copy_if_missing "%TEMPLATES_DIR%\BOOT.example.md"      "BOOT.md"
 call :copy_if_missing "%TEMPLATES_DIR%\HEARTBEAT.example.md" "HEARTBEAT.md"
 
 :: --- Summary ---
-echo(
+echo/
 if %COUNT% equ 0 (
     echo All config files already exist. Nothing to do.
 ) else (

@@ -21,7 +21,7 @@ bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scr
 
 ```powershell
 # Windows (PowerShell)
-$f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.bat).Content | Set-Content $f; & $f
+$f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.bat).Content | Set-Content -Encoding ASCII $f; & $f
 ```
 
 ### オプション B — クローンして実行
