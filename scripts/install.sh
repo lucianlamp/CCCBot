@@ -199,6 +199,11 @@ copy_if_missing "$TEMPLATES_DIR/HEARTBEAT.example.md" "HEARTBEAT.md"
 # --- Git setup (after all files are in place) ---
 if ! git rev-parse --git-dir &>/dev/null; then
     git init
+    # Set fallback git identity if not configured (needed for initial commit)
+    if ! git config user.name &>/dev/null; then
+        git config user.name "CCCBot"
+        git config user.email "cccbot@localhost"
+    fi
     # NOTE: git add -A is safe here — .gitignore is already in place, excluding secrets and user config
     git add -A
     git commit -m "CCCBot ${VERSION} installed" --quiet

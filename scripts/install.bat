@@ -193,6 +193,9 @@ git rev-parse --git-dir >nul 2>&1
 if %ERRORLEVEL% equ 0 goto :git_exists
 
 git init
+rem Set fallback git identity if not configured
+git config user.name >nul 2>&1 || git config user.name "CCCBot"
+git config user.email >nul 2>&1 || git config user.email "cccbot@localhost"
 rem NOTE: git add -A is safe here — .gitignore is already in place, excluding secrets and user config
 git add -A
 git commit -m "CCCBot %VERSION% installed" --quiet
