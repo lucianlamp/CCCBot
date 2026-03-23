@@ -27,11 +27,16 @@ bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scr
 $f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.bat).Content | Set-Content -Encoding ASCII $f; & $f
 ```
 
+### 前提条件
+
+[Claude Code Channels](https://code.claude.com/docs/en/channels) の公式ドキュメントに従い、以下を事前に完了してください:
+
+- Telegram Bot Token または Discord Bot Token の取得・設定
+- Claude Code Channels プラグインの有効化
+
 ### インストール後
 
-1. `~/.cccbot/start.sh`（Windows: `%USERPROFILE%\.cccbot\start.bat`）を実行
-2. 初回起動時にアシスタントがセットアップをガイドします（`/ccc-setup`）
-3. Telegram や Discord からメッセージを送信 — Claude が応答します
+インストール完了後、Claude Code が自動で起動します。Telegram または Discord でメッセージを送ると、初回は対話的にセットアップ（`/ccc-setup`）が始まります。
 
 ---
 
