@@ -78,13 +78,25 @@ claude --channels plugin:telegram@claude-plugins-official plugin:discord@claude-
 
 ## アップデート
 
+インストーラーを再実行して最新リリースに更新します:
+
 ```bash
-cd ~/.cccbot && git pull
+# macOS / Linux
+bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.sh)
 ```
 
-スキル、スクリプト、テンプレートが更新されます。個人設定ファイル（`SOUL.md`、`CLAUDE.md`、`JOBS.yaml`、`BOOT.md`、`HEARTBEAT.md`）はテンプレートから未作成時のみ生成されるため、`git pull` で上書きされません。`.claude/settings.json` は gitignore 対象です。
+```powershell
+# Windows (PowerShell)
+$f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.bat).Content | Set-Content -Encoding ASCII $f; & $f
+```
 
-新しいテンプレートが追加された場合、次回起動時に自動で作成されます。
+特定のバージョンをインストールする場合:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.sh) v1.0.0
+```
+
+スキル、スクリプト、テンプレートが更新されます。個人設定ファイル（`SOUL.md`、`CLAUDE.md`、`JOBS.yaml`、`BOOT.md`、`HEARTBEAT.md`）と設定は保持されます。
 
 ---
 

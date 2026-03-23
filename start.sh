@@ -3,7 +3,6 @@
 # Start Claude Code Channels session
 
 CCCBOT_DIR="$HOME/.cccbot"
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Channels to enable — space-separated list of plugins.
 # Add or remove channels here:
@@ -12,16 +11,16 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Example (both): CHANNELS="plugin:telegram@claude-plugins-official plugin:discord@claude-plugins-official"
 CHANNELS="${CHANNELS:-plugin:telegram@claude-plugins-official}"
 
-# First run: install if ~/.cccbot doesn't exist
+# Check workspace exists
 if [ ! -d "$CCCBOT_DIR" ]; then
-    echo "~/.cccbot not found. Running installer..."
-    bash "$SCRIPT_DIR/scripts/install.sh"
-    # install.sh already launches start.sh via exec, so exit here to avoid double-launch
-    exit $?
+    echo "Error: CCCBot workspace not found at $CCCBOT_DIR"
+    echo "Run the installer first:"
+    echo "  bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.sh)"
+    exit 1
 fi
 cd "$CCCBOT_DIR"
 
-# Ensure settings.json exists (may be missing after git pull)
+# Ensure settings.json exists (may be missing after update)
 if [ ! -f ".claude/settings.json" ]; then
     mkdir -p .claude
     cp scripts/templates/settings.json.default .claude/settings.json

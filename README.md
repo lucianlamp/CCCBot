@@ -78,13 +78,25 @@ claude --channels plugin:telegram@claude-plugins-official plugin:discord@claude-
 
 ## Updating
 
+Re-run the installer to update to the latest release:
+
 ```bash
-cd ~/.cccbot && git pull
+# macOS / Linux
+bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.sh)
 ```
 
-Skills, scripts, and templates are updated. Your personal config files (`SOUL.md`, `CLAUDE.md`, `JOBS.yaml`, `BOOT.md`, `HEARTBEAT.md`) are created from templates only if missing — `git pull` won't overwrite them. `.claude/settings.json` is gitignored.
+```powershell
+# Windows (PowerShell)
+$f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.bat).Content | Set-Content -Encoding ASCII $f; & $f
+```
 
-If a new template is added, it will be created automatically on the next launch.
+To install a specific version:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.sh) v1.0.0
+```
+
+Skills, scripts, and templates are updated. Your personal config files (`SOUL.md`, `CLAUDE.md`, `JOBS.yaml`, `BOOT.md`, `HEARTBEAT.md`) and settings are preserved.
 
 ---
 

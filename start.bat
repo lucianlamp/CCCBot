@@ -1,22 +1,22 @@
 @echo off
-:: CCCBot Workspace Launcher
-:: Start Claude Code Channels session
+rem CCCBot Workspace Launcher
+rem Start Claude Code Channels session
 
 set "CCCBOT_DIR=%USERPROFILE%\.cccbot"
 
-:: Channels to enable
+rem Channels to enable
 if not defined CHANNELS set "CHANNELS=plugin:telegram@claude-plugins-official"
 
-:: First run: install if .cccbot doesn't exist
-if not exist "%CCCBOT_DIR%" (
-    echo .cccbot not found. Running installer...
-    call "%~dp0scripts\install.bat"
-    :: install.bat already launches start.bat, so exit here to avoid double-launch
-    exit /b %ERRORLEVEL%
-)
+rem Check workspace exists
+if exist "%CCCBOT_DIR%" goto :workspace_ok
+echo Error - CCCBot workspace not found at %CCCBOT_DIR%
+echo Run the installer first.
+exit /b 1
+
+:workspace_ok
 cd /d "%CCCBOT_DIR%"
 
-:: Ensure settings.json exists (may be missing after git pull)
+rem Ensure settings.json exists (may be missing after update)
 if not exist ".claude\settings.json" (
     if not exist ".claude" mkdir ".claude"
     copy scripts\templates\settings.json.default .claude\settings.json >nul
