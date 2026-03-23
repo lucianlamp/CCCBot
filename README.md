@@ -102,6 +102,16 @@ Claude Code (persistent session)
 
 > Both Telegram and Discord can be active simultaneously. Pass both to `--channels` when starting.
 
+### Remote Control via Claude App
+
+CCCBot launches with `--remote-control`, which connects the session to the [Claude desktop/mobile app](https://claude.ai). This lets you:
+
+- **Monitor** — watch Claude's activity in real time from your phone or browser
+- **Approve** — confirm tool executions when permission mode is set to `auto`
+- **Intervene** — send messages directly to the session, pause or cancel tasks
+
+The terminal running Claude Code stays headless — all interaction happens through channels (Telegram/Discord) and/or the Claude app.
+
 ---
 
 ## Customizable Files
