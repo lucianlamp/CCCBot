@@ -1,24 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1a1209"/>
-      <stop offset="50%" style="stop-color:#2a1a0a"/>
-      <stop offset="100%" style="stop-color:#1f1510"/>
+      <stop offset="0%" stop-color="#1a1209"/>
+      <stop offset="50%" stop-color="#2a1a0a"/>
+      <stop offset="100%" stop-color="#1f1510"/>
     </linearGradient>
     <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#d97706"/>
-      <stop offset="100%" style="stop-color:#f59e0b"/>
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
     </linearGradient>
   </defs>
   <rect width="800" height="200" rx="12" fill="url(#bg)"/>
-  <rect x="0" y="188" width="800" height="4" rx="0" fill="url(#accent)" opacity="0.8"/>
-  <text x="400" y="95" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="56" font-weight="700" fill="#f5f0eb" text-anchor="middle" letter-spacing="2">
-    CCCBot
-  </text>
-  <text x="400" y="140" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#f59e0b" text-anchor="middle" letter-spacing="1">
-    Claude Code Channels Bot
-  </text>
-  <text x="400" y="168" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#a8967a" text-anchor="middle" letter-spacing="0.5">
-    Autonomous workspace connected to Telegram &amp; Discord
-  </text>
+  <rect x="0" y="188" width="800" height="4" fill="url(#accent)" opacity="0.8"/>
+  <text x="400" y="95" font-family="sans-serif" font-size="56" font-weight="700" fill="#f5f0eb" text-anchor="middle" letter-spacing="2">CCCBot</text>
+  <text x="400" y="140" font-family="sans-serif" font-size="18" fill="#f59e0b" text-anchor="middle" letter-spacing="1">Claude Code Channels Bot</text>
+  <text x="400" y="168" font-family="sans-serif" font-size="13" fill="#a8967a" text-anchor="middle">Autonomous workspace connected to Telegram &amp; Discord</text>
 </svg>
