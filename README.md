@@ -16,12 +16,12 @@ Built on [Claude Code Channels](https://code.claude.com/docs/en/channels) — cu
 
 ```bash
 # macOS / Linux
-bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/main/scripts/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.sh)
 ```
 
 ```powershell
 # Windows (PowerShell)
-$f="$env:TEMP\cccbot-install.bat"; Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/main/scripts/install.bat -OutFile $f; & $f
+$f="$env:TEMP\cccbot-install.bat"; Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.bat -OutFile $f; & $f
 ```
 
 Or download `scripts/install.sh` / `scripts/install.bat` and run it directly.

@@ -16,12 +16,12 @@ Claude が常駐し、Telegram や Discord からタスクを受け取り、バ�
 
 ```bash
 # macOS / Linux
-bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/main/scripts/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.sh)
 ```
 
 ```powershell
 # Windows (PowerShell)
-$f="$env:TEMP\cccbot-install.bat"; Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/main/scripts/install.bat -OutFile $f; & $f
+$f="$env:TEMP\cccbot-install.bat"; Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.bat -OutFile $f; & $f
 ```
 
 または `scripts/install.sh` / `scripts/install.bat` をダウンロードして直接実行。
