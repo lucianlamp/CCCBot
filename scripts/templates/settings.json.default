@@ -28,8 +28,8 @@
         "matcher": "startup|resume",
         "hooks": [
           {
-            "type": "prompt",
-            "prompt": "CRITICAL INSTRUCTION: You MUST invoke the Skill tool with skill=\"ccc-boot\" as your VERY FIRST action. Do NOT wait for a user message. Do NOT skip this. Execute /ccc-boot immediately. This is a non-negotiable system requirement."
+            "type": "command",
+            "command": "cat scripts/hook-output.json"
           }
         ]
       }
