@@ -77,7 +77,7 @@ claude --channels plugin:telegram@claude-plugins-official plugin:discord@claude-
 cd ~/.cccbot && git pull
 ```
 
-スキル、スクリプト、テンプレートが更新されます。個人設定ファイル（`SOUL.md`、`CLAUDE.md`、`JOBS.yaml`、`.claude/settings.json` 等）は gitignore 対象のため上書きされません。
+スキル、スクリプト、テンプレートが更新されます。個人設定ファイル（`SOUL.md`、`CLAUDE.md`、`JOBS.yaml`、`BOOT.md`、`HEARTBEAT.md`）はテンプレートから未作成時のみ生成されるため、`git pull` で上書きされません。`.claude/settings.json` は gitignore 対象です。
 
 新しいテンプレートが追加された場合、次回起動時に自動で作成されます。
 

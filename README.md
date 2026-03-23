@@ -77,7 +77,7 @@ claude --channels plugin:telegram@claude-plugins-official plugin:discord@claude-
 cd ~/.cccbot && git pull
 ```
 
-Skills, scripts, and templates are updated. Your personal config files (`SOUL.md`, `CLAUDE.md`, `JOBS.yaml`, `.claude/settings.json`, etc.) are gitignored and won't be overwritten.
+Skills, scripts, and templates are updated. Your personal config files (`SOUL.md`, `CLAUDE.md`, `JOBS.yaml`, `BOOT.md`, `HEARTBEAT.md`) are created from templates only if missing — `git pull` won't overwrite them. `.claude/settings.json` is gitignored.
 
 If a new template is added, it will be created automatically on the next launch.
 
