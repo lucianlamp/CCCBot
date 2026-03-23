@@ -26,4 +26,4 @@ echo "Workspace: $(pwd)"
 echo "Channels:  $CHANNELS"
 echo ""
 
-claude --channels $CHANNELS --remote-control
+claude --channels $CHANNELS --remote-control --init-prompt "/ccc-boot"
