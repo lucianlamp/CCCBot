@@ -42,7 +42,7 @@ fi
 # Format: "template_name:target_path"
 FILES=(
     "CLAUDE.example.md:CLAUDE.md"
-    "CRONS.example.md:CRONS.md"
+    "JOBS.example.yaml:JOBS.yaml"
     "BOOT.example.md:BOOT.md"
     "HEARTBEAT.example.md:HEARTBEAT.md"
 )

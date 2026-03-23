@@ -38,7 +38,7 @@ if not exist ".claude\settings.json" (
 :: --- Template files ---
 :: Structural files only. SOUL.md is created by /ccc-setup interactively.
 call :copy_if_missing "%TEMPLATES_DIR%\CLAUDE.example.md"    "CLAUDE.md"
-call :copy_if_missing "%TEMPLATES_DIR%\CRONS.example.md"     "CRONS.md"
+call :copy_if_missing "%TEMPLATES_DIR%\JOBS.example.yaml"    "JOBS.yaml"
 call :copy_if_missing "%TEMPLATES_DIR%\BOOT.example.md"      "BOOT.md"
 call :copy_if_missing "%TEMPLATES_DIR%\HEARTBEAT.example.md" "HEARTBEAT.md"
 

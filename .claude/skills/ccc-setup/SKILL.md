@@ -15,7 +15,7 @@ Called by `ccc-boot` when `SOUL.md` is missing. Can also be run manually with `/
 
 ### 1. Ensure structural files exist
 
-Run the setup script to copy structural config files (CLAUDE.md, CRONS.md, BOOT.md, HEARTBEAT.md) if not already present:
+Run the setup script to copy structural config files (CLAUDE.md, JOBS.yaml, BOOT.md, HEARTBEAT.md) if not already present:
 
 ```bash
 bash scripts/setup.sh
@@ -64,7 +64,7 @@ Offer examples: "1. Concise & technical  2. Friendly & casual  3. Formal & thoro
 
 **Q5: Scheduled tasks (optional)**
 Ask: "Want to set up any recurring tasks? (e.g., daily reports, periodic checks) If not, just say 'skip'."
-→ If yes, write to `CRONS.md`. If skip, move on.
+→ If yes, write to `JOBS.yaml`. If skip, move on.
 
 ### 5. Done
 

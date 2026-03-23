@@ -48,7 +48,7 @@ $f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercont
 cd ~/.cccbot && git pull
 ```
 
-スキル、スクリプト、テンプレートが更新されます。個人設定ファイル（`SOUL.md`、`CLAUDE.md`、`CRONS.md`、`.claude/settings.json` 等）は gitignore 対象のため上書きされません。
+スキル、スクリプト、テンプレートが更新されます。個人設定ファイル（`SOUL.md`、`CLAUDE.md`、`JOBS.yaml`、`.claude/settings.json` 等）は gitignore 対象のため上書きされません。
 
 新しいテンプレートが追加された場合、次回起動時に自動で作成されます。
 
@@ -67,9 +67,9 @@ Claude Code（常駐セッション）
       +-- Telegram / Discord で結果を報告
 ```
 
-- **Boot**: cronジョブを登録し、ハートビートを開始
+- **Boot**: スケジュールジョブを登録し、ハートビートを開始
 - **Heartbeat**: 定期チェック — 問題がある場合のみ通知を送信
-- **CRONS.md**: 起動時に自動登録される定期タスクを定義
+- **JOBS.yaml**: 起動時に自動登録される定期タスクを定義（`/ccc-jobs` で管理）
 
 > Telegram と Discord は同時に有効にできます。起動時に `--channels` で両方を指定してください。
 
@@ -85,7 +85,7 @@ Claude Code（常駐セッション）
 | `SOUL.md` | ユーザー情報、ボットのアイデンティティ、ペルソナ、トーン、価値観 |
 | `BOOT.md` | セッション開始時の処理 |
 | `HEARTBEAT.md` | ハートビートサイクルごとのチェック項目 |
-| `CRONS.md` | 定期スケジュールタスク |
+| `JOBS.yaml` | 定期スケジュールタスク（`/ccc-jobs` で管理） |
 
 > **CLAUDE.md** は最も重要なファイルです。Claude の指示を直接制御します。
 > 不適切な編集は予期しない動作を引き起こす可能性があります。git で変更を追跡してください。
@@ -152,6 +152,7 @@ CCCBot はデフォルトで `.claude/settings.json` に自律性と安全性の
         +-- IMPORTED.md    # 外部インポートされたスキル
         +-- ccc-boot/
         +-- ccc-setup/
+        +-- ccc-jobs/
         +-- ccc-heartbeat/
         +-- ccc-channel-task/
         +-- ccc-defaults/
@@ -167,6 +168,7 @@ CCCBot はデフォルトで `.claude/settings.json` に自律性と安全性の
 | スキル | 用途 |
 |--------|------|
 | `ccc-boot` | セッション開始シーケンス |
+| `ccc-jobs` | スケジュールジョブ管理（`JOBS.yaml`） |
 | `ccc-setup` | 初回セットアップ（対話的に設定をガイド） |
 | `ccc-heartbeat` | 定期的な死活監視 |
 | `ccc-channel-task` | チャンネルメッセージの標準フロー |

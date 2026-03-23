@@ -1,0 +1,19 @@
+# Scheduled Jobs
+# Registered on every boot via CronCreate.
+# Heartbeat is excluded (handled by boot skill directly).
+#
+# Manage with /ccc-jobs:
+#   /ccc-jobs list              — show all jobs
+#   /ccc-jobs add               — add a new job interactively
+#   /ccc-jobs remove <id>       — delete a job
+#   /ccc-jobs pause <id>        — deactivate (keeps definition)
+#   /ccc-jobs resume <id>       — reactivate
+#   /ccc-jobs edit <id>         — modify a job interactively
+
+jobs: {}
+  # example-job:
+  #   schedule: "0 9 * * *"
+  #   description: Daily morning report
+  #   active: true
+  #   prompt: |
+  #     Check system status and send summary to Telegram.

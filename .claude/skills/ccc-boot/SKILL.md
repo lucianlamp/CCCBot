@@ -36,9 +36,9 @@ Read `SOUL.md` and internalize as self-description (identity, persona, tone, val
 
 Start HEARTBEAT via `/loop 30m /ccc-heartbeat`
 
-### 5. Register cron jobs
+### 5. Register scheduled jobs
 
-Read `CRONS.md` and register all Active Jobs via CronCreate.
+Read `JOBS.yaml` and register all jobs with `active: true` via CronCreate.
 
 ## Usage
 

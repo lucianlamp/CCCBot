@@ -48,7 +48,7 @@ Claude Code starts automatically after installation. On first launch, a greeting
 cd ~/.cccbot && git pull
 ```
 
-Skills, scripts, and templates are updated. Your personal config files (`SOUL.md`, `CLAUDE.md`, `CRONS.md`, `.claude/settings.json`, etc.) are gitignored and won't be overwritten.
+Skills, scripts, and templates are updated. Your personal config files (`SOUL.md`, `CLAUDE.md`, `JOBS.yaml`, `.claude/settings.json`, etc.) are gitignored and won't be overwritten.
 
 If a new template is added, it will be created automatically on the next launch.
 
@@ -67,9 +67,9 @@ Claude Code (persistent session)
       └─ Reports result via Telegram / Discord
 ```
 
-- **Boot**: registers cron jobs, starts heartbeat
+- **Boot**: registers scheduled jobs, starts heartbeat
 - **Heartbeat**: periodic check — sends notification only if issues are found
-- **CRONS.md**: define recurring tasks that auto-register on boot
+- **JOBS.yaml**: define recurring tasks that auto-register on boot (managed via `/ccc-jobs`)
 
 > Both Telegram and Discord can be active simultaneously. Pass both to `--channels` when starting.
 
@@ -85,7 +85,7 @@ These files are yours to edit — they define behavior for your workspace:
 | `SOUL.md` | User info, bot identity, persona, tone, values |
 | `BOOT.md` | What to do at session start |
 | `HEARTBEAT.md` | What to check on each heartbeat cycle |
-| `CRONS.md` | Recurring scheduled tasks |
+| `JOBS.yaml` | Recurring scheduled tasks (managed via `/ccc-jobs`) |
 
 > **CLAUDE.md** is the most critical file — it directly controls Claude's instructions.
 > Incorrect edits can change behavior in unexpected ways. Use git to track changes.
@@ -152,6 +152,7 @@ Or ask Claude in chat — e.g. *"allow npm test commands"* — and it will updat
         ├── IMPORTED.md    # Externally imported skills
         ├── ccc-boot/
         ├── ccc-setup/
+        ├── ccc-jobs/
         ├── ccc-heartbeat/
         ├── ccc-channel-task/
         ├── ccc-defaults/
@@ -171,6 +172,7 @@ Skills in `.claude/skills/` define the authoritative behavior logic. The `.md` f
 | `ccc-channel-task` | Standard flow for channel messages |
 | `ccc-defaults` | Workspace-wide defaults (HTTP, git, Telegram) |
 | `ccc-import-openclaw-skill` | Install ClawHub skills |
+| `ccc-jobs` | Scheduled job management (`JOBS.yaml`) |
 | `ccc-setup` | First-run config file generation |
 
 ### Skill Registry Files

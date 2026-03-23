@@ -4,6 +4,7 @@
 # Personal configuration (use *.example.md as templates)
 CLAUDE.md
 CRONS.md
+JOBS.yaml
 SOUL.md
 MEMORY.md
 BOOT.md
