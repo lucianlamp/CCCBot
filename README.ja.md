@@ -2,6 +2,7 @@
   <img src="assets/banner.svg" alt="CCCBot — Claude Code Channels Bot" width="800">
 </p>
 
+[![Release](https://img.shields.io/github/v/release/lucianlamp/CCCBot)](https://github.com/lucianlamp/CCCBot/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-blue.svg)](#クイックスタート)
 [![Claude Code](https://img.shields.io/badge/Built%20with-Claude%20Code-blueviolet.svg)](https://claude.ai/code)
