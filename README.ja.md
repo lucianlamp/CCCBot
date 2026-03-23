@@ -9,11 +9,11 @@
 
 > **[English version](README.md)**
 
-メッセージングチャンネル（Telegram、Discordなど）に接続された、自律型 Claude Code ワークスペース。
+[Claude Code Channels](https://code.claude.com/docs/en/channels) を拡張して、[OpenClaw](https://openclaw.org) 的な自律エージェントにするボット。
 
-Claude が常駐し、Telegram や Discord からタスクを受け取り、バックグラウンドで実行し、結果を報告します。セッションを維持するため、Claude Code を実行中のターミナルは開いたままにしておく必要があります。
+素の Channels は Telegram / Discord に「繋がる」だけ。CCCBot はその上にスケジュールタスク、死活監視（HEARTBEAT）、MCP 切断時の自動復旧、人格・ペルソナ設定を載せて、**自律的に動き続ける**ところまでやります。
 
-[Claude Code Channels](https://code.claude.com/docs/en/channels) 上に構築（リサーチプレビュー中）。
+最大の魅力は、Claude Code の **OAuth 定額プラン**で動くこと。API 従量課金ではなく、月額固定で Claude が自律的に動き続けます。
 
 ---
 

@@ -9,11 +9,11 @@
 
 > **[日本語版はこちら](README.ja.md)**
 
-An autonomous Claude Code workspace connected to messaging channels (Telegram, Discord, etc.).
+An [OpenClaw](https://openclaw.org)-style autonomous agent built on top of [Claude Code Channels](https://code.claude.com/docs/en/channels).
 
-Claude runs persistently, receives tasks via Telegram or Discord, executes them in the background, and reports results. The terminal running Claude Code must stay open to maintain the session.
+Channels connects Claude Code to Telegram and Discord — CCCBot extends that into a **self-sustaining autonomous agent** with scheduled tasks, heartbeat monitoring, automatic recovery, and persona configuration.
 
-Built on [Claude Code Channels](https://code.claude.com/docs/en/channels) — currently in research preview.
+The biggest advantage: it runs on Claude Code's **flat-rate OAuth plan**. No per-token API billing — Claude works autonomously at a fixed monthly cost.
 
 ---
 
