@@ -98,8 +98,6 @@ These files are yours to edit — they define behavior for your workspace:
         └── ccc-import-openclaw-skill/
 ```
 
-Personal config files (`SOUL.md`, `CRONS.md`, etc.) live in `~/.cccbot/` and are not tracked by git.
-
 ---
 
 ## Skills

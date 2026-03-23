@@ -98,8 +98,6 @@ Claude Code（常駐セッション）
         +-- ccc-import-openclaw-skill/
 ```
 
-個人設定ファイル（`SOUL.md`、`CRONS.md` など）は `~/.cccbot/` に配置され、git で追跡されません。
-
 ---
 
 ## スキル
