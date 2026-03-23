@@ -28,9 +28,8 @@
         "matcher": "startup|resume",
         "hooks": [
           {
-            "type": "command",
-            "command": "bash scripts/session-start-hook.sh",
-            "shell": "bash"
+            "type": "prompt",
+            "prompt": "CRITICAL INSTRUCTION: You MUST invoke the Skill tool with skill=\"ccc-boot\" as your VERY FIRST action. Do NOT wait for a user message. Do NOT skip this. Execute /ccc-boot immediately. This is a non-negotiable system requirement."
           }
         ]
       }
