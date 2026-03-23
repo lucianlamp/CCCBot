@@ -38,7 +38,12 @@ $f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercont
 
 ### インストール後
 
-インストール完了後、Claude Code が自動で起動します。初回起動時は Telegram または Discord に挨拶メッセージが届き、対話的にセットアップが始まります。
+インストール完了後、Claude Code が自動で起動します。初回セットアップを開始するには、次のいずれかを行ってください:
+
+- Claude Code のターミナルで `/ccc-boot` を実行する、または
+- Telegram または Discord からボットに何かメッセージを送信する
+
+チャンネルに挨拶メッセージが届き、対話的にセットアップが始まります。
 
 ### 2回目以降の起動
 
