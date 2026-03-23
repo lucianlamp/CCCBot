@@ -164,12 +164,26 @@ $f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercont
 - Update section: change from `git pull` to "re-run the installer"
 - Add version pinning example: `bash <(curl -fsSL ...) v1.0.0`
 
+## Archive Exclusions
+
+The following files are excluded from release archives via `.gitattributes` `export-ignore`. They exist in the dev repo but are not included in the user's workspace:
+
+- `docs/superpowers/` — development specs and plans
+- `scripts/install.sh` — installer (fetched via raw URL, not needed in workspace)
+- `scripts/install.bat` — installer (fetched via raw URL, not needed in workspace)
+
+Files that remain in the archive:
+
+- `scripts/templates/` — config templates (used at install/update time)
+- `scripts/session-start-hook.sh` — runtime hook
+- `.claude/skills/` — all skill definitions
+
 ## Release Workflow
 
 Developers create releases via `gh release create` or GitHub UI:
 
 1. Tag the commit (e.g., `v1.0.0`)
-2. Create GitHub Release — Source code archives are auto-generated
+2. Create GitHub Release — Source code archives are auto-generated (with `export-ignore` exclusions applied)
 3. Users running `install.sh` without arguments get this latest release
 
 No CI/CD or custom asset build required.
