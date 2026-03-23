@@ -34,6 +34,18 @@ Standard processing flow for tasks received from channels like Telegram or Disco
                     └─ Completion notification
 ```
 
+## Step 0: Boot check (automatic)
+
+Before processing any message, check if boot has been completed this session:
+
+```bash
+ls SOUL.md 2>&1
+```
+
+- If `SOUL.md` is missing → invoke `/ccc-boot` first (which will trigger `/ccc-setup` for first-run)
+- If this is the first message of the session and boot hasn't run yet → invoke `/ccc-boot` first
+- Otherwise → proceed to Step 1
+
 ## Step 1: Immediate acknowledgment (required)
 
 After receiving a channel message, **reply to the channel first**.

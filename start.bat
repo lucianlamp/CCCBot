@@ -20,4 +20,4 @@ echo Starting Claude Code Channels session...
 echo Workspace: %CD%
 echo Channels:  %CHANNELS%
 
-claude --channels %CHANNELS% --remote-control "/ccc-boot"
+claude --channels %CHANNELS% --remote-control
