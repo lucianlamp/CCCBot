@@ -24,7 +24,15 @@ ls SOUL.md 2>&1
 
 Read `SOUL.md` and internalize as self-description (identity, persona, tone, values, language).
 
-### 3. Status report & greeting
+### 3. Wait for MCP readiness
+
+Before sending any messages, verify that channel MCP is ready.
+Attempt a lightweight MCP call (e.g. Telegram "react" tool with a dry-run or any simple call).
+- If it succeeds → proceed to step 4
+- If it fails → wait 5 seconds, then retry (up to 3 attempts)
+- If all retries fail → log "MCP not ready, skipping greeting" to console and proceed to step 5
+
+### 4. Status report & greeting
 
 **On resume (context compaction recovery):** Skip this step entirely — no Telegram messages.
 
@@ -32,11 +40,11 @@ Read `SOUL.md` and internalize as self-description (identity, persona, tone, val
 - If there are in-progress or incomplete tasks → report status via Telegram
 - If nothing to report → send "Ready" via Telegram
 
-### 4. Start heartbeat
+### 5. Start heartbeat
 
 Start HEARTBEAT via `/loop 30m /ccc-heartbeat`
 
-### 5. Migrate legacy config (if needed)
+### 6. Migrate legacy config (if needed)
 
 Check for legacy `CRONS.md`:
 
@@ -52,7 +60,7 @@ If `CRONS.md` exists **and** `JOBS.yaml` does NOT exist:
 
 If both exist, or only `JOBS.yaml` exists, skip this step.
 
-### 6. Register scheduled jobs
+### 7. Register scheduled jobs
 
 Read `JOBS.yaml` and register all jobs with `active: true` via CronCreate.
 
