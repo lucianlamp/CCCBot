@@ -21,10 +21,8 @@ bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scr
 
 ```powershell
 # Windows (PowerShell)
-$f="$env:TEMP\cccbot-install.bat"; Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.bat -OutFile $f; & $f
+git clone https://github.com/lucianlamp/CCCBot $env:USERPROFILE\.cccbot; & $env:USERPROFILE\.cccbot\scripts\setup.bat; & $env:USERPROFILE\.cccbot\start.bat
 ```
-
-または `scripts/install.sh` / `scripts/install.bat` をダウンロードして直接実行。
 
 ### オプション B — クローンして実行
 
