@@ -38,10 +38,10 @@ echo "PID file:  $PID_FILE"
 echo ""
 
 # Try to resume previous session first; fall back to fresh start
-claude --continue --channels $CHANNELS --remote-control
+claude --continue --channels $CHANNELS --remote-control --effort auto
 if [ $? -ne 0 ]; then
     echo "Previous session not found. Starting fresh..."
-    claude --channels $CHANNELS --remote-control
+    claude --channels $CHANNELS --remote-control --effort auto
 fi
 
 # Clean up PID file on exit
