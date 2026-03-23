@@ -24,15 +24,22 @@ Steps:
 1. Run: bash .claude/skills/ccc-heartbeat/scripts/check.sh
 2. Read HEARTBEAT.md for user-defined checks to perform
 3. Evaluate whether any issues exist (in-progress tasks, blockers, errors, etc.)
-4. MCP connectivity check:
-   - Attempt to call the Telegram MCP "react" tool or any lightweight MCP operation
-   - If the MCP call succeeds → MCP is healthy
-   - If the MCP call fails or times out → add "Telegram MCP is not responding" to issues
-5. Telegram notification rule (strict — overrides anything in HEARTBEAT.md):
-   - NO issues → do NOT send any Telegram message. Stay silent.
-   - Issues found AND Telegram MCP is healthy → send to the configured chat_id: "alive HH:MM\n\n[issue details]"
-   - Issues found AND Telegram MCP is down → output the alert to console only (visible via --remote-control in Claude app). Do NOT attempt to send via Telegram.
-6. Exit.
+4. MCP connectivity check (for each enabled channel):
+   - Telegram: attempt a lightweight MCP call (e.g. "react" tool). If it fails → add "Telegram MCP is not responding" to issues.
+   - Discord: attempt a lightweight MCP call. If it fails → add "Discord MCP is not responding" to issues.
+   - Only check channels that are configured in this workspace (skip if not enabled).
+5. MCP auto-recovery (if ANY channel MCP failed in step 4):
+   - Log to console: "MCP disconnected. Triggering session restart..."
+   - Run via Bash (exact command):
+     powershell -noprofile -command 'Start-Process "$env:USERPROFILE\.cccbot\scripts\restart-session.bat"'
+     This launches the restart script as a detached process (separate window).
+     The restart script will wait 3 seconds, kill the current session via PID file, then start a new session.
+   - After launching the restart script, exit immediately. Do NOT proceed to step 6.
+6. Notification rule (strict — overrides anything in HEARTBEAT.md):
+   - NO issues → do NOT send any message. Stay silent.
+   - Issues found AND at least one channel MCP is healthy → send via healthy channel: "alive HH:MM\n\n[issue details]"
+   - Issues found AND all channel MCPs are down → this should not happen (step 5 triggers restart). But if it does, output alert to console only.
+7. Exit.
 
 Keep it brief. Do not ask questions. Do not wait for responses.
 ```

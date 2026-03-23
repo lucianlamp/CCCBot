@@ -3,6 +3,7 @@ rem CCCBot Workspace Launcher
 rem Start Claude Code Channels session
 
 set "CCCBOT_DIR=%USERPROFILE%\.cccbot"
+set "PID_FILE=%CCCBOT_DIR%\.claude\ccc-session.pid"
 
 rem Channels to enable
 if not defined CHANNELS set "CHANNELS=plugin:telegram@claude-plugins-official"
@@ -23,8 +24,23 @@ if not exist ".claude\settings.json" (
     echo Created default .claude\settings.json
 )
 
+rem Write this cmd.exe's PID to file (for restart-session.bat to kill)
+title CCC-Session
+for /f %%a in ('powershell -noprofile -ExecutionPolicy Bypass -File "%~dp0scripts\get-parent-pid.ps1"') do (
+    echo %%a> "%PID_FILE%"
+)
+
 echo Starting Claude Code Channels session...
 echo Workspace: %CD%
 echo Channels:  %CHANNELS%
+echo PID file:  %PID_FILE%
 
-claude --channels %CHANNELS% --remote-control
+rem Try to resume previous session first; fall back to fresh start
+claude --continue --channels %CHANNELS% --remote-control
+if %errorlevel% neq 0 (
+    echo Previous session not found. Starting fresh...
+    claude --channels %CHANNELS% --remote-control
+)
+
+rem Clean up PID file on exit
+del "%PID_FILE%" 2>nul
