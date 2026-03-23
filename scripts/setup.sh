@@ -29,7 +29,7 @@ if [ ! -f ".gitignore" ]; then
 fi
 
 # --- Template files ---
-# Structural files only. SOUL.md and USER.md are created by /ccc-setup interactively.
+# Structural files only. SOUL.md is created by /ccc-setup interactively.
 # Format: "template_name:target_path"
 FILES=(
     "CLAUDE.example.md:CLAUDE.md"

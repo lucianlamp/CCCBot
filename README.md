@@ -1,5 +1,10 @@
 # CCCBot — Claude Code Channels Bot
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-blue.svg)](#quick-start)
+[![Claude Code](https://img.shields.io/badge/Built%20with-Claude%20Code-blueviolet.svg)](https://claude.ai/code)
+[![Channels](https://img.shields.io/badge/Channels-Telegram%20%7C%20Discord-green.svg)](#how-it-works)
+
 > **[日本語版はこちら](README.ja.md)**
 
 An autonomous Claude Code workspace connected to messaging channels (Telegram, Discord, etc.).
@@ -12,8 +17,6 @@ Built on [Claude Code Channels](https://code.claude.com/docs/en/channels) — cu
 
 ## Quick Start
 
-### Option A — One-command install
-
 ```bash
 # macOS / Linux
 bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.sh)
@@ -23,16 +26,6 @@ bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scr
 # Windows (PowerShell)
 $f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.bat).Content | Set-Content -Encoding ASCII $f; & $f
 ```
-
-### Option B — Clone and run
-
-```bash
-git clone https://github.com/lucianlamp/CCCBot
-cd CCCBot
-bash start.sh   # Windows: start.bat
-```
-
-`start.sh` automatically runs the installer on first launch if `~/.cccbot` doesn't exist.
 
 ### After install
 
@@ -70,8 +63,7 @@ These files are yours to edit — they define behavior for your workspace:
 | File | Purpose |
 |------|---------|
 | `CLAUDE.md` | **Core config — controls Claude's behavior. Edit with care.** |
-| `SOUL.md` | Identity, persona, tone, values |
-| `USER.md` | Info about the operator |
+| `SOUL.md` | User info, bot identity, persona, tone, values |
 | `BOOT.md` | What to do at session start |
 | `HEARTBEAT.md` | What to check on each heartbeat cycle |
 | `CRONS.md` | Recurring scheduled tasks |
@@ -106,7 +98,7 @@ These files are yours to edit — they define behavior for your workspace:
         └── ccc-import-openclaw-skill/
 ```
 
-Personal config files (`SOUL.md`, `USER.md`, `CRONS.md`, etc.) live in `~/.cccbot/` and are not tracked by git.
+Personal config files (`SOUL.md`, `CRONS.md`, etc.) live in `~/.cccbot/` and are not tracked by git.
 
 ---
 

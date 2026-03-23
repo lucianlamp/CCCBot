@@ -5,15 +5,11 @@
 
 ---
 
-## Soul — Persona & Values
+## Soul — Persona, User & Values
 
 See [SOUL.md](SOUL.md)
 
----
-
-## User
-
-See [USER.md](USER.md) — copy from `USER.example.md` and customize.
+**SOUL.md is editable via chat.** When the user requests changes to persona, tone, name, language, values, or boundaries, edit SOUL.md immediately. Phrases like "engrave it in your soul" or "remember this about yourself" also mean writing to SOUL.md.
 
 ---
 

@@ -9,7 +9,7 @@ Interactive first-run setup. Creates config files and guides the user through wo
 
 ## When to Run
 
-Called by `ccc-boot` when `SOUL.md` or `USER.md` is missing. Can also be run manually with `/ccc-setup`.
+Called by `ccc-boot` when `SOUL.md` is missing. Can also be run manually with `/ccc-setup`.
 
 ## Steps
 
@@ -23,14 +23,13 @@ bash scripts/setup.sh
 
 (On Windows cmd: `scripts\setup.bat`)
 
-### 2. Create SOUL.md and USER.md from templates
+### 2. Create SOUL.md from template
 
-Use the Write tool to copy template contents as starting points:
+Use the Write tool to copy template contents as a starting point:
 
 - Read `scripts/templates/SOUL.example.md` → Write to `SOUL.md`
-- Read `scripts/templates/USER.example.md` → Write to `USER.md`
 
-Only create if the files don't already exist.
+Only create if the file doesn't already exist.
 
 ### 3. Greet via Telegram
 
@@ -43,16 +42,16 @@ Let me set up your workspace. I'll ask a few quick questions.
 
 ### 4. Interactive configuration (via Telegram)
 
-Ask one question at a time via Telegram. Wait for each answer before asking the next. Write answers to the corresponding files immediately.
+Ask one question at a time via Telegram. Wait for each answer before asking the next. Write all answers to `SOUL.md` immediately.
 
 **Q1: Language**
 Ask: "What language should I use? (e.g., English, 日本語)"
-→ Write to `SOUL.md` Language section AND `USER.md` Language field.
+→ Write to `SOUL.md` User > Language AND remove the old Language section at the bottom.
 → Switch to the chosen language for all subsequent messages.
 
 **Q2: Your name**
 Ask: "What should I call you? (name or handle)"
-→ Write to `USER.md` Handle field.
+→ Write to `SOUL.md` User > Handle field.
 
 **Q3: Bot name**
 Ask: "What should my name be? (default: CCC)"
@@ -78,8 +77,8 @@ Return control to the boot skill to continue the boot sequence (heartbeat, crons
 
 ## Design Notes
 
-- **USER.md is minimal by design.** Only name/handle and language are asked. User's role, projects, expertise, and preferences are learned automatically through interactions and stored via the auto-memory system — not through an interrogation at setup time.
-- **SOUL.md defines the bot**, not the user. Keep the setup focused on how the bot should behave.
+- **SOUL.md is the single personalization file.** It contains both user info (handle, language) and bot config (identity, persona, tone, values, boundaries).
+- **User details are minimal by design.** Only name/handle and language are asked at setup. Role, projects, expertise, and preferences are learned automatically through interactions and stored via the auto-memory system.
 
 ## Usage
 

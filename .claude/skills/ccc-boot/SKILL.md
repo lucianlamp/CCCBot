@@ -11,14 +11,14 @@ Run the boot sequence at session start.
 
 ### 1. First-run check
 
-Run this command to check if personalization files exist:
+Run this command to check if the personalization file exists:
 
 ```bash
-ls SOUL.md USER.md 2>&1
+ls SOUL.md 2>&1
 ```
 
-- If **either file is missing** (error in output) → invoke `/ccc-setup` skill, then continue from step 4 (skip steps 2-3, setup already handles greeting)
-- If **both exist** → continue to step 2
+- If **missing** (error in output) → invoke `/ccc-setup` skill, then continue from step 4 (skip steps 2-3, setup already handles greeting)
+- If **exists** → continue to step 2
 
 ### 2. Load persona
 
