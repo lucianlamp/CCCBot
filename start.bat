@@ -16,6 +16,11 @@ if not exist "%CCCBOT_DIR%" (
 )
 cd /d "%CCCBOT_DIR%"
 
+:: Ensure settings.json exists (may be missing after git pull)
+if not exist ".claude\settings.json" (
+    call scripts\setup.bat
+)
+
 echo Starting Claude Code Channels session...
 echo Workspace: %CD%
 echo Channels:  %CHANNELS%

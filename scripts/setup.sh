@@ -28,6 +28,15 @@ if [ ! -f ".gitignore" ]; then
     echo -e "  ${GREEN}Created:${NC} .gitignore"
 fi
 
+# --- Settings ---
+if [ ! -f ".claude/settings.json" ]; then
+    mkdir -p .claude
+    cp "$TEMPLATES_DIR/settings.json.default" ".claude/settings.json"
+    echo -e "  ${GREEN}Created:${NC} .claude/settings.json"
+else
+    echo "  Skipped (exists): .claude/settings.json"
+fi
+
 # --- Template files ---
 # Structural files only. SOUL.md is created by /ccc-setup interactively.
 # Format: "template_name:target_path"

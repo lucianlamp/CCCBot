@@ -26,6 +26,15 @@ if not exist ".gitignore" (
     echo   Created: .gitignore
 )
 
+:: --- Settings ---
+if not exist ".claude" mkdir ".claude"
+if not exist ".claude\settings.json" (
+    copy "%TEMPLATES_DIR%\settings.json.default" ".claude\settings.json" >nul
+    echo   Created: .claude\settings.json
+) else (
+    echo   Skipped [exists]: .claude\settings.json
+)
+
 :: --- Template files ---
 :: Structural files only. SOUL.md is created by /ccc-setup interactively.
 call :copy_if_missing "%TEMPLATES_DIR%\CLAUDE.example.md"    "CLAUDE.md"

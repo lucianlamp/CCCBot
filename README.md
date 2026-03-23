@@ -80,6 +80,46 @@ These files are yours to edit — they define behavior for your workspace:
 
 ---
 
+## Permissions
+
+CCCBot ships with a default permission set in `.claude/settings.json` that balances autonomy and safety.
+
+**Default mode:** `bypassPermissions` — Claude runs most tools without asking for confirmation.
+
+**Allowed by default:**
+
+- Web search, reading/editing `.claude/` config files
+
+**Denied (destructive operations):**
+
+- `rm -rf /`, `rm -rf ~` — filesystem destruction
+- `git push --force`, `git reset --hard`, `git clean -f`, `git branch -D` — irreversible git operations
+- `format`, `mkfs`, `dd if=` — disk operations
+- `npm publish` — accidental package publishing
+
+### Updating Permissions
+
+Edit `.claude/settings.json` directly:
+
+```jsonc
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm test*)"     // add tool patterns to allow
+    ],
+    "deny": [
+      "Bash(dangerous-cmd*)" // add tool patterns to deny
+    ]
+  }
+}
+```
+
+Or ask Claude in chat — e.g. *"allow npm test commands"* — and it will update the settings file.
+
+> **Tip:** Deny rules take precedence over allow rules. See [Claude Code docs](https://docs.anthropic.com/en/docs/claude-code) for the full permission pattern syntax.
+
+---
+
 ## Project Structure
 
 ```
@@ -91,9 +131,10 @@ These files are yours to edit — they define behavior for your workspace:
 │   ├── install.bat        # Installer (Windows)
 │   ├── setup.sh           # Shared setup logic (template copy, gitignore)
 │   ├── setup.bat          # Windows version
-│   └── templates/         # Personal config templates (copied on first run)
+│   └── templates/         # Config templates (copied on first run)
+│       └── settings.json.default  # Permission & hook defaults
 └── .claude/
-    ├── settings.json      # Permissions and hooks
+    ├── settings.json      # Permissions and hooks (created from template, gitignored)
     └── skills/            # Skill definitions (behavior logic)
         ├── REQUIRED.md    # Essential skills — do not delete
         ├── IMPORTED.md    # Externally imported skills

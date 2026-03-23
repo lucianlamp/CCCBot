@@ -2,12 +2,9 @@
   "permissions": {
     "allow": [
       "WebSearch",
-      "Edit(.claude/**)",
-      "Write(.claude/**)",
       "Read(.claude/**)",
-      "Edit(/.claude/skills/ccc-boot/**)",
-      "Edit(/.claude/skills/ccc-heartbeat/**)",
-      "Edit(/.claude/skills/ccc-setup/**)"
+      "Edit(.claude/**)",
+      "Write(.claude/**)"
     ],
     "deny": [
       "Bash(rm -rf /*)",

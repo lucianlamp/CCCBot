@@ -6,6 +6,7 @@ memory/
 .claude/scheduled_tasks.lock
 
 # Local machine overrides
+.claude/settings.json
 .claude/settings.local.json
 
 # Security: Telegram access list

@@ -80,6 +80,46 @@ Claude Code（常駐セッション）
 
 ---
 
+## パーミッション
+
+CCCBot はデフォルトで `.claude/settings.json` に自律性と安全性のバランスを取ったパーミッション設定を持っています。
+
+**デフォルトモード:** `bypassPermissions` — Claude はほとんどのツールを確認なしで実行します。
+
+**許可（デフォルト）:**
+
+- Web 検索、`.claude/` 設定ファイルの読み書き
+
+**拒否（破壊的操作）:**
+
+- `rm -rf /`, `rm -rf ~` — ファイルシステム破壊
+- `git push --force`, `git reset --hard`, `git clean -f`, `git branch -D` — 不可逆な git 操作
+- `format`, `mkfs`, `dd if=` — ディスク操作
+- `npm publish` — パッケージの誤公開
+
+### パーミッションの更新
+
+`.claude/settings.json` を直接編集:
+
+```jsonc
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm test*)"     // 許可するツールパターンを追加
+    ],
+    "deny": [
+      "Bash(dangerous-cmd*)" // 拒否するツールパターンを追加
+    ]
+  }
+}
+```
+
+または、チャットで Claude に依頼できます — 例: *「npm test コマンドを許可して」*
+
+> **ヒント:** deny ルールは allow ルールより優先されます。パーミッションパターンの完全な構文は [Claude Code ドキュメント](https://docs.anthropic.com/en/docs/claude-code) を参照してください。
+
+---
+
 ## プロジェクト構成
 
 ```
@@ -91,9 +131,10 @@ Claude Code（常駐セッション）
 |   +-- install.bat        # インストーラー（Windows）
 |   +-- setup.sh           # 共通セットアップ処理（テンプレートコピー、gitignore）
 |   +-- setup.bat          # Windows 版
-|   +-- templates/         # 個人設定テンプレート（初回実行時にコピー）
+|   +-- templates/         # 設定テンプレート（初回実行時にコピー）
+|       +-- settings.json.default  # パーミッション・フックのデフォルト
 +-- .claude/
-    +-- settings.json      # パーミッションとフック
+    +-- settings.json      # パーミッションとフック（テンプレートから作成、gitignore対象）
     +-- skills/            # スキル定義（動作ロジック）
         +-- REQUIRED.md    # 必須スキル — 削除禁止
         +-- IMPORTED.md    # 外部インポートされたスキル

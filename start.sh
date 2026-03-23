@@ -21,6 +21,11 @@ if [ ! -d "$CCCBOT_DIR" ]; then
 fi
 cd "$CCCBOT_DIR"
 
+# Ensure settings.json exists (may be missing after git pull)
+if [ ! -f ".claude/settings.json" ]; then
+    bash scripts/setup.sh
+fi
+
 echo "Starting Claude Code Channels session..."
 echo "Workspace: $(pwd)"
 echo "Channels:  $CHANNELS"
