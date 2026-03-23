@@ -42,6 +42,18 @@ $f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercont
 
 ---
 
+## アップデート
+
+```bash
+cd ~/.cccbot && git pull
+```
+
+スキル、スクリプト、テンプレートが更新されます。個人設定ファイル（`SOUL.md`、`CLAUDE.md`、`CRONS.md`、`.claude/settings.json` 等）は gitignore 対象のため上書きされません。
+
+新しいテンプレートが追加された場合、次回起動時に自動で作成されます。
+
+---
+
 ## 仕組み
 
 ```

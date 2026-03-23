@@ -42,6 +42,18 @@ Claude Code starts automatically after installation. On first launch, a greeting
 
 ---
 
+## Updating
+
+```bash
+cd ~/.cccbot && git pull
+```
+
+Skills, scripts, and templates are updated. Your personal config files (`SOUL.md`, `CLAUDE.md`, `CRONS.md`, `.claude/settings.json`, etc.) are gitignored and won't be overwritten.
+
+If a new template is added, it will be created automatically on the next launch.
+
+---
+
 ## How It Works
 
 ```
