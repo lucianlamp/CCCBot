@@ -1,8 +1,9 @@
 #!/bin/bash
 # CCCBot — Claude Code Channels Bot Installer
 
-REPO_URL="https://github.com/lucianlamp/CCCBot"
-INSTALL_DIR="${1:-$HOME/.cccbot}"
+REPO="lucianlamp/CCCBot"
+VERSION="${1:-}"
+INSTALL_DIR="$HOME/.cccbot"
 
 # Colors
 RED='\033[0;31m'
@@ -26,60 +27,127 @@ if ! command -v claude &> /dev/null; then
     exit 1
 fi
 
-# Clone repo
-if [ -d "$INSTALL_DIR" ]; then
-    echo -e "${YELLOW}Directory already exists: $INSTALL_DIR${NC}"
-    echo "Skipping clone. Updating templates only."
-else
-    echo "Cloning to $INSTALL_DIR..."
-    git clone "$REPO_URL" "$INSTALL_DIR"
-    if [ $? -ne 0 ]; then
-        echo -e "${RED}Error: Clone failed.${NC}"
+# Resolve version
+if [ -z "$VERSION" ]; then
+    echo "Fetching latest release..."
+    VERSION=$(curl -fsSL "https://api.github.com/repos/$REPO/releases/latest" | grep '"tag_name"' | sed 's/.*"tag_name": *"\([^"]*\)".*/\1/')
+    if [ -z "$VERSION" ]; then
+        echo -e "${RED}Error: Could not determine latest release.${NC}"
+        echo "Specify a version manually: install.sh v1.0.0"
         exit 1
+    fi
+    echo -e "  Latest release: ${GREEN}${VERSION}${NC}"
+fi
+
+# Download and extract release archive
+TMPDIR=$(mktemp -d)
+ARCHIVE_URL="https://github.com/$REPO/archive/refs/tags/${VERSION}.tar.gz"
+
+echo "Downloading CCCBot ${VERSION}..."
+curl -fsSL "$ARCHIVE_URL" -o "$TMPDIR/cccbot.tar.gz"
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Error: Download failed. Check version tag: ${VERSION}${NC}"
+    rm -rf "$TMPDIR"
+    exit 1
+fi
+
+echo "Extracting..."
+tar xzf "$TMPDIR/cccbot.tar.gz" -C "$TMPDIR"
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Error: Extraction failed.${NC}"
+    rm -rf "$TMPDIR"
+    exit 1
+fi
+
+# Find extracted directory
+EXTRACTED_DIR=$(ls -d "$TMPDIR"/CCCBot-* 2>/dev/null | head -1)
+if [ -z "$EXTRACTED_DIR" ]; then
+    echo -e "${RED}Error: Unexpected archive structure.${NC}"
+    rm -rf "$TMPDIR"
+    exit 1
+fi
+
+mkdir -p "$INSTALL_DIR"
+
+# On update: preserve user config files by moving them aside temporarily
+IS_UPDATE=false
+if [ -f "$INSTALL_DIR/CLAUDE.md" ] || [ -f "$INSTALL_DIR/start.sh" ]; then
+    IS_UPDATE=true
+    echo -e "${YELLOW}Existing installation detected. Updating...${NC}"
+    BACKUP_DIR=$(mktemp -d)
+    for f in CLAUDE.md SOUL.md BOOT.md HEARTBEAT.md JOBS.yaml .mcp.json .gitignore; do
+        [ -f "$INSTALL_DIR/$f" ] && cp "$INSTALL_DIR/$f" "$BACKUP_DIR/"
+    done
+    [ -f "$INSTALL_DIR/.claude/settings.json" ] && mkdir -p "$BACKUP_DIR/.claude" && cp "$INSTALL_DIR/.claude/settings.json" "$BACKUP_DIR/.claude/"
+    [ -f "$INSTALL_DIR/.claude/settings.local.json" ] && mkdir -p "$BACKUP_DIR/.claude" && cp "$INSTALL_DIR/.claude/settings.local.json" "$BACKUP_DIR/.claude/"
+    [ -d "$INSTALL_DIR/memory" ] && cp -r "$INSTALL_DIR/memory" "$BACKUP_DIR/"
+fi
+
+# Copy all files from archive (overwrites core files)
+cp -r "$EXTRACTED_DIR"/* "$INSTALL_DIR/"
+cp -r "$EXTRACTED_DIR"/.[!.]* "$INSTALL_DIR/" 2>/dev/null
+
+# Restore preserved user config files
+if [ "$IS_UPDATE" = true ]; then
+    for f in CLAUDE.md SOUL.md BOOT.md HEARTBEAT.md JOBS.yaml .mcp.json .gitignore; do
+        [ -f "$BACKUP_DIR/$f" ] && cp "$BACKUP_DIR/$f" "$INSTALL_DIR/"
+    done
+    [ -f "$BACKUP_DIR/.claude/settings.json" ] && cp "$BACKUP_DIR/.claude/settings.json" "$INSTALL_DIR/.claude/"
+    [ -f "$BACKUP_DIR/.claude/settings.local.json" ] && cp "$BACKUP_DIR/.claude/settings.local.json" "$INSTALL_DIR/.claude/"
+    [ -d "$BACKUP_DIR/memory" ] && cp -r "$BACKUP_DIR/memory" "$INSTALL_DIR/"
+    rm -rf "$BACKUP_DIR"
+fi
+
+# Cleanup temp
+rm -rf "$TMPDIR"
+
+cd "$INSTALL_DIR"
+TEMPLATES_DIR="$INSTALL_DIR/scripts/templates"
+
+# Migrate from git-clone workspace
+if git rev-parse --git-dir &>/dev/null; then
+    REMOTE_URL=$(git remote get-url origin 2>/dev/null || true)
+    if echo "$REMOTE_URL" | grep -q "lucianlamp/CCCBot"; then
+        echo -e "${YELLOW}Detected old git-clone workspace. Removing dev remote...${NC}"
+        git remote remove origin
     fi
 fi
 
-cd "$INSTALL_DIR"
+# --- Permission mode selection (skip on update) ---
+if [ "$IS_UPDATE" = true ] && [ -f ".claude/settings.json" ]; then
+    echo "  Keeping existing settings"
+else
+    echo ""
+    echo "=== Permission Mode ==="
+    echo ""
+    echo "Claude Code needs permission settings to control tool execution."
+    echo ""
+    echo -e "  ${GREEN}1) bypass${NC} — All tools run without confirmation (full autonomy)"
+    echo -e "     Best for: experienced users, background bot operation"
+    echo ""
+    echo -e "  ${YELLOW}2) allowEdits${NC} — File edits auto-approved, Bash/dangerous tools require confirmation"
+    echo -e "     Best for: first-time users, security-conscious setups"
+    echo ""
 
-# --- Permission mode selection ---
-echo ""
-echo "=== Permission Mode ==="
-echo ""
-echo "Claude Code needs permission settings to control tool execution."
-echo ""
-echo -e "  ${GREEN}1) bypass${NC} — All tools run without confirmation (full autonomy)"
-echo -e "     Best for: experienced users, background bot operation"
-echo ""
-echo -e "  ${YELLOW}2) allowEdits${NC} — File edits auto-approved, Bash/dangerous tools require confirmation"
-echo -e "     Best for: first-time users, security-conscious setups"
-echo ""
-
-while true; do
-    read -rp "Select permission mode [1/2] (default: 1): " PERM_CHOICE
-    PERM_CHOICE="${PERM_CHOICE:-1}"
-    case "$PERM_CHOICE" in
-        1|bypass)
-            PERM_MODE="bypassPermissions"
-            echo -e "  → ${GREEN}bypass${NC} mode selected"
-            break
-            ;;
-        2|allowEdits)
-            PERM_MODE="allowEdits"
-            echo -e "  → ${YELLOW}allowEdits${NC} mode selected"
-            break
-            ;;
-        *)
-            echo -e "  ${RED}Invalid choice. Enter 1 or 2.${NC}"
-            ;;
-    esac
-done
-
-TEMPLATES_DIR="$INSTALL_DIR/scripts/templates"
-
-# --- Git setup ---
-if ! git rev-parse --git-dir &>/dev/null; then
-    echo "Initializing git repository..."
-    git init
+    while true; do
+        read -rp "Select permission mode [1/2] (default: 1): " PERM_CHOICE
+        PERM_CHOICE="${PERM_CHOICE:-1}"
+        case "$PERM_CHOICE" in
+            1|bypass)
+                PERM_MODE="bypassPermissions"
+                echo -e "  → ${GREEN}bypass${NC} mode selected"
+                break
+                ;;
+            2|allowEdits)
+                PERM_MODE="allowEdits"
+                echo -e "  → ${YELLOW}allowEdits${NC} mode selected"
+                break
+                ;;
+            *)
+                echo -e "  ${RED}Invalid choice. Enter 1 or 2.${NC}"
+                ;;
+        esac
+    done
 fi
 
 # --- .gitignore ---
@@ -116,11 +184,27 @@ copy_if_missing "$TEMPLATES_DIR/JOBS.example.yaml"    "JOBS.yaml"
 copy_if_missing "$TEMPLATES_DIR/BOOT.example.md"      "BOOT.md"
 copy_if_missing "$TEMPLATES_DIR/HEARTBEAT.example.md" "HEARTBEAT.md"
 
+# --- Git setup (after all files are in place) ---
+if ! git rev-parse --git-dir &>/dev/null; then
+    git init
+    git add -A
+    git commit -m "CCCBot ${VERSION} installed" --quiet
+    echo -e "  ${GREEN}Initial commit created${NC}"
+else
+    if [ "$IS_UPDATE" = true ]; then
+        git add -A
+        git commit -m "CCCBot updated to ${VERSION}" --quiet 2>/dev/null
+        if [ $? -eq 0 ]; then
+            echo -e "  ${GREEN}Update committed${NC}"
+        else
+            echo "  No changes to commit"
+        fi
+    fi
+fi
+
 # Done
 echo ""
-echo -e "${GREEN}CCC installed to: $INSTALL_DIR${NC}"
-echo ""
-echo "Docs: $REPO_URL"
+echo -e "${GREEN}CCCBot ${VERSION} installed to: $INSTALL_DIR${NC}"
 echo ""
 
 # Launch
