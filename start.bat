@@ -55,11 +55,9 @@ echo Channels:  %CHANNELS%
 echo PID file:  %PID_FILE%
 
 rem Try to resume previous session first; fall back to fresh start
-claude --continue --channels %CHANNELS% --remote-control --effort auto
-if %errorlevel% neq 0 (
+claude --continue --channels %CHANNELS% --remote-controlif %errorlevel% neq 0 (
     echo Previous session not found. Starting fresh...
-    claude --channels %CHANNELS% --remote-control --effort auto
-)
+    claude --channels %CHANNELS% --remote-control)
 
 rem Clean up PID file on exit
 del "%PID_FILE%" 2>nul
