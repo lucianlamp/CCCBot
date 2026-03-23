@@ -5,3 +5,4 @@
 docs/superpowers/ export-ignore
 scripts/install.sh export-ignore
 scripts/install.bat export-ignore
+assets/ export-ignore
