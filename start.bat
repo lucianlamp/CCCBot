@@ -20,9 +20,4 @@ echo Starting Claude Code Channels session...
 echo Workspace: %CD%
 echo Channels:  %CHANNELS%
 
-echo Trying --continue...
-claude --continue --channels %CHANNELS% --remote-control
-if %ERRORLEVEL% neq 0 (
-    echo No previous session found, starting fresh...
-    claude --channels %CHANNELS% --remote-control
-)
+claude --channels %CHANNELS% --remote-control
