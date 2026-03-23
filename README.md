@@ -15,6 +15,15 @@ Built on [Claude Code Channels](https://code.claude.com/docs/en/channels) — cu
 
 ---
 
+## Prerequisites
+
+Complete these steps first, following the [Claude Code Channels](https://code.claude.com/docs/en/channels) official docs:
+
+- Obtain and configure a Telegram Bot Token or Discord Bot Token
+- Enable the Claude Code Channels plugin
+
+---
+
 ## Quick Start
 
 ```bash
@@ -26,13 +35,6 @@ bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scr
 # Windows (PowerShell)
 $f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.bat).Content | Set-Content -Encoding ASCII $f; & $f
 ```
-
-### Prerequisites
-
-Complete these steps first, following the [Claude Code Channels](https://code.claude.com/docs/en/channels) official docs:
-
-- Obtain and configure a Telegram Bot Token or Discord Bot Token
-- Enable the Claude Code Channels plugin
 
 ### After install
 
