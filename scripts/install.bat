@@ -1,5 +1,5 @@
 @echo off
-:: CCCBot -Claude Code Channels Bot Installer
+:: CCCBot - Claude Code Channels Bot Installer
 
 set "REPO_URL=https://github.com/lucianlamp/CCCBot"
 if "%~1"=="" (
@@ -10,7 +10,6 @@ if "%~1"=="" (
 
 echo CCCBot -- Claude Code Channels Bot Installer
 echo =============================================
-echo/
 
 :: Check dependencies
 where git >nul 2>&1
@@ -42,15 +41,11 @@ if exist "%INSTALL_DIR%" (
 cd /d "%INSTALL_DIR%"
 
 :: Run shared setup (template copy, gitignore, etc.)
-echo/
 call "%INSTALL_DIR%\scripts\setup.bat"
 
 :: Done
-echo/
 echo CCC installed to: %INSTALL_DIR%
-echo/
 echo Docs: %REPO_URL%
-echo/
 
 :: Launch
 call "%INSTALL_DIR%\start.bat"

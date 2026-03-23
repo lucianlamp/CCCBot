@@ -24,39 +24,7 @@ if ! git rev-parse --git-dir &>/dev/null; then
 fi
 
 if [ ! -f ".gitignore" ]; then
-    echo "Creating .gitignore..."
-    cat > .gitignore << 'GITIGNORE'
-# MCP config (contains bot tokens)
-.mcp.json
-
-# Personal configuration (use *.example.md as templates)
-CLAUDE.md
-CRONS.md
-USER.md
-SOUL.md
-MEMORY.md
-BOOT.md
-HEARTBEAT.md
-
-# Runtime / session data
-memory/
-.claude/scheduled_tasks.lock
-
-# Local machine overrides
-.claude/settings.local.json
-
-# Security: Telegram access list
-.claude/access.json
-**/access.json
-
-# Secrets and credentials
-.env
-**/*.key
-**/*.pem
-**/*.secret
-**/secrets.*
-**/credentials.*
-GITIGNORE
+    cp "$TEMPLATES_DIR/.gitignore.default" ".gitignore"
     echo -e "  ${GREEN}Created:${NC} .gitignore"
 fi
 
