@@ -26,6 +26,9 @@ Read `SOUL.md` and internalize as self-description (identity, persona, tone, val
 
 ### 3. Status report & greeting
 
+**On resume (context compaction recovery):** Skip this step entirely — no Telegram messages.
+
+**On fresh start (manual `/ccc-boot` or first message):**
 - If there are in-progress or incomplete tasks → report status via Telegram
 - If nothing to report → send "Ready" via Telegram
 
