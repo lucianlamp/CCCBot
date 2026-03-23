@@ -34,8 +34,16 @@ if "%VERSION%"=="" (
 echo   Latest release -- %VERSION%
 :version_set
 
+rem Validate version format to prevent command injection
+echo %VERSION% | findstr /r "^v[0-9]" >nul
+if %ERRORLEVEL% neq 0 (
+    echo Error - Invalid version format: %VERSION%
+    echo Version must start with v followed by a number, e.g. v1.0.0
+    exit /b 1
+)
+
 rem Download and extract release archive
-set "TMPDIR=%TEMP%\cccbot-%RANDOM%"
+set "TMPDIR=%TEMP%\cccbot-%RANDOM%%RANDOM%"
 mkdir "%TMPDIR%"
 set "ARCHIVE_URL=https://github.com/%REPO%/archive/refs/tags/%VERSION%.zip"
 
@@ -62,7 +70,7 @@ if exist "%INSTALL_DIR%\start.bat" set "IS_UPDATE=1"
 rem On update, back up user config files
 if "%IS_UPDATE%"=="0" goto :skip_backup
 echo Existing installation detected. Updating...
-set "BACKUP_DIR=%TEMP%\cccbot-backup-%RANDOM%"
+set "BACKUP_DIR=%TEMP%\cccbot-backup-%RANDOM%%RANDOM%"
 mkdir "%BACKUP_DIR%"
 for %%f in (CLAUDE.md SOUL.md BOOT.md HEARTBEAT.md JOBS.yaml .mcp.json .gitignore) do (
     if exist "%INSTALL_DIR%\%%f" copy "%INSTALL_DIR%\%%f" "%BACKUP_DIR%\" >nul
@@ -185,6 +193,7 @@ git rev-parse --git-dir >nul 2>&1
 if %ERRORLEVEL% equ 0 goto :git_exists
 
 git init
+rem NOTE: git add -A is safe here — .gitignore is already in place, excluding secrets and user config
 git add -A
 git commit -m "CCCBot %VERSION% installed" --quiet
 echo   Initial commit created
@@ -192,6 +201,7 @@ goto :git_done
 
 :git_exists
 if "%IS_UPDATE%"=="0" goto :git_done
+rem NOTE: git add -A is safe here — .gitignore is in place and user config files are preserved
 git add -A
 git commit -m "CCCBot updated to %VERSION%" --quiet 2>nul
 if %ERRORLEVEL% neq 0 goto :no_changes

@@ -8,7 +8,7 @@ echo ""
 
 # 1. List today's memory file if it exists
 TODAY=$(date '+%Y-%m-%d')
-YESTERDAY=$(date -d 'yesterday' '+%Y-%m-%d' 2>/dev/null || date -v-1d '+%Y-%m-%d' 2>/dev/null)
+YESTERDAY=$(date -d 'yesterday' '+%Y-%m-%d' 2>/dev/null || date -v-1d '+%Y-%m-%d' 2>/dev/null || echo "unknown")
 MEMORY_DIR="$WORKSPACE_DIR/memory"
 
 echo "--- Memory ---"

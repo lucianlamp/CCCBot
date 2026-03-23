@@ -1,7 +1,9 @@
 # Force CRLF for Windows batch files (cmd.exe requires CRLF)
 *.bat text eol=crlf
 
-# Exclude from release archives (git archive / GitHub source downloads)
+# Exclude from release archives (git archive / GitHub source downloads).
+# Installer scripts are fetched from master branch via curl, not from the archive.
+# Dev-only directories (docs, assets) are not needed in the installed workspace.
 docs/superpowers/ export-ignore
 scripts/install.sh export-ignore
 scripts/install.bat export-ignore

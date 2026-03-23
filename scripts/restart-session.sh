@@ -17,9 +17,17 @@ if [ ! -f "$PID_FILE" ]; then
     echo "No PID file found. Skipping kill."
 else
     OLD_PID=$(cat "$PID_FILE")
-    echo "Killing old session (PID: $OLD_PID) and its process tree..."
-    # Kill the process group (shell + all children including claude)
-    kill -- -"$OLD_PID" 2>/dev/null || kill "$OLD_PID" 2>/dev/null
+    # Validate process is actually a CCC session before killing
+    OLD_CMD=$(ps -p "$OLD_PID" -o args= 2>/dev/null || true)
+    if echo "$OLD_CMD" | grep -qE "(claude|ccc|start\.sh)"; then
+        echo "Killing old session (PID: $OLD_PID) and its process tree..."
+        # Kill child processes first, then the parent
+        pkill -P "$OLD_PID" 2>/dev/null
+        kill "$OLD_PID" 2>/dev/null
+    else
+        echo "PID $OLD_PID is not a CCC session (cmd: $OLD_CMD). Skipping kill."
+        rm -f "$PID_FILE"
+    fi
     # Wait for process to fully terminate
     sleep 2
 fi

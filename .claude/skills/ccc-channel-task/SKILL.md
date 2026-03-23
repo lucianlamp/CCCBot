@@ -39,7 +39,7 @@ Standard processing flow for tasks received from channels like Telegram or Disco
 Before processing any message, check if boot has been completed this session:
 
 ```bash
-ls SOUL.md 2>&1
+test -f SOUL.md && echo "exists" || echo "missing"
 ```
 
 - If `SOUL.md` is missing → invoke `/ccc-boot` first (which will trigger `/ccc-soul` for first-run)

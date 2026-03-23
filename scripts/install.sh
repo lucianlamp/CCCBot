@@ -39,6 +39,13 @@ if [ -z "$VERSION" ]; then
     echo -e "  Latest release: ${GREEN}${VERSION}${NC}"
 fi
 
+# Validate version format
+if ! echo "$VERSION" | grep -qE '^v[0-9]'; then
+    echo -e "${RED}Error: Invalid version format: ${VERSION}${NC}"
+    echo "Version must start with v followed by a number, e.g. v1.0.0"
+    exit 1
+fi
+
 # Download and extract release archive
 TMPDIR=$(mktemp -d)
 ARCHIVE_URL="https://github.com/$REPO/archive/refs/tags/${VERSION}.tar.gz"
@@ -61,6 +68,10 @@ fi
 
 # Find extracted directory
 EXTRACTED_DIR=$(ls -d "$TMPDIR"/CCCBot-* 2>/dev/null | head -1)
+# Fallback: some archive formats may use different naming
+if [ -z "$EXTRACTED_DIR" ]; then
+    EXTRACTED_DIR=$(find "$TMPDIR" -mindepth 1 -maxdepth 1 -type d | head -1)
+fi
 if [ -z "$EXTRACTED_DIR" ]; then
     echo -e "${RED}Error: Unexpected archive structure.${NC}"
     rm -rf "$TMPDIR"
@@ -162,7 +173,8 @@ fi
 mkdir -p .claude
 if [ ! -f ".claude/settings.json" ]; then
     cp "$TEMPLATES_DIR/settings.json.default" ".claude/settings.json"
-    sed -i "s/\"defaultMode\": \"bypassPermissions\"/\"defaultMode\": \"$PERM_MODE\"/" ".claude/settings.json"
+    # Portable sed: macOS sed -i requires backup extension, so use temp file instead
+    sed "s/\"defaultMode\": \"bypassPermissions\"/\"defaultMode\": \"$PERM_MODE\"/" ".claude/settings.json" > ".claude/settings.json.tmp" && mv ".claude/settings.json.tmp" ".claude/settings.json"
     echo -e "  ${GREEN}Created:${NC} .claude/settings.json (mode: $PERM_MODE)"
 else
     echo "  Skipped (exists): .claude/settings.json"
@@ -187,11 +199,13 @@ copy_if_missing "$TEMPLATES_DIR/HEARTBEAT.example.md" "HEARTBEAT.md"
 # --- Git setup (after all files are in place) ---
 if ! git rev-parse --git-dir &>/dev/null; then
     git init
+    # NOTE: git add -A is safe here — .gitignore is already in place, excluding secrets and user config
     git add -A
     git commit -m "CCCBot ${VERSION} installed" --quiet
     echo -e "  ${GREEN}Initial commit created${NC}"
 else
     if [ "$IS_UPDATE" = true ]; then
+        # NOTE: git add -A is safe here — .gitignore is in place and user config files are preserved
         git add -A
         git commit -m "CCCBot updated to ${VERSION}" --quiet 2>/dev/null
         if [ $? -eq 0 ]; then

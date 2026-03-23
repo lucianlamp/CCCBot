@@ -59,7 +59,7 @@ Cron triggers can fire 2–3× in the same interval due to scheduler jitter. Wit
 **Pattern:**
 
 ```bash
-LOCK=/tmp/ccc-<job-id>; NOW=$(date +%s); if [ -f "$LOCK" ] && [ $((NOW - $(cat "$LOCK"))) -lt <threshold>; then echo "SKIP"; else echo $NOW > "$LOCK"; <your command>; fi
+LOCK=/tmp/ccc-<job-id>; NOW=$(date +%s); if [ -f "$LOCK" ] && [ $((NOW - $(cat "$LOCK"))) -lt <threshold> ]; then echo "SKIP"; else echo $NOW > "$LOCK"; <your command>; fi
 ```
 
 **Threshold = ~75% of the cron interval in seconds:**
