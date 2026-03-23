@@ -11,10 +11,8 @@ if not defined CHANNELS set "CHANNELS=plugin:telegram@claude-plugins-official"
 if not exist "%CCCBOT_DIR%" (
     echo .cccbot not found. Running installer...
     call "%~dp0scripts\install.bat"
-    if %ERRORLEVEL% neq 0 (
-        echo Install failed. Exiting.
-        exit /b 1
-    )
+    :: install.bat already launches start.bat, so exit here to avoid double-launch
+    exit /b %ERRORLEVEL%
 )
 cd /d "%CCCBOT_DIR%"
 

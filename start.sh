@@ -16,10 +16,8 @@ CHANNELS="${CHANNELS:-plugin:telegram@claude-plugins-official}"
 if [ ! -d "$CCCBOT_DIR" ]; then
     echo "~/.cccbot not found. Running installer..."
     bash "$SCRIPT_DIR/scripts/install.sh"
-    if [ $? -ne 0 ]; then
-        echo "Install failed. Exiting."
-        exit 1
-    fi
+    # install.sh already launches start.sh via exec, so exit here to avoid double-launch
+    exit $?
 fi
 cd "$CCCBOT_DIR"
 

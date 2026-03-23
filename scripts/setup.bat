@@ -27,9 +27,8 @@ if not exist ".gitignore" (
 )
 
 :: --- Template files ---
+:: Structural files only. SOUL.md and USER.md are created by /ccc-setup interactively.
 call :copy_if_missing "%TEMPLATES_DIR%\CLAUDE.example.md"    "CLAUDE.md"
-call :copy_if_missing "%TEMPLATES_DIR%\SOUL.example.md"      "SOUL.md"
-call :copy_if_missing "%TEMPLATES_DIR%\USER.example.md"      "USER.md"
 call :copy_if_missing "%TEMPLATES_DIR%\CRONS.example.md"     "CRONS.md"
 call :copy_if_missing "%TEMPLATES_DIR%\BOOT.example.md"      "BOOT.md"
 call :copy_if_missing "%TEMPLATES_DIR%\HEARTBEAT.example.md" "HEARTBEAT.md"

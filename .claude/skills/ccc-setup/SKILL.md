@@ -13,28 +13,36 @@ Called by `ccc-boot` when required files are missing. Can also be run manually.
 
 ## Steps
 
-### 1. Generate config files
+### 1. Copy structural templates (if not already done)
 
-Run the setup script to copy templates:
+Run the setup script to copy structural config files (CLAUDE.md, CRONS.md, BOOT.md, HEARTBEAT.md):
 
 - **Unix/WSL/Git Bash:** `bash scripts/setup.sh`
 - **Windows (cmd):** `scripts\setup.bat`
 
 Detect the platform and run the appropriate script.
 
-### 2. Greet the user
+### 2. Create SOUL.md and USER.md from templates
 
-Print to terminal (and via Telegram if available):
+Copy the templates as starting points (these will be customized in the interactive step):
+
+- `scripts/templates/SOUL.example.md` → `SOUL.md`
+- `scripts/templates/USER.example.md` → `USER.md`
+
+Only copy if the files don't already exist.
+
+### 3. Greet the user via Telegram
+
+**Always send the greeting via Telegram** (using the reply MCP tool). This is the user's first contact with the bot — they need to see it in their messaging app.
 
 ```
-Welcome to CCCBot — Claude Code Channels Bot!
-
-I'm your autonomous assistant. Let's set up your workspace.
+Welcome to CCCBot!
+Let's set up your workspace. I'll ask a few questions here.
 ```
 
-### 3. Interactive configuration
+### 4. Interactive configuration (via Telegram)
 
-Guide the user through the following, one at a time. Ask questions and write their answers to the corresponding files.
+Guide the user through the following, one at a time. Ask questions via Telegram and write their answers to the corresponding files.
 
 **USER.md — Who are you?**
 - Name / handle
@@ -51,11 +59,14 @@ Guide the user through the following, one at a time. Ask questions and write the
 - Ask if they want to set up any recurring tasks
 - If not, skip
 
-### 4. Done
+### 5. Done
 
+Send via Telegram:
 ```
-Setup complete! Run /ccc-boot to start a fresh session with your new config.
+Setup complete! Starting session now.
 ```
+
+Then return control to the boot skill to continue the boot sequence.
 
 ## Usage
 
