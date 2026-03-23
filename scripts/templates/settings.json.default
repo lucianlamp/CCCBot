@@ -29,7 +29,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash scripts/ccc-boot-hook.sh",
+            "command": "bash scripts/session-start-hook.sh",
             "shell": "bash"
           }
         ]
