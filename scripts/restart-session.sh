@@ -1,36 +1,29 @@
 #!/bin/bash
-# CCC Session Restart Script
-# Called by heartbeat when MCP disconnection is detected.
-# Runs as a detached process: kills the old session, then starts a new one.
+# CCC Session Restart
+# Launched as detached process (nohup) to safely kill old session.
 
 CCCBOT_DIR="$HOME/.cccbot"
-PID_FILE="$CCCBOT_DIR/.claude/ccc-session.pid"
-START_SH="$(dirname "$0")/../start.sh"
+PID_FILE="$CCCBOT_DIR/.ccc-pid"
 
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] CCC restart triggered"
 
-# Wait for the calling process to finish its cleanup
+# Wait for Claude to finish its reply
 sleep 3
 
-# Read PID and kill the old session process tree
-if [ ! -f "$PID_FILE" ]; then
-    echo "No PID file found. Skipping kill."
-else
-    OLD_PID=$(cat "$PID_FILE")
-    # Validate process is actually a CCC session before killing
-    OLD_CMD=$(ps -p "$OLD_PID" -o args= 2>/dev/null || true)
-    if echo "$OLD_CMD" | grep -qE "(claude|ccc|start\.sh)"; then
-        echo "Killing old session (PID: $OLD_PID) and its process tree..."
-        # Kill child processes first, then the parent
+# Kill old session via PID file
+if [ -f "$PID_FILE" ]; then
+    OLD_PID=$(cat "$PID_FILE" | tr -d '[:space:]')
+    if [ -n "$OLD_PID" ] && ps -p "$OLD_PID" > /dev/null 2>&1; then
+        echo "Killing previous session (PID: $OLD_PID)..."
         pkill -P "$OLD_PID" 2>/dev/null
         kill "$OLD_PID" 2>/dev/null
     else
-        echo "PID $OLD_PID is not a CCC session (cmd: $OLD_CMD). Skipping kill."
-        rm -f "$PID_FILE"
+        echo "No active session found"
     fi
-    # Wait for process to fully terminate
-    sleep 2
+    rm -f "$PID_FILE"
+    sleep 5
 fi
 
-echo "Starting new session..."
-exec "$START_SH"
+# Start new session (skip --continue, force fresh start)
+export CCC_FRESH=1
+exec "$CCCBOT_DIR/start.sh"
