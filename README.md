@@ -62,6 +62,8 @@ Use the launcher script to start the session:
 %USERPROFILE%\.cccbot\start.bat
 ```
 
+On Windows, you can also double-click `start.bat` in Explorer. On macOS/Linux, you can make `start.sh` clickable with `chmod +x ~/.cccbot/start.sh`.
+
 > **Always use the launcher scripts** (`start.sh` / `start.bat`). They handle PID tracking, duplicate-launch prevention, session resume (`--continue`), and boot auto-trigger. Running `claude --channels ...` directly will skip these safeguards.
 
 ---

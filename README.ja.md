@@ -62,6 +62,8 @@ $f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercont
 %USERPROFILE%\.cccbot\start.bat
 ```
 
+Windows では `start.bat` をダブルクリックでも起動できます。macOS/Linux では `chmod +x ~/.cccbot/start.sh` で `start.sh` をクリック起動可能にできます。
+
 > **必ずランチャースクリプト**（`start.sh` / `start.bat`）を使用してください。PID管理、二重起動防止、セッション再開（`--continue`）、ブート自動実行を処理します。`claude --channels ...` を直接実行するとこれらの機能がスキップされます。
 
 ---
