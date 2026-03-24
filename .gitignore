@@ -10,6 +10,9 @@ MEMORY.md
 BOOT.md
 HEARTBEAT.md
 
+# Superpowers working docs (local only)
+docs/superpowers/
+
 # Runtime / session data
 memory/
 .claude/scheduled_tasks.lock
