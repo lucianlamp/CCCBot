@@ -15,18 +15,22 @@ Use these directly. No bash checks needed.
 
 ## Execution
 
-Execute ALL of the following in a **single message** with parallel tool calls.
-Background agents do NOT depend on SOUL.md and always launch immediately.
+**Phase 1** — Single message with parallel tool calls (foreground + background agents):
 
 | # | Type | Action |
 |---|------|--------|
 | 1 | **Foreground** | If SOUL.md **exists**: Read `SOUL.md` and internalize as self-description (identity, persona, tone, values, language). If SOUL.md **missing**: invoke `/ccc-soul` skill (interactive persona setup), then read the created `SOUL.md`. |
-| 2 | **Background Agent** | **Heartbeat registration** — `description='register heartbeat cron'`, `run_in_background=true`. Prompt: `"Register the CCC heartbeat cron job. 1) Use CronList to check if a heartbeat cron already exists (look for 'ccc-heartbeat' in prompt text). 2) If it already exists, do nothing and exit. 3) If not found, use CronCreate with schedule='*/30 * * * *' and prompt='Run /ccc-heartbeat skill (invoke Skill tool with skill=ccc-heartbeat)'. 4) Exit."` |
-| 3 | **Background Agent** | **Jobs registration** — `description='register scheduled jobs'`, `run_in_background=true`. Prompt: `"Register scheduled jobs from JOBS.yaml. 1) Check if CRONS.md exists AND JOBS.yaml does NOT — if so, migrate: parse Active Jobs table, write JOBS.yaml, delete CRONS.md. 2) Read JOBS.yaml. If missing or empty, exit. 3) Use CronList to get existing crons. 4) For each job with active:true, register via CronCreate if not already registered (match by prompt content). 5) Exit."` |
-| 4 | **Background Agent** | **MCP check + greeting** — prompt changes by source (see below) |
-| 5 | **Background Agent** | **Session context review** — always launch (see below for prompt by source). Skip only if no transcript path is available. |
+| 2 | **Background Agent** | **MCP check + greeting** — prompt changes by source (see below) |
+| 3 | **Background Agent** | **Session context review** — always launch (see below for prompt by source). Skip only if no transcript path is available. |
 
-### #4 prompt by source
+**Phase 2** — After Phase 1 completes, register crons in the **main session** (Cron tools are not available to subagents):
+
+| # | Action |
+|---|--------|
+| 4 | **Heartbeat registration** — Use CronList to check if a heartbeat cron already exists (look for 'ccc-heartbeat' in prompt text). If it already exists, do nothing. If not found, use CronCreate with `schedule='*/30 * * * *'` and `prompt='Run /ccc-heartbeat skill (invoke Skill tool with skill=ccc-heartbeat)'`. |
+| 5 | **Jobs registration** — Check if CRONS.md exists AND JOBS.yaml does NOT — if so, migrate: parse Active Jobs table, write JOBS.yaml, delete CRONS.md. Then read JOBS.yaml. If missing or empty, skip. Otherwise use CronList to get existing crons, then for each job with `active: true`, register via CronCreate if not already registered (match by prompt content). |
+
+### #2 prompt by source
 
 **startup** (fresh session):
 ```
@@ -48,7 +52,7 @@ Check MCP health silently. No greeting.
 3) Exit. Do NOT send any message.
 ```
 
-### #5 Previous session review
+### #3 Previous session review
 
 `description='review previous session'`, `run_in_background=true`.
 
@@ -66,7 +70,7 @@ Review the previous session transcript and report anything worth carrying forwar
 
 ## Done
 
-Main session is ready once #1 completes. Background agents continue independently.
+Main session is ready once Phase 2 completes. Background agents (#2, #3) continue independently.
 
 ## Usage
 

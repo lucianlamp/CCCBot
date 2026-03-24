@@ -56,10 +56,10 @@ echo ""
 # Each space-separated plugin URI becomes a separate argument to --channels.
 
 # Try to resume previous session first; fall back to fresh start
-claude --continue --channels $CHANNELS --remote-control
+claude "/ccc-boot" --continue --channels $CHANNELS --remote-control
 if [ $? -ne 0 ]; then
     echo "Previous session not found. Starting fresh..."
-    claude --channels $CHANNELS --remote-control
+    claude "/ccc-boot" --channels $CHANNELS --remote-control
 fi
 
 # PID file cleanup is handled by the EXIT trap above
