@@ -10,7 +10,6 @@ Boot orchestrator. The SessionStart hook provides these values in the hook conte
 - `SOUL.md status: exists|missing` — pre-checked by hook
 - `Current transcript: <path>` — current session's JSONL (always present)
 - `Previous session transcript: <path>` — only on startup, if a previous session exists
-
 Use these directly. No bash checks needed.
 
 ## Execution
@@ -35,8 +34,7 @@ Use these directly. No bash checks needed.
 **startup** (fresh session):
 ```
 Check MCP health and send greeting.
-1) Read .claude/access.json to get chat_id.
-2) Attempt a lightweight Telegram MCP call (send a short test message via 'reply' tool to chat_id — do NOT use 'react' as it requires message_id). If it fails, wait 5s and retry (up to 3 attempts). Track mcp_ready.
+1) Attempt a lightweight Telegram MCP call (send a short test message via 'reply' tool — do NOT use 'react' as it requires message_id). If it fails, wait 5s and retry (up to 3 attempts). Track mcp_ready.
 3) If mcp_ready=false, log 'MCP not ready' to console and exit.
 4) If mcp_ready=true, check for in-progress tasks.
 5) If tasks exist, send status via Telegram reply to chat_id.
@@ -47,7 +45,7 @@ Check MCP health and send greeting.
 **resume** (context compaction recovery):
 ```
 Check MCP health silently. No greeting.
-1) Attempt a lightweight Telegram MCP call (send a short test message via 'reply' tool to chat_id — do NOT use 'react' as it requires message_id). If it fails, wait 5s and retry (up to 3 attempts). Track mcp_ready.
+1) Attempt a lightweight Telegram MCP call (send a short test message via 'reply' tool — do NOT use 'react' as it requires message_id). If it fails, wait 5s and retry (up to 3 attempts). Track mcp_ready.
 2) If mcp_ready=false, log 'MCP not ready' to console.
 3) Exit. Do NOT send any message.
 ```
@@ -61,7 +59,7 @@ Review the previous session transcript and report anything worth carrying forwar
 1) Read the transcript JSONL file at: <Previous session transcript path from hook context>
 2) Scan for: incomplete tasks, pending decisions, unresolved errors, user requests that weren't finished.
 3) If nothing actionable found, exit silently.
-4) If actionable items found, read .claude/access.json to get chat_id, then send a brief summary via Telegram reply to chat_id. Format:
+4) If actionable items found, send a brief summary via Telegram reply. Format:
    "📋 前セッションの引き継ぎ:
    • <item 1>
    • <item 2>"
