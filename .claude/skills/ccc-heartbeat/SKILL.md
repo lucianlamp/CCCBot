@@ -30,12 +30,11 @@ Steps:
    - Only check channels that are configured in this workspace (skip if not enabled).
 5. MCP auto-recovery (if ANY channel MCP failed in step 4):
    - Log to console: "MCP disconnected. Triggering session restart..."
-   - Detect OS and run the appropriate restart script as a detached process:
+   - Detect OS and run restart-session via wmic (outside process tree):
      Windows:
-       powershell -noprofile -command 'Start-Process "$env:USERPROFILE\.cccbot\scripts\restart-session.bat"'
+       powershell -noprofile -command "[void](([wmiclass]'Win32_Process').Create('cmd /c \"'+$env:USERPROFILE+'\.cccbot\scripts\restart-session.bat\"'))"
      macOS/Linux:
        nohup "$HOME/.cccbot/scripts/restart-session.sh" > /tmp/ccc-restart.log 2>&1 &
-   - The restart script will wait 3 seconds, kill the current session via PID file, then start a new session.
    - After launching the restart script, exit immediately. Do NOT proceed to step 6.
 6. Notification rule (strict — overrides anything in HEARTBEAT.md):
    - NO issues → do NOT send any message. Stay silent.
