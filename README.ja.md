@@ -62,20 +62,7 @@ $f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercont
 %USERPROFILE%\.cccbot\start.bat
 ```
 
-または、直接コマンドで起動することもできます:
-
-```bash
-cd ~/.cccbot
-
-# Telegram のみ（デフォルト）
-claude --channels plugin:telegram@claude-plugins-official --remote-control
-
-# Discord のみ
-claude --channels plugin:discord@claude-plugins-official --remote-control
-
-# 両方同時
-claude --channels plugin:telegram@claude-plugins-official plugin:discord@claude-plugins-official --remote-control
-```
+> **必ずランチャースクリプト**（`start.sh` / `start.bat`）を使用してください。PID管理、二重起動防止、セッション再開（`--continue`）、ブート自動実行を処理します。`claude --channels ...` を直接実行するとこれらの機能がスキップされます。
 
 ---
 

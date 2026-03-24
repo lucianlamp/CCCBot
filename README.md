@@ -62,20 +62,7 @@ Use the launcher script to start the session:
 %USERPROFILE%\.cccbot\start.bat
 ```
 
-Or launch directly with the underlying command:
-
-```bash
-cd ~/.cccbot
-
-# Telegram only (default)
-claude --channels plugin:telegram@claude-plugins-official --remote-control
-
-# Discord only
-claude --channels plugin:discord@claude-plugins-official --remote-control
-
-# Both at once
-claude --channels plugin:telegram@claude-plugins-official plugin:discord@claude-plugins-official --remote-control
-```
+> **Always use the launcher scripts** (`start.sh` / `start.bat`). They handle PID tracking, duplicate-launch prevention, session resume (`--continue`), and boot auto-trigger. Running `claude --channels ...` directly will skip these safeguards.
 
 ---
 
