@@ -5,64 +5,57 @@ description: CCC workspace boot sequence — read memory and report status
 
 # Boot Skill
 
-Run the boot sequence at session start.
+Run the boot sequence at session start. Uses parallel execution to minimize startup time.
 
-## Steps
-
-### 1. First-run check
-
-Run this command to check if the personalization file exists:
+## Step 1: First-run check
 
 ```bash
-ls SOUL.md 2>&1
+test -f SOUL.md && echo "exists" || echo "missing"
 ```
 
-- If **missing** (error in output) → invoke `/ccc-soul` skill, then continue from step 4 (skip steps 2-3, soul setup already handles greeting)
-- If **exists** → continue to step 2
+- If **missing** → invoke `/ccc-soul` skill, then jump to **Phase A (first-run)** below
+- If **exists** → jump to **Phase A (normal)** below
 
-### 2. Load persona
+---
 
-Read `SOUL.md` and internalize as self-description (identity, persona, tone, values, language).
+## Phase A — Parallel initialization
 
-### 3. Wait for MCP readiness
+Execute ALL tasks in this phase **in parallel** (use parallel tool calls in a single message). Do NOT wait for one to finish before starting the next.
 
-Before sending any messages, verify that channel MCP is ready.
-Attempt a lightweight MCP call (e.g. Telegram "react" tool with a dry-run or any simple call).
-- If it succeeds → proceed to step 4
-- If it fails → wait 5 seconds, then retry (up to 3 attempts)
-- If all retries fail → log "MCP not ready, skipping greeting" to console and proceed to step 5
+### Normal boot (SOUL.md exists)
 
-### 4. Status report & greeting
+Run these 4 tasks simultaneously:
 
-**On resume (context compaction recovery):** Skip this step entirely — no Telegram messages.
+| Task | Action |
+|------|--------|
+| **A1: Load persona** | Read `SOUL.md` and internalize as self-description (identity, persona, tone, values, language) |
+| **A2: MCP readiness** | Attempt a lightweight MCP call (e.g. Telegram "react" tool). If it fails → wait 5 seconds, retry (up to 3 attempts). Track result: `mcp_ready = true/false` |
+| **A3: Start heartbeat** | Start HEARTBEAT via `/loop 30m /ccc-heartbeat` |
+| **A4: Jobs setup** | 1) Check for legacy `CRONS.md` — if it exists and `JOBS.yaml` does NOT exist, migrate (parse Active Jobs table → write YAML → delete CRONS.md → report "Migrated CRONS.md → JOBS.yaml"). 2) Read `JOBS.yaml` and register all jobs with `active: true` via CronCreate. |
 
-**On fresh start (manual `/ccc-boot` or first message):**
-- If there are in-progress or incomplete tasks → report status via Telegram
-- If nothing to report → send "Ready" via Telegram
+### First-run boot (after `/ccc-soul` completes)
 
-### 5. Start heartbeat
+Run these 3 tasks simultaneously (A1 is skipped — soul setup already loaded persona):
 
-Start HEARTBEAT via `/loop 30m /ccc-heartbeat`
+| Task | Action |
+|------|--------|
+| **A2: MCP readiness** | Same as above |
+| **A3: Start heartbeat** | Same as above |
+| **A4: Jobs setup** | Same as above |
 
-### 6. Migrate legacy config (if needed)
+---
 
-Check for legacy `CRONS.md`:
+## Phase B — Greeting (after Phase A completes)
 
-```bash
-ls CRONS.md 2>&1
-```
+Wait for **A1** and **A2** to complete before proceeding.
 
-If `CRONS.md` exists **and** `JOBS.yaml` does NOT exist:
-1. Read `CRONS.md` and parse the Active Jobs table
-2. Convert each row to YAML format and write to `JOBS.yaml` (use `scripts/templates/JOBS.example.yaml` as the base structure)
-3. Delete `CRONS.md` after successful migration
-4. Report to user: "Migrated CRONS.md → JOBS.yaml"
+- If `mcp_ready = false` → log "MCP not ready, skipping greeting" to console. Done.
+- **On resume (context compaction recovery):** Skip greeting entirely — no channel messages. Done.
+- **On fresh start (manual `/ccc-boot` or first message):**
+  - If there are in-progress or incomplete tasks → report status via channel
+  - If nothing to report → send "Ready" via channel
 
-If both exist, or only `JOBS.yaml` exists, skip this step.
-
-### 7. Register scheduled jobs
-
-Read `JOBS.yaml` and register all jobs with `active: true` via CronCreate.
+---
 
 ## Usage
 
