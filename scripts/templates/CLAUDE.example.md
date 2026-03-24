@@ -16,7 +16,9 @@ See [SOUL.md](SOUL.md)
 ## Operating Instructions
 
 ### Boot (session start)
-1. If there are in-progress tasks, report status to the user via the active channel (Telegram/Discord)
+1. `start.bat`/`start.sh` passes `/ccc-boot` as initial prompt → session starts with boot sequence auto-firing
+2. On context compaction (resume), SessionStart hook injects boot context → fires on next incoming message
+3. If there are in-progress tasks, report status to the user via the active channel (Telegram/Discord)
 
 ### Session Behavior
 - **When a message arrives via Telegram or Discord, immediately send an acknowledgment reply first** (e.g., "Got it, I'll do X")

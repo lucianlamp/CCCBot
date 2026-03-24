@@ -25,7 +25,7 @@ Steps:
 2. Read HEARTBEAT.md for user-defined checks to perform
 3. Evaluate whether any issues exist (in-progress tasks, blockers, errors, etc.)
 4. MCP connectivity check (for each enabled channel):
-   - Telegram: attempt a lightweight MCP call (e.g. "react" tool). If it fails → add "Telegram MCP is not responding" to issues.
+   - Telegram: attempt a lightweight MCP call (send a test message via "reply" tool to chat_id — do NOT use "react" as it requires message_id). If it fails → add "Telegram MCP is not responding" to issues.
    - Discord: attempt a lightweight MCP call. If it fails → add "Discord MCP is not responding" to issues.
    - Only check channels that are configured in this workspace (skip if not enabled).
 5. MCP auto-recovery (if ANY channel MCP failed in step 4):

@@ -36,7 +36,7 @@ Use these directly. No bash checks needed.
 ```
 Check MCP health and send greeting.
 1) Read .claude/access.json to get chat_id.
-2) Attempt a lightweight Telegram MCP call (e.g. 'react' tool). If it fails, wait 5s and retry (up to 3 attempts). Track mcp_ready.
+2) Attempt a lightweight Telegram MCP call (send a short test message via 'reply' tool to chat_id — do NOT use 'react' as it requires message_id). If it fails, wait 5s and retry (up to 3 attempts). Track mcp_ready.
 3) If mcp_ready=false, log 'MCP not ready' to console and exit.
 4) If mcp_ready=true, check for in-progress tasks.
 5) If tasks exist, send status via Telegram reply to chat_id.
@@ -47,7 +47,7 @@ Check MCP health and send greeting.
 **resume** (context compaction recovery):
 ```
 Check MCP health silently. No greeting.
-1) Attempt a lightweight Telegram MCP call (e.g. 'react' tool). If it fails, wait 5s and retry (up to 3 attempts). Track mcp_ready.
+1) Attempt a lightweight Telegram MCP call (send a short test message via 'reply' tool to chat_id — do NOT use 'react' as it requires message_id). If it fails, wait 5s and retry (up to 3 attempts). Track mcp_ready.
 2) If mcp_ready=false, log 'MCP not ready' to console.
 3) Exit. Do NOT send any message.
 ```
