@@ -58,8 +58,8 @@ Review the previous session transcript and report anything worth carrying forwar
 
 **Phase 3** — Boot completion (main session, after Phase 2):
 
-- If source is **startup**: send a boot completion greeting via Telegram `reply` tool (e.g. "Boot complete. Ready."). MCP is loaded at this point so `reply` works.
-- If source is **resume**: do NOT send any message. Silent.
+- Send a boot completion greeting via Telegram `reply` tool (e.g. "Boot complete. Ready."). MCP is loaded at this point so `reply` works.
+- This applies to both **startup** and **resume** (session always starts via `--continue`, so MCP is available in both cases).
 
 ## Done
 
