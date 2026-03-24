@@ -113,8 +113,8 @@ CronCreate returns a session-internal ID that differs from the JOBS.yaml job ID.
 
 - JOBS.yaml is the source of truth for persistent job definitions
 - CronCreate/CronDelete are session-scoped (lost on session end)
-- Boot skill registers all `active: true` jobs on every session start
-- Heartbeat is NOT managed here — it's handled by boot skill directly
+- SessionStart hook registers all `active: true` jobs on every session start (background agent)
+- Heartbeat is NOT managed here — it's registered separately by SessionStart hook
 
 ## Usage
 

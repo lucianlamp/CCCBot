@@ -13,6 +13,9 @@ HEARTBEAT.md
 # Superpowers working docs (local only)
 docs/superpowers/
 
+# Session tracking
+.claude/last-session.json
+
 # Runtime / session data
 memory/
 .claude/scheduled_tasks.lock

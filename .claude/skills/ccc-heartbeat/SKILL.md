@@ -48,7 +48,8 @@ Keep it brief. Do not ask questions. Do not wait for responses.
 
 ## Usage
 
-Run automatically via `/loop` skill:
+Registered automatically at session start by SessionStart hook (background agent).
+Can also be started manually:
 ```
 /loop 30m /ccc-heartbeat
 ```

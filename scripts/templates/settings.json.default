@@ -29,7 +29,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash scripts/session-start-hook.sh",
+            "command": "bash .claude/scripts/session-start-hook.sh",
             "shell": "bash"
           }
         ]

@@ -214,7 +214,6 @@ Or ask Claude in chat — e.g. *"allow npm test commands"* — and it will updat
 │   ├── restart-session.sh   # MCP auto-recovery (macOS/Linux)
 │   ├── restart-session.bat  # MCP auto-recovery (Windows)
 │   ├── get-parent-pid.ps1   # PID helper for Windows
-│   ├── session-start-hook.sh
 │   └── templates/           # Config templates (copied on first run)
 │       ├── settings.json.default
 │       ├── CLAUDE.example.md
@@ -226,6 +225,8 @@ Or ask Claude in chat — e.g. *"allow npm test commands"* — and it will updat
 ├── .claude/
 │   ├── settings.json        # Permissions and hooks (gitignored)
 │   ├── settings.local.json  # Local overrides (gitignored)
+│   ├── scripts/
+│   │   └── session-start-hook.sh  # SessionStart hook (boot orchestrator)
 │   └── skills/              # Skill definitions (behavior logic)
 │       ├── REQUIRED.md
 │       ├── IMPORTED.md

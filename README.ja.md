@@ -212,7 +212,6 @@ CCCBot はデフォルトで `.claude/settings.json` に自律性と安全性の
 |   +-- restart-session.sh   # MCP 自動リカバリ（macOS/Linux）
 |   +-- restart-session.bat  # MCP 自動リカバリ（Windows）
 |   +-- get-parent-pid.ps1   # PID 取得ヘルパー（Windows）
-|   +-- session-start-hook.sh
 |   +-- templates/           # 設定テンプレート（初回実行時にコピー）
 |       +-- settings.json.default
 |       +-- CLAUDE.example.md
@@ -224,6 +223,8 @@ CCCBot はデフォルトで `.claude/settings.json` に自律性と安全性の
 +-- .claude/
 |   +-- settings.json        # パーミッションとフック（gitignore対象）
 |   +-- settings.local.json  # ローカル上書き設定（gitignore対象）
+|   +-- scripts/
+|   |   +-- session-start-hook.sh  # SessionStart フック（起動オーケストレーター）
 |   +-- skills/              # スキル定義（動作ロジック）
 |       +-- REQUIRED.md
 |       +-- IMPORTED.md
