@@ -19,7 +19,7 @@ Use these directly. No bash checks needed.
 | # | Type | Action |
 |---|------|--------|
 | 1 | **Foreground** | If SOUL.md **exists**: Read `SOUL.md` and internalize as self-description (identity, persona, tone, values, language). If SOUL.md **missing**: invoke `/ccc-soul` skill (interactive persona setup), then read the created `SOUL.md`. |
-| 2 | **Background Agent** | **MCP check + greeting** — prompt changes by source (see below) |
+| 2 | **Background Agent** | **MCP health check** — silent check, no greeting (see below) |
 | 3 | **Background Agent** | **Session context review** — always launch (see below for prompt by source). Skip only if no transcript path is available. |
 
 **Phase 2** — After Phase 1 completes, register crons in the **main session** (Cron tools are not available to subagents):
@@ -29,25 +29,15 @@ Use these directly. No bash checks needed.
 | 4 | **Heartbeat registration** — Use CronList to check if a heartbeat cron already exists (look for 'ccc-heartbeat' in prompt text). If it already exists, do nothing. If not found, use CronCreate with `schedule='*/30 * * * *'` and `prompt='Run /ccc-heartbeat skill (invoke Skill tool with skill=ccc-heartbeat)'`. |
 | 5 | **Jobs registration** — Check if CRONS.md exists AND JOBS.yaml does NOT — if so, migrate: parse Active Jobs table, write JOBS.yaml, delete CRONS.md. Then read JOBS.yaml. If missing or empty, skip. Otherwise use CronList to get existing crons, then for each job with `active: true`, register via CronCreate if not already registered (match by prompt content). |
 
-### #2 prompt by source
+### #2 MCP health check
 
-**startup** (fresh session):
-```
-Check MCP health and send greeting.
-1) Attempt a lightweight Telegram MCP call (send a short test message via 'reply' tool — do NOT use 'react' as it requires message_id). If it fails, wait 5s and retry (up to 3 attempts). Track mcp_ready.
-3) If mcp_ready=false, log 'MCP not ready' to console and exit.
-4) If mcp_ready=true, check for in-progress tasks.
-5) If tasks exist, send status via Telegram reply to chat_id.
-6) If nothing to report, send 'Ready' via Telegram reply to chat_id.
-7) Exit.
-```
+`description='MCP health check'`, `run_in_background=true`. Same prompt for both startup and resume:
 
-**resume** (context compaction recovery):
 ```
-Check MCP health silently. No greeting.
+Check MCP health silently.
 1) Attempt a lightweight Telegram MCP call (send a short test message via 'reply' tool — do NOT use 'react' as it requires message_id). If it fails, wait 5s and retry (up to 3 attempts). Track mcp_ready.
 2) If mcp_ready=false, log 'MCP not ready' to console.
-3) Exit. Do NOT send any message.
+3) Exit. Do NOT send any greeting or notification.
 ```
 
 ### #3 Previous session review
@@ -66,9 +56,14 @@ Review the previous session transcript and report anything worth carrying forwar
 5) Exit.
 ```
 
+**Phase 3** — Boot completion (main session, after Phase 2):
+
+- If source is **startup**: send a boot completion greeting via Telegram `reply` tool (e.g. "Boot complete. Ready."). MCP is loaded at this point so `reply` works.
+- If source is **resume**: do NOT send any message. Silent.
+
 ## Done
 
-Main session is ready once Phase 2 completes. Background agents (#2, #3) continue independently.
+Main session is ready once Phase 3 completes. Background agents (#2, #3) continue independently.
 
 ## Usage
 

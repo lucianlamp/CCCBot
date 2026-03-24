@@ -39,7 +39,7 @@ Steps:
    - After launching the restart script, exit immediately. Do NOT proceed to step 6.
 6. Notification rule (strict — overrides anything in HEARTBEAT.md):
    - NO issues → do NOT send any message. Stay silent.
-   - Issues found AND at least one channel MCP is healthy → send via healthy channel: "alive HH:MM\n\n[issue details]"
+   - Issues found AND at least one channel MCP is healthy → send issue details via healthy channel (no "alive" prefix)
    - Issues found AND all channel MCPs are down → this should not happen (step 5 triggers restart). But if it does, output alert to console only.
 7. Exit.
 
