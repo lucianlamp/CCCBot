@@ -34,10 +34,11 @@ Use these directly. No bash checks needed.
 `description='MCP health check'`, `run_in_background=true`. Same prompt for both startup and resume:
 
 ```
-Check MCP health silently.
-1) Attempt a lightweight Telegram MCP call (send a short test message via 'reply' tool — do NOT use 'react' as it requires message_id). If it fails, wait 5s and retry (up to 3 attempts). Track mcp_ready.
-2) If mcp_ready=false, log 'MCP not ready' to console.
-3) Exit. Do NOT send any greeting or notification.
+Check MCP health silently. Do NOT send any message to any channel.
+1) Check if Telegram MCP tools (reply, react) are available in the tool list. Do NOT call them — just confirm they exist.
+2) If tools are not available, wait 5s and recheck (up to 3 attempts). Track mcp_ready.
+3) If mcp_ready=false, log 'MCP not ready' to console.
+4) Exit. Do NOT send any message via reply or any other channel tool.
 ```
 
 ### #3 Previous session review

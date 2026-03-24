@@ -37,8 +37,8 @@ See [SOUL.md](SOUL.md)
 ## HEARTBEAT
 
 On trigger: read `HEARTBEAT.md` and execute.
-No action needed: return only `HEARTBEAT_OK` at the **start** of the reply (under 300 chars).
-Alert: return content only, without `HEARTBEAT_OK`.
+No action needed: return only `HEARTBEAT_OK` as plain text output (console only). Do NOT send via Telegram/Discord `reply` tool.
+Alert: send issue details via channel `reply` tool. Do NOT include `HEARTBEAT_OK`.
 
 ---
 
