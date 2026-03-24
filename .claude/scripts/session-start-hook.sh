@@ -28,13 +28,16 @@ if [ -f "$LAST_SESSION_FILE" ]; then
   PREV_TRANSCRIPT=$(grep -o '"transcript_path":"[^"]*"' "$LAST_SESSION_FILE" | sed 's/"transcript_path":"//;s/"$//')
 fi
 
-# Save current session info for next time
-if [ -n "$SESSION_ID" ]; then
+# Save current session info for next time (only on startup, not resume)
+if [ -n "$SESSION_ID" ] && [ "$SOURCE" = "startup" ]; then
   echo "{\"session_id\":\"${SESSION_ID}\",\"transcript_path\":\"${TRANSCRIPT}\",\"started_at\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date +%Y-%m-%dT%H:%M:%SZ)\"}" > "$LAST_SESSION_FILE"
 fi
 
 # Build context
 CONTEXT="Session started (${SOURCE}). SOUL.md status: ${SOUL_STATUS}."
+if [ -n "$TRANSCRIPT" ]; then
+  CONTEXT="${CONTEXT} Current transcript: ${TRANSCRIPT}"
+fi
 if [ -n "$PREV_TRANSCRIPT" ] && [ "$SOURCE" = "startup" ]; then
   CONTEXT="${CONTEXT} Previous session transcript: ${PREV_TRANSCRIPT}"
 fi
