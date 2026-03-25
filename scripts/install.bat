@@ -273,9 +273,16 @@ echo   No changes to commit
 
 :git_done
 
+rem --- CLI command setup ---
+if not exist "bin" mkdir "bin"
+powershell -NoProfile -Command "$p = [Environment]::GetEnvironmentVariable('PATH','User'); if ($p -notlike '*\.cccbot\bin*') { if ($p) { $p = $p + ';' }; [Environment]::SetEnvironmentVariable('PATH', $p + '%USERPROFILE%\.cccbot\bin', 'User'); Write-Host '  Added cccbot to PATH' }"
+
 rem Done
 echo.
 echo CCCBot %VERSION% installed to %INSTALL_DIR%
+echo.
+echo   Open a new terminal, then run: cccbot
+echo   Update later with: cccbot update
 echo.
 
 rem Launch

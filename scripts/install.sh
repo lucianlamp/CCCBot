@@ -289,9 +289,31 @@ else
     fi
 fi
 
+# --- CLI command setup ---
+mkdir -p "$INSTALL_DIR/bin"
+chmod +x "$INSTALL_DIR/bin/cccbot"
+
+# Add to PATH in shell profiles (idempotent)
+PATH_LINE='export PATH="$HOME/.cccbot/bin:$PATH"'
+PATH_ADDED=false
+for rc in "$HOME/.bashrc" "$HOME/.zshrc" "$HOME/.bash_profile" "$HOME/.profile"; do
+    [ ! -f "$rc" ] && continue
+    grep -qF '.cccbot/bin' "$rc" && continue
+    echo "" >> "$rc"
+    echo "# CCCBot" >> "$rc"
+    echo "$PATH_LINE" >> "$rc"
+    PATH_ADDED=true
+done
+if [ "$PATH_ADDED" = true ]; then
+    echo -e "  ${GREEN}Added cccbot to PATH${NC}"
+fi
+
 # Done
 echo ""
 echo -e "${GREEN}CCCBot ${VERSION} installed to: $INSTALL_DIR${NC}"
+echo ""
+echo "  Restart your terminal, then run: cccbot"
+echo "  Update later with: cccbot update"
 echo ""
 
 # Launch
