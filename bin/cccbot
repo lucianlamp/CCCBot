@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+CCCBOT_DIR="$HOME/.cccbot"
+REPO="lucianlamp/CCCBot"
+
+case "${1:-}" in
+  update)
+    VERSION="${2:-}"
+    echo "Updating CCCBot..."
+    if [ -n "$VERSION" ]; then
+        curl -fsSL "https://raw.githubusercontent.com/$REPO/master/scripts/install.sh" | bash -s -- "$VERSION"
+    else
+        curl -fsSL "https://raw.githubusercontent.com/$REPO/master/scripts/install.sh" | bash
+    fi
+    ;;
+  "")
+    if [ ! -f "$CCCBOT_DIR/start.sh" ]; then
+        echo "Error: CCCBot not found at $CCCBOT_DIR"
+        echo "Run the installer first: https://github.com/$REPO"
+        exit 1
+    fi
+    exec bash "$CCCBOT_DIR/start.sh"
+    ;;
+  *)
+    echo "Usage: cccbot [update [version]]"
+    exit 1
+    ;;
+esac
