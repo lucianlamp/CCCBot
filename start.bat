@@ -30,29 +30,7 @@ exit /b 1
 cd /d "%CCCBOT_DIR%"
 
 rem Resolve workspace path and add to additionalDirectories if external
-powershell -noprofile -command "& {
-    $ws = '%WORKSPACE%'; $cb = '%CCCBOT_DIR%'
-    if ($ws -match '^[a-zA-Z]:' -or $ws.StartsWith('/') -or $ws.StartsWith('\')) {
-        $abs = $ws
-    } elseif ($ws.StartsWith('~/')) {
-        $abs = Join-Path $env:USERPROFILE $ws.Substring(2)
-    } else {
-        $abs = Join-Path $cb $ws
-    }
-    if (-not (Test-Path $abs)) { New-Item -ItemType Directory -Path $abs -Force | Out-Null }
-    if (-not $abs.StartsWith($cb)) {
-        $f = Join-Path $cb '.claude\settings.local.json'
-        $cfg = @{}
-        if (Test-Path $f) { $cfg = Get-Content $f -Raw | ConvertFrom-Json -AsHashtable }
-        if (-not $cfg.permissions) { $cfg.permissions = @{} }
-        if (-not $cfg.permissions.additionalDirectories) { $cfg.permissions.additionalDirectories = @() }
-        if ($abs -notin $cfg.permissions.additionalDirectories) {
-            $cfg.permissions.additionalDirectories += $abs
-            $cfg | ConvertTo-Json -Depth 10 | Set-Content $f
-        }
-    }
-    Write-Host $abs
-}" > "%TEMP%\ccc-workspace.tmp"
+powershell -noprofile -command "$ws='%WORKSPACE%';$cb='%CCCBOT_DIR%';if($ws-match'^[a-zA-Z]:'  -or $ws.StartsWith('/')-or $ws.StartsWith('\')){$abs=$ws}elseif($ws.StartsWith('~/')){$abs=Join-Path $env:USERPROFILE $ws.Substring(2)}else{$abs=Join-Path $cb $ws};if(-not(Test-Path $abs)){New-Item -ItemType Directory -Path $abs -Force|Out-Null};if(-not $abs.StartsWith($cb)){$f=Join-Path $cb '.claude\settings.local.json';$cfg=@{};if(Test-Path $f){$cfg=Get-Content $f -Raw|ConvertFrom-Json -AsHashtable};if(-not $cfg.permissions){$cfg.permissions=@{}};if(-not $cfg.permissions.additionalDirectories){$cfg.permissions.additionalDirectories=@()};if($abs -notin $cfg.permissions.additionalDirectories){$cfg.permissions.additionalDirectories+=$abs;$cfg|ConvertTo-Json -Depth 10|Set-Content $f}};Write-Host $abs" > "%TEMP%\ccc-workspace.tmp"
 set /p WORKSPACE_ABS=<"%TEMP%\ccc-workspace.tmp"
 del "%TEMP%\ccc-workspace.tmp" 2>nul
 
