@@ -50,45 +50,29 @@ A greeting message will arrive via the channel, and the setup will guide you thr
 
 ### Subsequent launches
 
-Use the launcher script to start the session:
-
 ```bash
-# macOS / Linux
-~/.cccbot/start.sh
+cccbot
 ```
 
-```bat
-:: Windows
-%USERPROFILE%\.cccbot\start.bat
-```
+The `cccbot` command is automatically added to your PATH during installation. If it's not available, restart your terminal or re-run the installer.
 
-On Windows, you can also double-click `start.bat` in Explorer. On macOS/Linux, you can make `start.sh` clickable with `chmod +x ~/.cccbot/start.sh`.
-
-> **Always use the launcher scripts** (`start.sh` / `start.bat`). They handle PID tracking, duplicate-launch prevention, session resume (`--continue`), and boot auto-trigger. Running `claude --channels ...` directly will skip these safeguards.
+> **Always use `cccbot`** (or `start.sh` / `start.bat` directly). They handle PID tracking, duplicate-launch prevention, session resume (`--continue`), and boot auto-trigger. Running `claude --channels ...` directly will skip these safeguards.
 
 ---
 
 ## Updating
 
-Re-run the installer to update to the latest release:
+```bash
+cccbot update
+```
+
+To update to a specific version:
 
 ```bash
-# macOS / Linux
-bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.sh)
+cccbot update v1.0.0
 ```
 
-```powershell
-# Windows (PowerShell)
-$f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.bat).Content | Set-Content -Encoding ASCII $f; & $f
-```
-
-To install a specific version:
-
-```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.sh) v1.0.0
-```
-
-Skills, scripts, and templates are updated. Your personal config files (`SOUL.md`, `CLAUDE.md`, `JOBS.yaml`, `BOOT.md`, `HEARTBEAT.md`, `cccbot.json`) and settings are preserved.
+Your personal settings (`SOUL.md`, `cccbot.json`, etc.) are preserved during updates.
 
 ---
 

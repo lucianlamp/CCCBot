@@ -48,47 +48,31 @@ $f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercont
 
 チャンネルに挨拶メッセージが届き、対話的にセットアップが始まります。
 
-### 2回目以降の起動
-
-ランチャースクリプトでセッションを開始します:
+### 以降の起動
 
 ```bash
-# macOS / Linux
-~/.cccbot/start.sh
+cccbot
 ```
 
-```bat
-:: Windows
-%USERPROFILE%\.cccbot\start.bat
-```
+`cccbot` コマンドはインストール時に自動的に PATH に追加されます。利用できない場合はターミナルを再起動するか、インストーラーを再実行してください。
 
-Windows では `start.bat` をダブルクリックでも起動できます。macOS/Linux では `chmod +x ~/.cccbot/start.sh` で `start.sh` をクリック起動可能にできます。
-
-> **必ずランチャースクリプト**（`start.sh` / `start.bat`）を使用してください。PID管理、二重起動防止、セッション再開（`--continue`）、ブート自動実行を処理します。`claude --channels ...` を直接実行するとこれらの機能がスキップされます。
+> **必ず `cccbot`**（または `start.sh` / `start.bat`）を使用してください。PID 管理、重複起動防止、セッション再開（`--continue`）、起動時自動トリガーが含まれています。`claude --channels ...` を直接実行するとこれらがスキップされます。
 
 ---
 
 ## アップデート
 
-インストーラーを再実行して最新リリースに更新します:
+```bash
+cccbot update
+```
+
+特定のバージョンにアップデート：
 
 ```bash
-# macOS / Linux
-bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.sh)
+cccbot update v1.0.0
 ```
 
-```powershell
-# Windows (PowerShell)
-$f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.bat).Content | Set-Content -Encoding ASCII $f; & $f
-```
-
-特定のバージョンをインストールする場合:
-
-```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.sh) v1.0.0
-```
-
-スキル、スクリプト、テンプレートが更新されます。個人設定ファイル（`SOUL.md`、`CLAUDE.md`、`JOBS.yaml`、`BOOT.md`、`HEARTBEAT.md`、`cccbot.json`）と設定は保持されます。
+個人設定（`SOUL.md`、`cccbot.json` など）はアップデート時に自動的に保持されます。
 
 ---
 
