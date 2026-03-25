@@ -74,6 +74,8 @@ cccbot update v1.0.0
 
 Your personal settings (`SOUL.md`, `cccbot.json`, etc.) are preserved during updates.
 
+> **Upgrading from v0.1.x:** The `cccbot` command was added in v0.2.0. If you're on an older version, run the [install one-liner](#quick-start) once to upgrade. After that, `cccbot update` will work for all future updates.
+
 ---
 
 ## How It Works
