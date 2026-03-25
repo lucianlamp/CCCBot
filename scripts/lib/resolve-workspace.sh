@@ -8,10 +8,13 @@
 #   relative         → base_dir/relative
 resolve_workspace() {
     local raw="$1" base="$2"
-    case "$raw" in
-        /*) echo "$raw" ;;
-        ~/*) echo "${HOME}/${raw#\~/}" ;;
-        ~) echo "$HOME" ;;
-        *) echo "$base/$raw" ;;
-    esac
+    if [ "$raw" = "~" ]; then
+        echo "$HOME"
+    elif echo "$raw" | grep -q '^~/'; then
+        echo "${HOME}/${raw#\~/}"
+    elif echo "$raw" | grep -q '^/'; then
+        echo "$raw"
+    else
+        echo "$base/$raw"
+    fi
 }
