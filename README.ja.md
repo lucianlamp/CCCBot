@@ -224,6 +224,9 @@ CCCBot はデフォルトで `.claude/settings.json` に自律性と安全性の
 +-- cccbot.json              # ユーザー設定: ワークスペース、チャンネル（gitignore対象）
 +-- .mcp.json                # MCP プラグイン設定（ボットトークン — gitignore対象）
 +-- start.sh / start.bat     # ランチャー
++-- bin/
+|   +-- cccbot               # CLI コマンド（macOS/Linux/WSL）
+|   +-- cccbot.cmd           # CLI コマンド（Windows）
 +-- workspace/               # デフォルト作業ディレクトリ
 +-- scripts/
 |   +-- install.sh           # インストーラー（macOS/Linux）

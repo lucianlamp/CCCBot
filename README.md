@@ -226,6 +226,9 @@ Or ask Claude in chat — e.g. *"allow npm test commands"* — and it will updat
 ├── cccbot.json              # User config: workspace, channels (gitignored)
 ├── .mcp.json                # MCP plugin config (bot tokens — gitignored)
 ├── start.sh / start.bat     # Launchers
+├── bin/
+│   ├── cccbot               # CLI command (macOS/Linux/WSL)
+│   └── cccbot.cmd           # CLI command (Windows)
 ├── workspace/               # Default working directory
 ├── scripts/
 │   ├── install.sh           # Installer (macOS/Linux)
