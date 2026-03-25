@@ -50,8 +50,8 @@ if [ -f cccbot.json ]; then
   WS_RAW=$(json_get workspace cccbot.json)
   if [ -n "$WS_RAW" ]; then
     WS_ABS=$(resolve_workspace "$WS_RAW" "$(pwd)")
-    # Escape for JSON string embedding
-    WS_ESCAPED=$(echo "$WS_ABS" | sed 's/\\/\\\\/g;s/"/\\"/g')
+    # Escape double quotes for JSON string embedding (Git Bash uses forward slashes)
+    WS_ESCAPED="${WS_ABS//\"/\\\"}"
     CONTEXT="${CONTEXT} Default workspace: ${WS_ESCAPED}. Use this directory for file operations unless the user specifies otherwise."
   fi
 fi
