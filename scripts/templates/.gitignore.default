@@ -1,6 +1,9 @@
 # MCP config (contains bot tokens)
 .mcp.json
 
+# User config (contains local paths)
+cccbot.json
+
 # Runtime / session data
 memory/
 .claude/scheduled_tasks.lock
