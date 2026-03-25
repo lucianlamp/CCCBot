@@ -41,12 +41,9 @@ $f="$env:TEMP\cccbot-install.bat"; (Invoke-WebRequest https://raw.githubusercont
 
 ### After install
 
-Claude Code starts automatically after installation. To begin the interactive setup, either:
+Claude Code starts automatically and runs the boot sequence. A greeting message should arrive via your configured channel (Telegram or Discord).
 
-- Run `/ccc-boot` in the Claude Code terminal, or
-- Send any message from Telegram or Discord to the bot
-
-A greeting message will arrive via the channel, and the setup will guide you through configuration.
+If you don't receive a message, check that the [prerequisites](#prerequisites) are set up correctly, then run `/ccc-boot` in the Claude Code terminal.
 
 ### Subsequent launches
 
