@@ -86,7 +86,7 @@ if [ -f "$INSTALL_DIR/CLAUDE.md" ] || [ -f "$INSTALL_DIR/start.sh" ]; then
     IS_UPDATE=true
     echo -e "${YELLOW}Existing installation detected. Updating...${NC}"
     BACKUP_DIR=$(mktemp -d)
-    for f in CLAUDE.md SOUL.md BOOT.md HEARTBEAT.md JOBS.yaml .mcp.json .gitignore start.sh start.bat cccbot.json; do
+    for f in CLAUDE.md SOUL.md BOOT.md HEARTBEAT.md JOBS.yaml .mcp.json .gitignore cccbot.json; do
         [ -f "$INSTALL_DIR/$f" ] && cp "$INSTALL_DIR/$f" "$BACKUP_DIR/"
     done
     [ -f "$INSTALL_DIR/.claude/settings.json" ] && mkdir -p "$BACKUP_DIR/.claude" && cp "$INSTALL_DIR/.claude/settings.json" "$BACKUP_DIR/.claude/"
@@ -100,9 +100,20 @@ cp -r "$EXTRACTED_DIR"/.[!.]* "$INSTALL_DIR/" 2>/dev/null
 
 # Restore preserved user config files
 if [ "$IS_UPDATE" = true ]; then
-    for f in CLAUDE.md SOUL.md BOOT.md HEARTBEAT.md JOBS.yaml .mcp.json .gitignore start.sh start.bat cccbot.json; do
+    for f in CLAUDE.md SOUL.md BOOT.md HEARTBEAT.md JOBS.yaml .mcp.json .gitignore cccbot.json; do
         [ -f "$BACKUP_DIR/$f" ] && cp "$BACKUP_DIR/$f" "$INSTALL_DIR/"
     done
+    # Migrate: if old start.sh had custom CHANNELS and no cccbot.json exists, create one
+    if [ -f "$BACKUP_DIR/start.sh" ] && [ ! -f "$INSTALL_DIR/cccbot.json" ]; then
+        OLD_CHANNELS=$(grep -o 'CHANNELS=.*plugin:[^"]*' "$BACKUP_DIR/start.sh" | sed 's/CHANNELS="${CHANNELS:-//;s/}$//' | head -1)
+        if [ -n "$OLD_CHANNELS" ] && [ "$OLD_CHANNELS" != "plugin:telegram@claude-plugins-official" ]; then
+            echo "{" > "$INSTALL_DIR/cccbot.json"
+            echo "  \"workspace\": \"workspace\"," >> "$INSTALL_DIR/cccbot.json"
+            echo "  \"channels\": \"$OLD_CHANNELS\"" >> "$INSTALL_DIR/cccbot.json"
+            echo "}" >> "$INSTALL_DIR/cccbot.json"
+            echo -e "  ${GREEN}Migrated:${NC} channels from start.sh → cccbot.json"
+        fi
+    fi
     [ -f "$BACKUP_DIR/.claude/settings.json" ] && cp "$BACKUP_DIR/.claude/settings.json" "$INSTALL_DIR/.claude/"
     [ -f "$BACKUP_DIR/.claude/settings.local.json" ] && cp "$BACKUP_DIR/.claude/settings.local.json" "$INSTALL_DIR/.claude/"
     [ -d "$BACKUP_DIR/memory" ] && cp -r "$BACKUP_DIR/memory" "$INSTALL_DIR/"

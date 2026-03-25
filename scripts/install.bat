@@ -72,7 +72,7 @@ if "%IS_UPDATE%"=="0" goto :skip_backup
 echo Existing installation detected. Updating...
 set "BACKUP_DIR=%TEMP%\cccbot-backup-%RANDOM%%RANDOM%"
 mkdir "%BACKUP_DIR%"
-for %%f in (CLAUDE.md SOUL.md BOOT.md HEARTBEAT.md JOBS.yaml .mcp.json .gitignore start.sh start.bat cccbot.json) do (
+for %%f in (CLAUDE.md SOUL.md BOOT.md HEARTBEAT.md JOBS.yaml .mcp.json .gitignore cccbot.json) do (
     if exist "%INSTALL_DIR%\%%f" copy "%INSTALL_DIR%\%%f" "%BACKUP_DIR%\" >nul
 )
 if exist "%INSTALL_DIR%\.claude\settings.json" (
@@ -92,7 +92,7 @@ for /d %%d in ("%TMPDIR%\extract\CCCBot-*") do xcopy "%%d\*" "%INSTALL_DIR%\" /E
 
 rem Restore user config files on update
 if "%IS_UPDATE%"=="0" goto :skip_restore
-for %%f in (CLAUDE.md SOUL.md BOOT.md HEARTBEAT.md JOBS.yaml .mcp.json .gitignore start.sh start.bat cccbot.json) do (
+for %%f in (CLAUDE.md SOUL.md BOOT.md HEARTBEAT.md JOBS.yaml .mcp.json .gitignore cccbot.json) do (
     if exist "%BACKUP_DIR%\%%f" copy "%BACKUP_DIR%\%%f" "%INSTALL_DIR%\" >nul
 )
 if exist "%BACKUP_DIR%\.claude\settings.json" copy "%BACKUP_DIR%\.claude\settings.json" "%INSTALL_DIR%\.claude\" >nul
