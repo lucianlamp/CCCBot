@@ -5,8 +5,20 @@ rem Start Claude Code Channels session
 set "CCCBOT_DIR=%USERPROFILE%\.cccbot"
 set "PID_FILE=%CCCBOT_DIR%\.ccc-pid"
 
-rem Channels to enable
+rem Read user config from cccbot.json
+set "CFG_CHANNELS="
+set "CFG_WORKSPACE="
+if exist "%CCCBOT_DIR%\cccbot.json" (
+    for /f "usebackq delims=" %%i in (`powershell -noprofile -command "try { $j = Get-Content '%CCCBOT_DIR%\cccbot.json' -Raw | ConvertFrom-Json; if ($j.channels) { $j.channels } } catch { Write-Error 'invalid'; exit 1 }" 2^>nul`) do set "CFG_CHANNELS=%%i"
+    if errorlevel 1 echo Warning: cccbot.json is invalid JSON. Using defaults.
+    for /f "usebackq delims=" %%i in (`powershell -noprofile -command "try { $j = Get-Content '%CCCBOT_DIR%\cccbot.json' -Raw | ConvertFrom-Json; if ($j.workspace) { $j.workspace } } catch {}" 2^>nul`) do set "CFG_WORKSPACE=%%i"
+)
+
+rem Priority: env var > cccbot.json > default
+if not defined CHANNELS if defined CFG_CHANNELS set "CHANNELS=%CFG_CHANNELS%"
 if not defined CHANNELS set "CHANNELS=plugin:telegram@claude-plugins-official"
+if not defined WORKSPACE if defined CFG_WORKSPACE set "WORKSPACE=%CFG_WORKSPACE%"
+if not defined WORKSPACE set "WORKSPACE=workspace"
 
 rem Check workspace exists
 if exist "%CCCBOT_DIR%" goto :workspace_ok
@@ -16,6 +28,33 @@ exit /b 1
 
 :workspace_ok
 cd /d "%CCCBOT_DIR%"
+
+rem Resolve workspace path and add to additionalDirectories if external
+powershell -noprofile -command "& {
+    $ws = '%WORKSPACE%'; $cb = '%CCCBOT_DIR%'
+    if ($ws -match '^[a-zA-Z]:' -or $ws.StartsWith('/') -or $ws.StartsWith('\')) {
+        $abs = $ws
+    } elseif ($ws.StartsWith('~/')) {
+        $abs = Join-Path $env:USERPROFILE $ws.Substring(2)
+    } else {
+        $abs = Join-Path $cb $ws
+    }
+    if (-not (Test-Path $abs)) { New-Item -ItemType Directory -Path $abs -Force | Out-Null }
+    if (-not $abs.StartsWith($cb)) {
+        $f = Join-Path $cb '.claude\settings.local.json'
+        $cfg = @{}
+        if (Test-Path $f) { $cfg = Get-Content $f -Raw | ConvertFrom-Json -AsHashtable }
+        if (-not $cfg.permissions) { $cfg.permissions = @{} }
+        if (-not $cfg.permissions.additionalDirectories) { $cfg.permissions.additionalDirectories = @() }
+        if ($abs -notin $cfg.permissions.additionalDirectories) {
+            $cfg.permissions.additionalDirectories += $abs
+            $cfg | ConvertTo-Json -Depth 10 | Set-Content $f
+        }
+    }
+    Write-Host $abs
+}" > "%TEMP%\ccc-workspace.tmp"
+set /p WORKSPACE_ABS=<"%TEMP%\ccc-workspace.tmp"
+del "%TEMP%\ccc-workspace.tmp" 2>nul
 
 rem Ensure settings.json exists (may be missing after update)
 if not exist ".claude\settings.json" (
@@ -29,6 +68,7 @@ powershell -noprofile -command "(Get-CimInstance Win32_Process -Filter \"Process
 
 echo Starting Claude Code Channels session...
 echo Workspace: %CD%
+echo Work dir:  %WORKSPACE_ABS%
 echo Channels:  %CHANNELS%
 
 rem Start session (--continue unless CCC_FRESH is set)
