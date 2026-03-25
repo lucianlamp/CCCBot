@@ -182,12 +182,65 @@ echo   Skipped, already exists .claude\settings.json
 
 :settings_done
 
+rem --- Channel selection (skip on update if cccbot.json exists) ---
+if "%IS_UPDATE%"=="0" goto :show_chan_prompt
+if exist "cccbot.json" goto :chan_done
+:show_chan_prompt
+echo.
+echo === Channel Setup ===
+echo.
+echo Which messaging channel will CCCBot use?
+echo.
+echo   1) Telegram (default)
+echo   2) Discord
+echo   3) Both
+echo.
+
+:ask_chan
+set "CHAN_CHOICE="
+set /p "CHAN_CHOICE=Select channel [1/2/3] (default 1) "
+if "%CHAN_CHOICE%"=="" set "CHAN_CHOICE=1"
+if "%CHAN_CHOICE%"=="1" goto :chan_telegram
+if "%CHAN_CHOICE%"=="telegram" goto :chan_telegram
+if "%CHAN_CHOICE%"=="2" goto :chan_discord
+if "%CHAN_CHOICE%"=="discord" goto :chan_discord
+if "%CHAN_CHOICE%"=="3" goto :chan_both
+if "%CHAN_CHOICE%"=="both" goto :chan_both
+echo   Invalid choice. Enter 1, 2, or 3.
+goto :ask_chan
+
+:chan_telegram
+set "CCC_CHANNELS=plugin:telegram@claude-plugins-official"
+echo   -^> Telegram selected
+goto :chan_write
+
+:chan_discord
+set "CCC_CHANNELS=plugin:discord@claude-plugins-official"
+echo   -^> Discord selected
+goto :chan_write
+
+:chan_both
+set "CCC_CHANNELS=plugin:telegram@claude-plugins-official plugin:discord@claude-plugins-official"
+echo   -^> Telegram + Discord selected
+goto :chan_write
+
+:chan_write
+rem --- cccbot.json (with selected channel) ---
+if exist "cccbot.json" goto :skip_cccjson
+powershell -NoProfile -Command "@('{', '  \"workspace\": \"workspace\",', '  \"channels\": \"%CCC_CHANNELS%\"', '}') | Set-Content 'cccbot.json'"
+echo   Created cccbot.json (channels %CCC_CHANNELS%)
+goto :chan_done
+
+:skip_cccjson
+echo   Skipped, already exists cccbot.json
+
+:chan_done
+
 rem --- Template files ---
 call :copy_if_missing "%TEMPLATES_DIR%\CLAUDE.example.md"    "CLAUDE.md"
 call :copy_if_missing "%TEMPLATES_DIR%\JOBS.example.yaml"    "JOBS.yaml"
 call :copy_if_missing "%TEMPLATES_DIR%\BOOT.example.md"      "BOOT.md"
 call :copy_if_missing "%TEMPLATES_DIR%\HEARTBEAT.example.md" "HEARTBEAT.md"
-call :copy_if_missing "%TEMPLATES_DIR%\cccbot.json.default"  "cccbot.json"
 
 rem Create default workspace and lib directories
 if not exist "workspace" mkdir "workspace"

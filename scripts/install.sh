@@ -191,6 +191,59 @@ else
     echo "  Skipped (exists): .claude/settings.json"
 fi
 
+# --- Channel selection (skip on update if cccbot.json exists) ---
+if [ "$IS_UPDATE" = true ] && [ -f "cccbot.json" ]; then
+    echo "  Keeping existing channel config"
+else
+    echo ""
+    echo "=== Channel Setup ==="
+    echo ""
+    echo "Which messaging channel will CCCBot use?"
+    echo ""
+    echo -e "  ${GREEN}1) Telegram${NC} (default)"
+    echo -e "  ${YELLOW}2) Discord${NC}"
+    echo -e "  3) Both"
+    echo ""
+
+    while true; do
+        read -rp "Select channel [1/2/3] (default: 1): " CHAN_CHOICE
+        CHAN_CHOICE="${CHAN_CHOICE:-1}"
+        case "$CHAN_CHOICE" in
+            1|telegram)
+                CCC_CHANNELS="plugin:telegram@claude-plugins-official"
+                echo -e "  → ${GREEN}Telegram${NC} selected"
+                break
+                ;;
+            2|discord)
+                CCC_CHANNELS="plugin:discord@claude-plugins-official"
+                echo -e "  → ${YELLOW}Discord${NC} selected"
+                break
+                ;;
+            3|both)
+                CCC_CHANNELS="plugin:telegram@claude-plugins-official plugin:discord@claude-plugins-official"
+                echo -e "  → ${GREEN}Telegram${NC} + ${YELLOW}Discord${NC} selected"
+                break
+                ;;
+            *)
+                echo -e "  ${RED}Invalid choice. Enter 1, 2, or 3.${NC}"
+                ;;
+        esac
+    done
+fi
+
+# --- cccbot.json (with selected channel) ---
+if [ ! -f "cccbot.json" ]; then
+    cat > "cccbot.json" <<CCCJSON
+{
+  "workspace": "workspace",
+  "channels": "$CCC_CHANNELS"
+}
+CCCJSON
+    echo -e "  ${GREEN}Created:${NC} cccbot.json (channels: $CCC_CHANNELS)"
+else
+    echo "  Skipped (exists): cccbot.json"
+fi
+
 # --- Template files ---
 copy_if_missing() {
     local src="$1" dst="$2"
@@ -206,7 +259,6 @@ copy_if_missing "$TEMPLATES_DIR/CLAUDE.example.md"    "CLAUDE.md"
 copy_if_missing "$TEMPLATES_DIR/JOBS.example.yaml"    "JOBS.yaml"
 copy_if_missing "$TEMPLATES_DIR/BOOT.example.md"      "BOOT.md"
 copy_if_missing "$TEMPLATES_DIR/HEARTBEAT.example.md" "HEARTBEAT.md"
-copy_if_missing "$TEMPLATES_DIR/cccbot.json.default"  "cccbot.json"
 
 # Create default workspace and lib directories
 mkdir -p workspace
