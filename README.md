@@ -88,7 +88,7 @@ To install a specific version:
 bash <(curl -fsSL https://raw.githubusercontent.com/lucianlamp/CCCBot/master/scripts/install.sh) v1.0.0
 ```
 
-Skills, scripts, and templates are updated. Your personal config files (`SOUL.md`, `CLAUDE.md`, `JOBS.yaml`, `BOOT.md`, `HEARTBEAT.md`) and settings are preserved.
+Skills, scripts, and templates are updated. Your personal config files (`SOUL.md`, `CLAUDE.md`, `JOBS.yaml`, `BOOT.md`, `HEARTBEAT.md`, `cccbot.json`) and settings are preserved.
 
 ---
 
@@ -124,7 +124,51 @@ The terminal running Claude Code stays headless — all interaction happens thro
 
 ---
 
-## Customizable Files
+## Configuration
+
+### cccbot.json
+
+`cccbot.json` is the user configuration file for channels and workspace settings:
+
+```json
+{
+  "workspace": "workspace",
+  "channels": "plugin:telegram@claude-plugins-official"
+}
+```
+
+| Key | Default | Description |
+|-----|---------|-------------|
+| `workspace` | `"workspace"` | Default working directory for file operations |
+| `channels` | `"plugin:telegram@claude-plugins-official"` | Channel plugins (space-separated for multiple) |
+
+**Workspace path resolution:**
+
+| Value | Resolves to |
+|-------|-------------|
+| `"workspace"` | `~/.cccbot/workspace` (relative to install dir) |
+| `"~/projects/my-app"` | Your project directory (tilde expansion) |
+| `"/opt/project"` | Absolute path as-is |
+
+When the workspace points outside `~/.cccbot`, it is automatically added to Claude Code's `additionalDirectories` so Claude can access the files.
+
+**Environment variables** override `cccbot.json`:
+
+```bash
+WORKSPACE=~/other-project CHANNELS="plugin:discord@claude-plugins-official" ~/.cccbot/start.sh
+```
+
+### Multiple channels
+
+To use both Telegram and Discord simultaneously:
+
+```json
+{
+  "channels": "plugin:telegram@claude-plugins-official plugin:discord@claude-plugins-official"
+}
+```
+
+### Customizable Files
 
 These files are yours to edit — they define behavior for your workspace:
 
@@ -195,16 +239,23 @@ Or ask Claude in chat — e.g. *"allow npm test commands"* — and it will updat
 ├── BOOT.md                  # Session start instructions
 ├── HEARTBEAT.md             # Heartbeat check instructions
 ├── JOBS.yaml                # Scheduled recurring tasks
+├── cccbot.json              # User config: workspace, channels (gitignored)
 ├── .mcp.json                # MCP plugin config (bot tokens — gitignored)
-├── start.sh / start.bat     # Launchers (auto-installs on first run)
+├── start.sh / start.bat     # Launchers
+├── workspace/               # Default working directory
 ├── scripts/
 │   ├── install.sh           # Installer (macOS/Linux)
 │   ├── install.bat          # Installer (Windows)
 │   ├── restart-session.sh   # MCP auto-recovery (macOS/Linux)
 │   ├── restart-session.bat  # MCP auto-recovery (Windows)
 │   ├── get-parent-pid.ps1   # PID helper for Windows
+│   ├── lib/                 # Shared bash utilities
+│   │   ├── json-parse.sh    # JSON key-value extraction
+│   │   ├── resolve-workspace.sh  # Path expansion
+│   │   └── add-directory.sh # additionalDirectories management
 │   └── templates/           # Config templates (copied on first run)
 │       ├── settings.json.default
+│       ├── cccbot.json.default
 │       ├── CLAUDE.example.md
 │       ├── SOUL.example.md
 │       ├── BOOT.example.md
