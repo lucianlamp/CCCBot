@@ -14,6 +14,10 @@ SOURCE=${SOURCE:-startup}
 SESSION_ID=$(parse_json session_id)
 TRANSCRIPT=$(parse_json transcript_path)
 
+# Load shared libs (relative to CCCBOT_DIR which is cwd)
+source scripts/lib/json-parse.sh 2>/dev/null
+source scripts/lib/resolve-workspace.sh 2>/dev/null
+
 # Pre-check SOUL.md so boot can skip the bash step
 if [ -f SOUL.md ]; then
   SOUL_STATUS="exists"
@@ -40,6 +44,16 @@ if [ -n "$TRANSCRIPT" ]; then
 fi
 if [ -n "$PREV_TRANSCRIPT" ] && [ "$SOURCE" = "startup" ]; then
   CONTEXT="${CONTEXT} Previous session transcript: ${PREV_TRANSCRIPT}"
+fi
+# Inject workspace context from cccbot.json
+if [ -f cccbot.json ]; then
+  WS_RAW=$(json_get workspace cccbot.json)
+  if [ -n "$WS_RAW" ]; then
+    WS_ABS=$(resolve_workspace "$WS_RAW" "$(pwd)")
+    # Escape for JSON string embedding
+    WS_ESCAPED=$(echo "$WS_ABS" | sed 's/\\/\\\\/g;s/"/\\"/g')
+    CONTEXT="${CONTEXT} Default workspace: ${WS_ESCAPED}. Use this directory for file operations unless the user specifies otherwise."
+  fi
 fi
 CONTEXT="${CONTEXT} Your FIRST action must be to invoke the Skill tool with skill=\\\"ccc-boot\\\" to run the boot sequence. Do this before responding to any message."
 
