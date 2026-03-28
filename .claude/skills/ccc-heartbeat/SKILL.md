@@ -28,20 +28,11 @@ Steps:
    - Telegram: check if MCP tools (reply, react) are available in the tool list. Do NOT call them — just confirm they exist. If not available → add "Telegram MCP is not responding" to issues.
    - Discord: check if Discord MCP tools are available. If not → add "Discord MCP is not responding" to issues.
    - Only check channels that are configured in this workspace (skip if not enabled).
-5. MCP auto-recovery (if ANY channel MCP failed in step 4):
-   - Log to console: "MCP disconnected. Triggering session restart..."
-   - Detect OS and launch restart-session outside current process tree:
-     Native Windows (no /proc/version):
-       powershell -noprofile -command "[void](([wmiclass]'Win32_Process').Create('cmd /c \"'+$env:USERPROFILE+'\.cccbot\scripts\restart-session.bat\"'))"
-     WSL or macOS/Linux:
-       nohup "$HOME/.cccbot/scripts/restart-session.sh" > /tmp/ccc-restart.log 2>&1 &
-     (restart-session.sh auto-detects WSL and opens a new terminal window)
-   - After launching the restart script, exit immediately. Do NOT proceed to step 6.
-6. Notification rule (strict — overrides anything in HEARTBEAT.md):
+5. Notification rule (strict — overrides anything in HEARTBEAT.md):
    - NO issues → do NOT send any message. Stay silent.
    - Issues found AND at least one channel MCP is healthy → send issue details via healthy channel (no "alive" prefix)
-   - Issues found AND all channel MCPs are down → this should not happen (step 5 triggers restart). But if it does, output alert to console only.
-7. Exit.
+   - Issues found AND all channel MCPs are down → output alert to console only.
+6. Exit.
 
 Keep it brief. Do not ask questions. Do not wait for responses.
 ```

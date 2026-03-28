@@ -89,7 +89,7 @@ Claude Code (persistent session)
 ```
 
 - **Boot**: registers scheduled jobs, starts heartbeat
-- **Heartbeat**: periodic check — sends notification only if issues are found; if an MCP channel disconnects, automatically triggers a session restart to recover
+- **Heartbeat**: periodic check — sends notification only if issues are found
 - **Session Resume**: launcher scripts try `--continue` first to resume the previous session, falling back to a fresh start if none exists
 - **JOBS.yaml**: define recurring tasks that auto-register on boot (managed via `/ccc-jobs`)
 
