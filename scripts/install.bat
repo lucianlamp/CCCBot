@@ -25,10 +25,13 @@ if %ERRORLEVEL% neq 0 (
 rem Resolve latest version if not specified
 if not "%VERSION%"=="" goto :version_set
 echo Fetching latest release...
-for /f "tokens=*" %%v in ('powershell -NoProfile -Command "(Invoke-RestMethod 'https://api.github.com/repos/%REPO%/releases/latest').tag_name"') do set "VERSION=%%v"
+set "_VER_TMP=%TEMP%\cccbot-ver-%RANDOM%.tmp"
+powershell -NoProfile -Command "(Invoke-RestMethod 'https://api.github.com/repos/%REPO%/releases/latest').tag_name" > "%_VER_TMP%" 2>nul
+set /p VERSION=<"%_VER_TMP%"
+del "%_VER_TMP%" 2>nul
 if "%VERSION%"=="" (
     echo Error - Could not determine latest release.
-    echo Specify a version manually, e.g. install.bat v1.0.0
+    echo Specify a version manually, e.g. install.bat v0.2.1
     exit /b 1
 )
 echo   Latest release -- %VERSION%
