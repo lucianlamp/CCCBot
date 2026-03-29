@@ -55,7 +55,6 @@ Alert: send issue details via channel `reply` tool. Do NOT include `HEARTBEAT_OK
 - ccc-heartbeat: Periodic liveness check
 - ccc-defaults: CCC workspace default behaviors (always applied)
 - ccc-channel-task: Telegram/Discord message handling flow
-- ccc-restart: Session restart via Telegram
 - ccc-jobs: Scheduled job management (JOBS.yaml)
 - ccc-import-openclaw-skill: Install ClawHub skills
 - codex-pipeline: Delegate implementation tasks to Codex CLI

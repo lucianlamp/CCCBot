@@ -12,7 +12,7 @@ CCCBot is an autonomous agent built on Claude Code Channels. It connects Claude 
 ## Directory Structure
 - `start.sh` / `start.bat` — Bot launcher entry points
 - `bin/` — CLI wrapper scripts (`cccbot` command)
-- `scripts/` — Installer, restart, and utility scripts
+- `scripts/` — Installer and utility scripts
 - `scripts/lib/` — Shared bash library functions (json-parse, resolve-workspace, add-directory)
 - `scripts/templates/` — Default config file templates
 - `.claude/skills/` — Claude Code skill definitions
@@ -30,7 +30,6 @@ CCCBot is an autonomous agent built on Claude Code Channels. It connects Claude 
 ## Key Scripts
 - `scripts/install.sh` / `scripts/install.bat` — Download-based installer (also handles updates)
 - `start.sh` / `start.bat` — Session launcher with PID tracking and config loading
-- `scripts/restart-session.sh` / `scripts/restart-session.bat` — Session restart for recovery
 
 ## Skills Reference
 - bat ファイルは複雑な変数トラッキングを避け最小限に保つ

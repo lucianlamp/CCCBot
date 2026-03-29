@@ -232,8 +232,6 @@ Or ask Claude in chat — e.g. *"allow npm test commands"* — and it will updat
 ├── scripts/
 │   ├── install.sh           # Installer (macOS/Linux)
 │   ├── install.bat          # Installer (Windows)
-│   ├── restart-session.sh   # MCP auto-recovery (macOS/Linux)
-│   ├── restart-session.bat  # MCP auto-recovery (Windows)
 │   ├── get-parent-pid.ps1   # PID helper for Windows
 │   ├── lib/                 # Shared bash utilities
 │   │   ├── json-parse.sh    # JSON key-value extraction

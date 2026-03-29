@@ -39,3 +39,6 @@ memory/
 **/*.secret
 **/secrets.*
 **/credentials.*
+
+# AntiCrow ローカルデータ
+.anticrow/

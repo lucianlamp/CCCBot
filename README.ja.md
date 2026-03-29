@@ -230,8 +230,6 @@ CCCBot はデフォルトで `.claude/settings.json` に自律性と安全性の
 +-- scripts/
 |   +-- install.sh           # インストーラー（macOS/Linux）
 |   +-- install.bat          # インストーラー（Windows）
-|   +-- restart-session.sh   # MCP 自動リカバリ（macOS/Linux）
-|   +-- restart-session.bat  # MCP 自動リカバリ（Windows）
 |   +-- get-parent-pid.ps1   # PID 取得ヘルパー（Windows）
 |   +-- lib/                 # 共有 bash ユーティリティ
 |   |   +-- json-parse.sh    # JSON キー値抽出
