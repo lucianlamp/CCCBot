@@ -2,7 +2,8 @@
 # Heartbeat context check script
 # Outputs current state for Claude to evaluate
 
-WORKSPACE_DIR="$(cd "$(dirname "$0")/../../../.." && pwd)"
+CCCBOT_DIR="${HOME}/.cccbot"
+WORKSPACE_DIR="$(cd "$(dirname "$0")/../../../.." 2>/dev/null && pwd || echo "$CCCBOT_DIR")"
 echo "=== HEARTBEAT CHECK: $(date '+%Y-%m-%d %H:%M') ==="
 echo ""
 
