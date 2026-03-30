@@ -16,6 +16,8 @@ Channels connects Claude Code to Telegram and Discord — CCCBot extends that in
 
 The biggest advantage: it runs on Claude Code's **flat-rate OAuth plan**. No per-token API billing — Claude works autonomously at a fixed monthly cost.
 
+> **⚠️ Windows users:** The Channels plugin on Windows-native Claude Code is currently unstable. We strongly recommend running CCCBot under **WSL (Windows Subsystem for Linux)** for a reliable experience. Use the macOS / Linux install command inside your WSL terminal.
+
 ---
 
 ## Prerequisites

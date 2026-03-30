@@ -16,6 +16,8 @@
 
 最大の魅力は、Claude Code の **OAuth 定額プラン**で動くこと。API 従量課金ではなく、月額固定で Claude が自律的に動き続けます。
 
+> **⚠️ Windows ユーザーへ:** Windows ネイティブ版の Claude Code では Channels プラグインが現在不安定です。安定した動作のため、**WSL（Windows Subsystem for Linux）** 上での実行を強く推奨します。WSL ターミナル内で macOS / Linux 用のインストールコマンドを使用してください。
+
 ---
 
 ## 前提条件
